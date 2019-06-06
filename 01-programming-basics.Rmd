@@ -20,7 +20,7 @@ knitr::include_graphics("images/rstudio.png")
 
 ```
 
-You will learn more about how to use the features included in RStudio throughout this course, however, we highly reccommend watching [RStudio Essentials 1](https://www.rstudio.com/resources/webinars/rstudio-essentials-webinar-series-part-1/) from the RStudio team. The video last ~30 minutes and gives a tour of the main parts of RStudio. 
+You will learn more about how to use the features included in RStudio throughout this course, however, we highly reccommend watching [RStudio Essentials 1](https://www.rstudio.com/resources/webinars/rstudio-essentials-webinar-series-part-1/) from the RStudio team. The video lasts ~30 minutes and gives a tour of the main parts of RStudio. 
 
 ## Functions and arguments
 
