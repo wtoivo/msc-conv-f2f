@@ -177,6 +177,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.8" data-path="rm1-lab-1.html"><a href="rm1-lab-1.html#activity-6-pull-out-variables-of-interest"><i class="fa fa-check"></i><b>2.2.8</b> Activity 6: Pull out variables of interest</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="rm1-lab-1.html"><a href="rm1-lab-1.html#debugging-tips-1"><i class="fa fa-check"></i><b>2.3</b> Debugging tips</a></li>
+<li class="chapter" data-level="2.4" data-path="rm1-lab-1.html"><a href="rm1-lab-1.html#test-yourself-1"><i class="fa fa-check"></i><b>2.4</b> Test yourself</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendices</b></span></li>
 <li class="divider"></li>
@@ -402,6 +403,7 @@ There is also a function called <code>read.csv()</code>. Be very careful NOT to 
 <li>In the environment pane, click the small blue play button to the left of <code>dat</code> and <code>pinfo</code>. This will show you the structure of the object information including the names of all the variables in that object and what type they are (also see <code>str(pinfo)</code>)</li>
 <li>Use <code>summary(pinfo)</code></li>
 <li>Use <code>head(pinfo)</code></li>
+<li>Just type the name of the object you want to view, e.g., <code>dat</code>.</li>
 </ul>
 </div>
 <div id="activity-5-join-the-files-together" class="section level3">
@@ -511,6 +513,23 @@ There is also a function called <code>read.csv()</code>. Be very careful NOT to 
 </li>
 <li>Have you accidentally deleted any backticks (```) from the beginning or end of code chunks?</li>
 </ul>
+</div>
+<div id="test-yourself-1" class="section level2">
+<h2><span class="header-section-number">2.4</span> Test yourself</h2>
+<p><strong>Question 1</strong> When loading in a .csv file, which function should you use?</p>
+<p><select class='solveme' data-answer='["read_csv()"]'> <option></option> <option>read_csv()</option> <option>read.csv()</option></select></p>
+<div class="solution">
+<button>
+Explain This Answer
+</button>
+<p>Remember, in this course we use <code>read_csv()</code> and it is important for the portfolio assignment that you use this function otherwise you may find that the variable names are slightly different and you won’t get the marks</p>
+</div>
+<p><br></p>
+<p><strong>Question 2</strong> The function <code>inner_join()</code> takes the arguments <code>x</code>, <code>y</code>, <code>by</code>. What does <code>by</code> do?</p>
+<p><select class='solveme' data-answer='["Specifies the column to join by that both tables have in common"]'> <option></option> <option>Specifies the first table to join</option> <option>Specifies the second table to join</option> <option>Specifies the column to join by that both tables have in common</option></select></p>
+<p><strong>Question 3</strong> What does the function <code>select()</code> do?
+<br>
+<select class='solveme' data-answer='["Keeps only the variables you specify"]'> <option></option> <option>Keeps only the observations you specify</option> <option>Keeps only the variables you specify</option> <option>Keeps only the objects you specify</option></select></p>
 
 </div>
 </div>
