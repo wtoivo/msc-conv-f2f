@@ -2,7 +2,7 @@
 --- 
 title: "MSc Conversion in Psychological Studies/Science"
 author: "Emily Nordmann"
-date: "2019-06-05"
+date: "2019-06-12"
 bibliography:
 - book.bib
 - packages.bib
@@ -20,8 +20,8 @@ biblio-style: apalike
 # Overview {-}
 
 <div class="info">
-<p>This book contains the materials for students on the MSc Conversion in Psychological Studies/Science. This course is a one-year postgraduate degree where students who already hold a non-psychology undergraduate degree receive a British Psychological Society accredited MSc. The students are typically a diverse cohort and range from those with no STEM or programming background to engineering and computing science graduates.</p>
-<p>As a consequence of the intense nature of the programme and the diversity of the cohort, the approach to R is slightly different to that taken in the undergraduate programmes. The focus for the MSc is to provide a basic but solid competency in core data skills and statistics that can be built on in further study. Students who wish to push themselves beyond the core competencies are encouraged to consult the MSc Data Skills course where they can learn about e.g., simulation and custom functions.</p>
+<p>This book contains the materials for students on the MSc Conversion in Psychological Studies/Science. This course is a one-year postgraduate degree where students who already hold a non-psychology undergraduate degree receive a British Psychological Society accredited MSc. The students are typically a diverse cohort and range from those with no STEM or programming background to engineering and computing science graduates. Compared to the undergraduate degree, the students are older, and there is a greater incidence of computer anxiety.</p>
+<p>As a consequence of the intense nature of the programme and the diversity of the cohort, the approach to R is slightly different to that taken in the undergraduate programmes. The focus for the MSc is to provide a basic but solid competency in core data skills and statistics that can be built on in further study. Students who wish to push themselves beyond the core competencies are encouraged to consult the MSc Data Skills course where they can learn about e.g., simulation and custom functions. To support those students who may have very limited computer literacy, the beginning stages are more supported than in the undergraduate programme e.g., with an increased use of screenshots and explanations for terminiology.</p>
 </div>
 
 In this course you will learn core data skills that allow you to manipulate and analyse quantitative data, a key component of an accredited psychology programme. Each week we will build your skills through pre-class, in-class, and homework activities. In addition to this book, there are video walkthroughs of each in-class activity available on Moodle and there will be drop-in help sessions run by our Graduate Teaching Assistants.
