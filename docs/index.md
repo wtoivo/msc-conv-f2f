@@ -2,7 +2,7 @@
 --- 
 title: "MSc Conversion in Psychological Studies/Science"
 author: "Emily Nordmann"
-date: "2019-06-12"
+date: "2019-06-23"
 bibliography:
 - book.bib
 - packages.bib
