@@ -6,7 +6,7 @@ This is the first lab in which students will be introduced to R. The key aims of
 
 ## Pre-class activities
 
-There are nine activities in total for this pre-lab, but don't worry, they are broken down in to very small steps!
+There are nine activities in total for this pre-lab, but don't worry, they are broken down into very small steps!
 
 ### Activity 1: Programming basics
 
@@ -208,7 +208,7 @@ library(tidyverse)
 
 ### Open data
 
-For the next few labs we are going to be using real data from the following paper:
+For this lab we are going to be using real data from the following paper:
 
 [Woodworth, R.J., O'Brien-Malone, A., Diamond, M.R. and Schüz, B., 2018. Data from, ‘Web-based Positive Psychology Interventions: A Reexamination of Effectiveness’. Journal of Open Psychology Data, 6(1).](https://openpsychologydata.metajnl.com/articles/10.5334/jopd.35/)
 
@@ -290,7 +290,7 @@ There is no portfolio assessment this week, instead, use the time to get comfort
 
 ## Test yourself
 
-**Question 1** When loading in a .csv file, which function should you use? 
+* When loading in a .csv file, which function should you use? 
 
 `r mcq(c(answer = "read_csv()", "read.csv()"))`
 
@@ -302,10 +302,10 @@ cat("Remember, in this course we use `read_csv()` and it is important for the po
 
 <br>
 
-**Question 2** The function `inner_join()` takes the arguments `x`, `y`, `by`. What does `by` do?
+* The function `inner_join()` takes the arguments `x`, `y`, `by`. What does `by` do?
 
 `r mcq(c("Specifies the first table to join", "Specifies the second table to join", answer = "Specifies the column to join by that both tables have in common"))`
 
-**Question 3** What does the function `select()` do? 
+* What does the function `select()` do? 
 <br>
 `r mcq(c("Keeps only the observations you specify", answer = "Keeps only the variables you specify", "Keeps only the objects you specify"))`
