@@ -975,7 +975,10 @@ data_arrange &lt;-<span class="st"> </span>pong_data <span class="op">%&gt;%</sp
 Where piping becomes most useful is when we <strong>string a series of functions together</strong>, rather than using them as separate steps and having to save the data each time under a new variable name and getting ourselves all confused. In the non-piped version we have to create a new variable each time, for example, <code>data</code>, <code>data_filtered</code>, <code>data_arranged</code>, <code>data_grouped</code>, <code>data_summarised</code> just to get to the final one we actually want, which was <code>data_summarised</code>. This creates a lot of variables and tibbles in our environment and can make everything unclear and eventually slow down our computer. The piped version however uses one variable name, saving space in the environment, and is clear and easy to read. With pipes we skip unnecessary steps and avoid cluttering our environment.
 </p>
 </div>
-<p>We have now learned a number of functions and verbs that you will need as the semester goes on. You will use them in the lab next week so be sure to go over these and try them out to make yourself more comfortable with them. If you have any questions please post them on the Moodle forum or the slack forum. <strong>Happy Wrangling!</strong></p>
+<div id="finished-1" class="section level4">
+<h4><span class="header-section-number">3.2.13.1</span> Finished!</h4>
+<p>We have now learned a number of functions and verbs that you will need as the semester goes on. You will use them in the lab next week so be sure to go over these and try them out to make yourself more comfortable with them. Please check Moodle for details of the first R portfolio submission which will open this week but remember, you will have done everything you’re asked to do in these assignments before and you can refer back to this book to help you. If you have any questions please post them on the Moodle forum or the slack forum. <strong>Happy Wrangling!</strong></p>
+</div>
 </div>
 <div id="activity-solutions" class="section level3 tabset tabset-fade tabset-pills">
 <h3><span class="header-section-number">3.2.14</span> Activity solutions</h3>
@@ -1090,7 +1093,9 @@ pong_data_hits &lt;-<span class="st"> </span><span class="kw">summarise</span>(p
 </div>
 <div id="test-yourself-2" class="section level2">
 <h2><span class="header-section-number">3.4</span> Test yourself</h2>
-<p>What type of data would these most likely be:</p>
+<ol style="list-style-type: decimal">
+<li>What type of data would these most likely be:</li>
+</ol>
 <ul>
 <li><p>Male = <select class='solveme' data-answer='["Character"]'> <option></option> <option>Character</option> <option>Numeric</option> <option>Integer</option></select></p></li>
 <li><p>7.15 = <select class='solveme' data-answer='["Numeric"]'> <option></option> <option>Character</option> <option>Numeric</option> <option>Integer</option></select></p></li>
@@ -1103,12 +1108,12 @@ Explain These Answers
 <p>There is a lot of different types of data and as well as different types of levels of measurements and it can get very confusing. It’s important to try to remember which is which because you can only do certain types of analyses on certain types of data and certain types of measurements. For instance, you can’t take the average of Characters just like you can’t take the average of Categorical data. Likewise, you can do any maths on Numeric data, just like you can on Interval and Ratio data. Integer data is funny in that sometimes it is Ordinal and sometimes it is Interval, sometimes you should take the median, sometimes you should take the mean. The main point is to always know what type of data you are using and to think about what you can and cannot do with them.</p>
 </div>
 <p><br></p>
-<ul>
+<ol start="2" style="list-style-type: decimal">
 <li><p>Which of the Wickham Six would you use to sort columns from smallest to largest: <select class='solveme' data-answer='["arrange"]'> <option></option> <option>select</option> <option>filter</option> <option>mutate</option> <option>arrange</option> <option>group_by</option> <option>summarise</option></select></p></li>
 <li><p>Which of the Wickham Six would you use to calculate the mean of a column: <select class='solveme' data-answer='["summarise"]'> <option></option> <option>select</option> <option>filter</option> <option>mutate</option> <option>arrange</option> <option>group_by</option> <option>summarise</option></select></p></li>
 <li><p>Which of the Wickham Six would you use to remove certain observations - e.g. remove all males: <select class='solveme' data-answer='["filter"]'> <option></option> <option>select</option> <option>filter</option> <option>mutate</option> <option>arrange</option> <option>group_by</option> <option>summarise</option></select></p></li>
 <li><p>What does this line of code say? <code>data %&gt;% filter() %&gt;% group_by() %&gt;% summarise()</code>: <select class='solveme' data-answer='["take the data and then filter it and then group it and then summarise it"]'> <option></option> <option>take the data and then group it and then filter it and then summarise it</option> <option>take the data and then filter it and then group it and then summarise it</option> <option>take the data and then summarise it and then filter it and then group it</option> <option>take the data and then group it and then summarise it and then filter it</option></select></p></li>
-</ul>
+</ol>
 
 </div>
 </div>

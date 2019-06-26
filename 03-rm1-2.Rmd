@@ -581,8 +581,9 @@ data_arrange <- pong_data %>%
 Where piping becomes most useful is when we **string a series of functions together**, rather than using them as separate steps and having to save the data each time under a new variable name and getting ourselves all confused. In the non-piped version we have to create a new variable each time, for example, `data`, `data_filtered`, `data_arranged`, `data_grouped`, `data_summarised` just to get to the final one we actually want, which was `data_summarised`.  This creates a lot of variables and tibbles in our environment and can make everything unclear and eventually slow down our computer. The piped version however uses one variable name, saving space in the environment, and is clear and easy to read. With pipes we skip unnecessary steps and avoid cluttering our environment. 
 ```
 
+#### Finished!
 
-We have now learned a number of functions and verbs that you will need as the semester goes on.  You will use them in the lab next week so be sure to go over these and try them out to make yourself more comfortable with them. If you have any questions please post them on the Moodle forum or the slack forum. **Happy Wrangling!**
+We have now learned a number of functions and verbs that you will need as the semester goes on.  You will use them in the lab next week so be sure to go over these and try them out to make yourself more comfortable with them. Please check Moodle for details of the first R portfolio submission which will open this week but remember, you will have done everything you're asked to do in these assignments before and you can refer back to this book to help you. If you have any questions please post them on the Moodle forum or the slack forum. **Happy Wrangling!**
 
 ### Activity solutions {.tabset .tabset-fade .tabset-pills}
 Below you will find the solutions to the above questions. Only look at them after giving the questions a good try and speaking to the tutor about any issues.
@@ -698,7 +699,7 @@ Finally, check that the datafile is actually in the folder you have set as your 
 
 ## Test yourself
 
-What type of data would these most likely be:
+1. What type of data would these most likely be:
 
 * Male = `r mcq(c(answer = "Character","Numeric","Integer"))`
 
@@ -714,10 +715,10 @@ cat("There is a lot of different types of data and as well as different types of
 
 <br>
 
-* Which of the Wickham Six would you use to sort columns from smallest to largest: `r mcq(c("select","filter","mutate",answer ="arrange","group_by","summarise"))`
+2. Which of the Wickham Six would you use to sort columns from smallest to largest: `r mcq(c("select","filter","mutate",answer ="arrange","group_by","summarise"))`
 
-* Which of the Wickham Six would you use to calculate the mean of a column: `r mcq(c("select","filter","mutate","arrange","group_by",answer ="summarise"))`
+3. Which of the Wickham Six would you use to calculate the mean of a column: `r mcq(c("select","filter","mutate","arrange","group_by",answer ="summarise"))`
 
-* Which of the Wickham Six would you use to remove certain observations - e.g. remove all males: `r mcq(c("select",answer = "filter","mutate","arrange","group_by","summarise"))` 
+4. Which of the Wickham Six would you use to remove certain observations - e.g. remove all males: `r mcq(c("select",answer = "filter","mutate","arrange","group_by","summarise"))` 
 
-* What does this line of code say? `data %>% filter() %>% group_by() %>% summarise()`: `r mcq(c("take the data and then group it and then filter it and then summarise it", answer = "take the data and then filter it and then group it and then summarise it", "take the data and then summarise it and then filter it and then group it","take the data and then group it and then summarise it and then filter it"))`  
+5. What does this line of code say? `data %>% filter() %>% group_by() %>% summarise()`: `r mcq(c("take the data and then group it and then filter it and then summarise it", answer = "take the data and then filter it and then group it and then summarise it", "take the data and then summarise it and then filter it and then group it","take the data and then group it and then summarise it and then filter it"))`  
