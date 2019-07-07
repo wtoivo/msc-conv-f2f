@@ -66,7 +66,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -112,8 +112,8 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="include/psyteachr.css" type="text/css" />
-<link rel="stylesheet" href="include/style.css" type="text/css" />
+<link rel="stylesheet" href="include\psyteachr.css" type="text/css" />
+<link rel="stylesheet" href="include\style.css" type="text/css" />
 </head>
 
 <body>
@@ -131,7 +131,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Overview</a><ul>
 <li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#how-to-use-this-book"><i class="fa fa-check"></i><b>0.1</b> How to use this book</a></li>
-<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#intended-learning-outcomes"><i class="fa fa-check"></i><b>0.2</b> Intended Learning Outcomes</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#data-files"><i class="fa fa-check"></i><b>0.2</b> Data files</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#intended-learning-outcomes"><i class="fa fa-check"></i><b>0.3</b> Intended Learning Outcomes</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="programming-basics.html"><a href="programming-basics.html"><i class="fa fa-check"></i><b>1</b> Programming Basics</a><ul>
 <li class="chapter" data-level="1.1" data-path="programming-basics.html"><a href="programming-basics.html#r-and-r-studio"><i class="fa fa-check"></i><b>1.1</b> R and R Studio</a><ul>
@@ -585,7 +586,7 @@ Figure 5.7: Code and output
 <div id="activity-6-adding-rules-to-code-chunks" class="section level3">
 <h3><span class="header-section-number">5.1.8</span> Activity 6: Adding rules to code chunks</h3>
 <p>It can often be a good idea or even necessary to show the data or the outcome of a test in your report, for example if you were writing a report and wanted to include a table of results. But what if your code displayed a table that was 10,000 lines long? In that case you might want to not show the output and only show the code. You can do this by including a rule within the first line of your code chunk - your ```{r name, rule = option} line. You have already seen a rule before in the standard default chunk, the <code>include</code> rule, but there are a number of others.</p>
-<p><strong>To hide the output but show the code</strong> use the <code>results = &quot;hide&quot;</code> rule:</p>
+<p><strong>To hide the output but show the code</strong> use the <code>results = "hide"</code> rule:</p>
 <div class="figure" style="text-align: center"><span id="fig:img-hide"></span>
 <img src="images/rmd_hide.png" alt="Hiding output from knitted output" width="100%" />
 <p class="caption">
@@ -653,7 +654,7 @@ Figure 5.13: Hashtag headings
 </div>
 <ul>
 <li><p>Type the four main headings found in a Psychology journal article in your R Markdown file, typing each one in a separate line. These are mentioned above. Knit the file. What do these look like?</p></li>
-<li><p>Now add a different number of #’s before each heading, with a space between the heading and the hashtag (e.g. # Introduction) and knit the file again. What do you notice about the different number of hash-tags?</p></li>
+<li><p>Now add a different number of #’s before each heading, with a space between the heading and the hashtag (e.g. # Introduction) and knit the file again. What do you notice about the different number of hash-tags?</p></li>
 </ul>
 <div id="finished-4" class="section level4">
 <h4><span class="header-section-number">5.1.9.1</span> Finished!</h4>
@@ -664,7 +665,7 @@ Figure 5.13: Hashtag headings
 <h3><span class="header-section-number">5.1.10</span> Test yourself</h3>
 <p>You’ve got a large dataset of thousands of participant’s personality and happiness scores that you want to analyse and present in R Markdown.</p>
 <ol style="list-style-type: decimal">
-<li><p>You want to show the code you are running in your analysis but not show the output as this would be too much to display. Note that you want the code to run. Type in the box (e.g. <code>rule = &quot;set&quot;</code>) how you would set the <code>results</code> rule to do this? <input class='solveme nospaces' size='20' data-answer='["results = \"hide\""]'/></p></li>
+<li><p>You want to show the code you are running in your analysis but not show the output as this would be too much to display. Note that you want the code to run. Type in the box (e.g. <code>rule = "set"</code>) how you would set the <code>results</code> rule to do this? <input class='solveme nospaces' size='20' data-answer='["results = \"hide\""]'/></p></li>
 <li><p>You create a plot of happiness versus neuroticism scores but you want to hide the code and only show the output. How can you do this? <select class='solveme' data-answer='["echo = FALSE"]'> <option></option> <option>echo = TRUE</option> <option>include = FALSE</option> <option>code = HIDE</option> <option>echo = FALSE</option></select></p></li>
 </ol>
 <div class="solution">
@@ -686,13 +687,13 @@ Explain this
 </div>
 <p><br></p>
 <ol start="4" style="list-style-type: decimal">
-<li>True or False: there is no difference between the rules <code>results = &quot;hide&quot;</code> and <code>eval = FALSE</code> as they both hide the output: <select class='solveme' data-answer='["FALSE"]'> <option></option> <option>TRUE</option> <option>FALSE</option></select></li>
+<li>True or False: there is no difference between the rules <code>results = "hide"</code> and <code>eval = FALSE</code> as they both hide the output: <select class='solveme' data-answer='["FALSE"]'> <option></option> <option>TRUE</option> <option>FALSE</option></select></li>
 </ol>
 <div class="solution">
 <button>
 Explain this
 </button>
-<p>In the first rule, <code>results = &quot;hide&quot;</code>, the code is evaluated and results are produced but the output is hidden. In the second rule, <code>eval = FALSE</code>, the code is not evaluated and therefore no results or output has been produced. If you need your output for a later part of the code then you would use the <code>results</code> rule. If you don’t need the output and just want to show the code as an example then you would use the <code>eval</code> rule.</p>
+<p>In the first rule, <code>results = "hide"</code>, the code is evaluated and results are produced but the output is hidden. In the second rule, <code>eval = FALSE</code>, the code is not evaluated and therefore no results or output has been produced. If you need your output for a later part of the code then you would use the <code>results</code> rule. If you don’t need the output and just want to show the code as an example then you would use the <code>eval</code> rule.</p>
 </div>
 <p><br></p>
 <ol start="5" style="list-style-type: decimal">
@@ -703,7 +704,7 @@ Explain this
 <button>
 Explain this
 </button>
-<p>If * at the start and end of the word puts it in italics (e.g. <em>italics</em>) and ** puts it in bold (e.g. <strong>bold</strong>), then putting three *** at the start and end will put it in italics with bold (e.g. <strong><em>italics-bold</em></strong>).</p>
+<p>If * at the start and end of the word puts it in italics (e.g. <em>italics</em>) and ** puts it in bold (e.g. <strong>bold</strong>), then putting three *** at the start and end will put it in italics with bold (e.g. <strong><em>italics-bold</em></strong>).</p>
 <p>It is true that the more #’s you use, the smaller the heading is. Word and other document writers use different headings as well. Here, # gives the biggest heading, and it gets smaller and smaller with every extra #.</p>
 </div>
 <p><br></p>
@@ -894,8 +895,8 @@ Explain these answers
 <ul>
 <li>the column name of Variable 1</li>
 <li>the column name of Variable 2</li>
-<li>the type of correlation you want to run: e.g. “pearson”, “spearman”</li>
-<li>the type of NHST tail you want to run: e.g. “one.sided”, “two.sided”</li>
+<li>the type of correlation you want to run: e.g. “pearson”, “spearman”</li>
+<li>the type of NHST tail you want to run: e.g. “one.sided”, “two.sided”</li>
 </ul>
 <p>For example, if your data is stored in <code>dat</code> and you are wanting a two-sided pearson correlation of the variables (columns) <code>X</code> and <code>Y</code>, then you would do:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cor.test</span>(dat<span class="op">$</span>X, dat<span class="op">$</span>Y, <span class="dt">method =</span> <span class="st">&quot;pearson&quot;</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</code></pre>

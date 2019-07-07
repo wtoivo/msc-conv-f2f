@@ -66,7 +66,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -112,8 +112,8 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="include/psyteachr.css" type="text/css" />
-<link rel="stylesheet" href="include/style.css" type="text/css" />
+<link rel="stylesheet" href="include\psyteachr.css" type="text/css" />
+<link rel="stylesheet" href="include\style.css" type="text/css" />
 </head>
 
 <body>
@@ -131,7 +131,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Overview</a><ul>
 <li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#how-to-use-this-book"><i class="fa fa-check"></i><b>0.1</b> How to use this book</a></li>
-<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#intended-learning-outcomes"><i class="fa fa-check"></i><b>0.2</b> Intended Learning Outcomes</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#data-files"><i class="fa fa-check"></i><b>0.2</b> Data files</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#intended-learning-outcomes"><i class="fa fa-check"></i><b>0.3</b> Intended Learning Outcomes</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="programming-basics.html"><a href="programming-basics.html"><i class="fa fa-check"></i><b>1</b> Programming Basics</a><ul>
 <li class="chapter" data-level="1.1" data-path="programming-basics.html"><a href="programming-basics.html#r-and-r-studio"><i class="fa fa-check"></i><b>1.1</b> R and R Studio</a><ul>
@@ -521,7 +522,7 @@ Hint
 <p>Now we can visualise the data. In the original paper they use a bar plot, which we will reproduce later but for now let’s use a better plot that gives us more information about the data.</p>
 <ul>
 <li>Create the below violin-boxplot with number of intrusions on the y-axis and condition on the x-axis (see lab 5)</li>
-<li>Change the labels on the x-axis to something more informative (hint: <code>scale_x_discrete(labels = c(&quot;label names&quot;)</code>)</li>
+<li>Change the labels on the x-axis to something more informative (hint: <code>scale_x_discrete(labels = c("label names")</code>)</li>
 </ul>
 <div class="figure" style="text-align: center">
 <img src="08-rm2-4_files/figure-html/violin%20plot-1.png" alt="Number of intrusions by condition" width="100%" />
@@ -615,7 +616,7 @@ Hint
 </ul>
 <p>If you want R to round this for you to make it easier to read, you could use the below code to save it to an object, tidy it and then round the p.value. Just remember that in APA style you should never write “p = 0”, instead, you should write “p &lt; .001” (because p will never equal actual zero, it can just be very, very, very small).</p>
 <pre class="sourceCode r"><code class="sourceCode r">shapiro &lt;-<span class="st"> </span><span class="kw">shapiro.test</span>(mod<span class="op">$</span>aov<span class="op">$</span>residuals) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>()<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">p.value =</span> <span class="kw">round</span>(p.value, <span class="dt">digits =</span> <span class="dv">3</span>))</code></pre>
-<p>The second thing to note is that from both the qq-plot and the Shapiro-Wilk test it is clear that the assumption of normality has not been met. Is this a problem? Well, Field et al. (2009) say that if the sample sizes for each group are equal then ANOVA is robust to violations of both normality and of homogeneity of variance. There’s also a good discussion of this <a href="https://link.springer.com/article/10.3758/s13428-017-0918-2">here</a> but it is a bit technical. We can check how many participants are in each condition using <code>count()</code>:</p>
+<p>The second thing to note is that from both the qq-plot and the Shapiro-Wilk test it is clear that the assumption of normality has not been met. Is this a problem? Well, Field et al. (2009) say that if the sample sizes for each group are equal then ANOVA is robust to violations of both normality and of homogeneity of variance. There’s also a good discussion of this <a href="https://link.springer.com/article/10.3758/s13428-017-0918-2">here</a> but it is a bit technical. We can check how many participants are in each condition using <code>count()</code>:</p>
 <pre class="sourceCode r"><code class="sourceCode r">dat2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(Condition)</code></pre>
 <table>
 <thead>
@@ -704,10 +705,10 @@ What are your options if the data don’t meet the assumptions and it’s really
 You could run a non-parametric test, the Kruskal-Wallis for between-subject designs and the Friedman test for within-subject designs. There is more information about how to do this in the Supplementary Analyses chapter.
 </li>
 <li>
-If normality is the problem, you could try transforming the data. Field et al. (2009) has a good section on data transformation.
+If normality is the problem, you could try transforming the data. Field et al. (2009) has a good section on data transformation.
 </li>
 <li>
-You could use bootstrapping, which is not something we will cover in this course at all. Again, Field et al. (2009) covers this although it is a little complicated.
+You could use bootstrapping, which is not something we will cover in this course at all. Again, Field et al. (2009) covers this although it is a little complicated.
 </li>
 </ol>
 </div>

@@ -66,7 +66,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -112,8 +112,8 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="include/psyteachr.css" type="text/css" />
-<link rel="stylesheet" href="include/style.css" type="text/css" />
+<link rel="stylesheet" href="include\psyteachr.css" type="text/css" />
+<link rel="stylesheet" href="include\style.css" type="text/css" />
 </head>
 
 <body>
@@ -131,7 +131,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Overview</a><ul>
 <li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#how-to-use-this-book"><i class="fa fa-check"></i><b>0.1</b> How to use this book</a></li>
-<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#intended-learning-outcomes"><i class="fa fa-check"></i><b>0.2</b> Intended Learning Outcomes</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#data-files"><i class="fa fa-check"></i><b>0.2</b> Data files</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#intended-learning-outcomes"><i class="fa fa-check"></i><b>0.3</b> Intended Learning Outcomes</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="programming-basics.html"><a href="programming-basics.html"><i class="fa fa-check"></i><b>1</b> Programming Basics</a><ul>
 <li class="chapter" data-level="1.1" data-path="programming-basics.html"><a href="programming-basics.html#r-and-r-studio"><i class="fa fa-check"></i><b>1.1</b> R and R Studio</a><ul>
@@ -1191,7 +1192,7 @@ Do nothing. <a href="https://www.rips-irsp.com/articles/10.5334/irsp.82/">Delacr
 </div>
 <div id="activity-7-effect-size" class="section level3">
 <h3><span class="header-section-number">6.2.7</span> Activity 7: Effect size</h3>
-<p>Before we interpret and write-up the results our last task is to calculate the effect size which for a t-test is Cohen’s D. To do this, we will use the function <code>cohensD()</code> from the <code>lsr</code> package. The code is very simple, it is very similar to the syntax for <code>t.test()</code>. The only difference is rather than <code>paired = FALSE</code>, you must specify <code>method = &quot;unequal&quot;</code> which indicates that we conducted a Welch test (see the help documentation for more information).</p>
+<p>Before we interpret and write-up the results our last task is to calculate the effect size which for a t-test is Cohen’s D. To do this, we will use the function <code>cohensD()</code> from the <code>lsr</code> package. The code is very simple, it is very similar to the syntax for <code>t.test()</code>. The only difference is rather than <code>paired = FALSE</code>, you must specify <code>method = "unequal"</code> which indicates that we conducted a Welch test (see the help documentation for more information).</p>
 <ul>
 <li>Run the below code and then calculate the effect sizes for hire and impression</li>
 </ul>
@@ -1238,7 +1239,7 @@ Finally, they also reported being more likely to hire the candidates when they l
 <p>Parents often sing to their children and, even as infants, children listen to and look at their parents while they are singing. Research by Mehr, Song, and Spelke (2016) sought to explore the psychological function that music has for parents and infants, by examining the hypothesis that particular melodies convey
 important social information to infants. Specifically, melodies convey information about social affiliation.</p>
 <p>The authors argue that melodies are shared within social groups. Whereas children growing up in one culture may be exposed to certain songs as infants (e.g., “Rock-a-bye Baby”), children growing up in other cultures (or even other groups within a culture) may be exposed to different songs. Thus, when a novel person (someone who the infant has never seen before) sings a familiar song, it may signal to the infant that this new person is a member of their social group.</p>
-<p>To test this hypothesis, the researchers recruited 32 infants and their parents to complete an experiment. During their first visit to the lab, the parents were taught a new lullaby (one that neither they nor their infants had heard before). The experimenters asked the parents to sing the new lullaby to their child every day for the next 1-2 weeks. Following this 1-2 week exposure period, the parents and their infant returned to the lab to complete the experimental portion of the study. Infants were first shown a screen with side-by-side videos of two unfamiliar people, each of whom were silently smiling and looking at the infant. The researchers recorded the looking behavior (or gaze) of the infants during this ‘baseline’ phase. Next, one by one, the two unfamiliar people on the screen sang either the lullaby that the parents learned or a different lullaby (that had the same lyrics and rhythm, but a different melody). Finally, the infants saw the same silent video used at baseline, and the researchers again recorded the looking behavior of the infants during this ‘test’ phase. For more details on the experiment’s methods, please refer to Mehr et al. (2016) Experiment 1.</p>
+<p>To test this hypothesis, the researchers recruited 32 infants and their parents to complete an experiment. During their first visit to the lab, the parents were taught a new lullaby (one that neither they nor their infants had heard before). The experimenters asked the parents to sing the new lullaby to their child every day for the next 1-2 weeks. Following this 1-2 week exposure period, the parents and their infant returned to the lab to complete the experimental portion of the study. Infants were first shown a screen with side-by-side videos of two unfamiliar people, each of whom were silently smiling and looking at the infant. The researchers recorded the looking behavior (or gaze) of the infants during this ‘baseline’ phase. Next, one by one, the two unfamiliar people on the screen sang either the lullaby that the parents learned or a different lullaby (that had the same lyrics and rhythm, but a different melody). Finally, the infants saw the same silent video used at baseline, and the researchers again recorded the looking behavior of the infants during this ‘test’ phase. For more details on the experiment’s methods, please refer to Mehr et al. (2016) Experiment 1.</p>
 <ul>
 <li>First, download <code>Mehr Song and Spelke 2016 Experiment 1.csv</code> from Moodle and run below code to load and wrangle the data into the format we need - this code selects only the data we need for the analysis and renames variables to make them easier to work with.</li>
 </ul>

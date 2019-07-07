@@ -66,7 +66,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -112,8 +112,8 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="include/psyteachr.css" type="text/css" />
-<link rel="stylesheet" href="include/style.css" type="text/css" />
+<link rel="stylesheet" href="include\psyteachr.css" type="text/css" />
+<link rel="stylesheet" href="include\style.css" type="text/css" />
 </head>
 
 <body>
@@ -131,7 +131,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Overview</a><ul>
 <li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#how-to-use-this-book"><i class="fa fa-check"></i><b>0.1</b> How to use this book</a></li>
-<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#intended-learning-outcomes"><i class="fa fa-check"></i><b>0.2</b> Intended Learning Outcomes</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#data-files"><i class="fa fa-check"></i><b>0.2</b> Data files</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#intended-learning-outcomes"><i class="fa fa-check"></i><b>0.3</b> Intended Learning Outcomes</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="programming-basics.html"><a href="programming-basics.html"><i class="fa fa-check"></i><b>1</b> Programming Basics</a><ul>
 <li class="chapter" data-level="1.1" data-path="programming-basics.html"><a href="programming-basics.html#r-and-r-studio"><i class="fa fa-check"></i><b>1.1</b> R and R Studio</a><ul>
@@ -539,7 +540,7 @@ This layout can be easy to read, howver, it makes programming quite difficult. W
 <p>Now you need to load in the <code>.csv</code> datafiles using the <code>read_csv()</code> function and save them as variables in the environment. For example, to load in the <code>responses</code> file we would type:</p>
 <pre class="sourceCode r"><code class="sourceCode r">responses &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;responses.csv&quot;</span>) </code></pre>
 <ul>
-<li>Add the following lines of code to your Markdown and complete them to load in all four <code>.csv</code> datafiles. Use the above code as an example and name each variable the same as its original filename (minus the .csv part), again as above, e.g. <code>responses.csv</code> gets saved as <code>responses</code>. Remember to run the lines so that the data loaded in and is stored in your environment.</li>
+<li>Add the following lines of code to your Markdown and complete them to load in all four <code>.csv</code> datafiles. Use the above code as an example and name each variable the same as its original filename (minus the .csv part), again as above, e.g. <code>responses.csv</code> gets saved as <code>responses</code>. Remember to run the lines so that the data loaded in and is stored in your environment.</li>
 </ul>
 <pre class="sourceCode r"><code class="sourceCode r">responses &lt;-<span class="st">  </span><span class="kw">read_csv</span>()    <span class="co"># survey responses</span>
 qformats &lt;-<span class="st">                 </span><span class="co"># question formats</span>
@@ -569,7 +570,7 @@ Explain this answer
                 <span class="dt">key =</span> Question, <span class="co"># the name of the variable that will store what is currently the names of each column (question numbers)</span>
                 <span class="dt">value =</span> Response, <span class="co"># the name of the new column that will store the values (data points)</span>
                 Q1<span class="op">:</span>Q10) <span class="co"># the columns we want to gather together</span></code></pre>
-<p>In case you are wondering if we wanted to go back the way, and ungather the data we just gathered, we would use the <code>spread()</code> function: e.g. <code>rwide &lt;- spread(rlong, Questions, Response)</code>. But we do not want to do that here so let’s not add this to the code.</p>
+<p>In case you are wondering if we wanted to go back the way, and ungather the data we just gathered, we would use the <code>spread()</code> function: e.g. <code>rwide &lt;- spread(rlong, Questions, Response)</code>. But we do not want to do that here so let’s not add this to the code.</p>
 <div class="warning">
 <p>
 In the code above we have used the notation <code>Q1:Q10</code>. This means ’select all the columns from Q1 to Q10. We could have written out the name of each column individually, for example <code>Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10</code> but obviously it is much easier to use the shorthand notation. You must be careful though to know what you are selecting. R isn’t clever enough to realise that what you want is all the Question columns - it would take any and all columns that exist between Q1 and Q10. This means that if your dataset is out of order you may end up selecting columns you didn’t mean to. Always look at your data and make sure you know the layout.
@@ -641,8 +642,8 @@ Helpful Hint
 </button>
 <p>At any point where the first argument of your function is the name of a variable created before that line, there is a good chance you could have used a pipe! Here are all the bits of this code that could be piped together into one chain:</p>
 <p><code>rlong &lt;- gather(responses, Question, Response, Q1:Q10)</code></p>
-<p><code>rlong2 &lt;- inner_join(rlong, qformats, &quot;Question&quot;)</code></p>
-<p><code>rscores &lt;- inner_join(rlong2, scoring, c(&quot;QFormat&quot;, &quot;Response&quot;))</code></p>
+<p><code>rlong2 &lt;- inner_join(rlong, qformats, "Question")</code></p>
+<p><code>rscores &lt;- inner_join(rlong2, scoring, c("QFormat", "Response"))</code></p>
 <p><code>aq_scores &lt;- rscores %&gt;% group_by(Id) %&gt;% summarise(AQ = sum(Score))</code></p>
 </div>
 <p><br></p>
@@ -914,7 +915,7 @@ How many participants in the rta condition donated? <input class='solveme nospac
 <div class="figure" style="text-align: center"><span id="fig:img-layers"></span>
 <img src="images/layers.png" alt="ggplot2 layers from Field et al. (2012)" width="100%" />
 <p class="caption">
-Figure 4.1: ggplot2 layers from Field et al. (2012)
+Figure 4.1: ggplot2 layers from Field et al. (2012)
 </p>
 </div>
 </div>
@@ -932,7 +933,7 @@ Figure 4.1: ggplot2 layers from Field et al. (2012)
 </li>
 <li>The next layer adds a <strong>geom</strong> or a shape, in this case we use <code>geom_bar()</code> as we want to draw a bar plot.<br />
 </li>
-<li><code>position = &quot;dodge&quot;</code> places the bars next to each other, rather than on top of each other. Try removing this argument and just running the code with <code>geom_bar()</code> to see what happens.</li>
+<li><code>position = "dodge"</code> places the bars next to each other, rather than on top of each other. Try removing this argument and just running the code with <code>geom_bar()</code> to see what happens.</li>
 </ul>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> intent_recode, <span class="kw">aes</span>(<span class="dt">x =</span> condition, <span class="dt">fill =</span> actualdonate)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>)</code></pre>
@@ -985,7 +986,7 @@ results</code></pre>
 ## 
 ## data:  intent_recode$condition and intent_recode$actualdonate
 ## X-squared = 8.244, df = 1, p-value = 0.004089</code></pre>
-<p>This code looks a little different to code you’ve used up until this point as it comes from Base R. The x and y variables use the notation <code>object$variable</code> so our x variable could be read as &quot;use the variable <code>condition</code> from the object <code>intent_recode</code>. The reason that we chose not to apply the continuity correction is because this is what the analysis in the original paper did.</p>
+<p>This code looks a little different to code you’ve used up until this point as it comes from Base R. The x and y variables use the notation <code>object$variable</code> so our x variable could be read as "use the variable <code>condition</code> from the object <code>intent_recode</code>. The reason that we chose not to apply the continuity correction is because this is what the analysis in the original paper did.</p>
 <ol style="list-style-type: decimal">
 <li>What is the chi-square statistic? <input class='solveme nospaces' size='5' data-answer='["8.244"]'/></li>
 <li>Is the p-value significant? <select class='solveme' data-answer='["Yes"]'> <option></option> <option>Yes</option> <option>No</option></select><br />
@@ -1135,7 +1136,7 @@ Activity 9
 <h3><span class="header-section-number">4.2.17</span> Test yourself</h3>
 <p>** This question is currently borked</p>
 <ol style="list-style-type: decimal">
-<li>You have a dataset where gender has been coded numerically. You want to recode this to use text labels. Which code will work? <select class='solveme' data-answer='["mutate(gender = recode(gender, \"1\" = \"male\", \"2\" = \"female\", \"3\" = \"nonbinary\"))"]'> <option></option> <option>mutate(gender = recode(gender, “male” = “1”, “female” = “2”, “nonbinary” = “3”))</option> <option>mutate(gender = recode(gender, male = 1, “female = 2, nonbinary = 3))</option> <option>mutate(gender = recode(gender,”1&quot; = “male”, “2” = “female”, “3” = “nonbinary”))</option></select></li>
+<li>You have a dataset where gender has been coded numerically. You want to recode this to use text labels. Which code will work? <select class='solveme' data-answer='["mutate(gender = recode(gender, \"1\" = \"male\", \"2\" = \"female\", \"3\" = \"nonbinary\"))"]'> <option></option> <option>mutate(gender = recode(gender, “male” = “1”, “female” = “2”, “nonbinary” = “3”))</option> <option>mutate(gender = recode(gender, male = 1, “female = 2, nonbinary = 3))</option> <option>mutate(gender = recode(gender,”1" = “male”, “2” = “female”, “3” = “nonbinary”))</option></select></li>
 </ol>
 <div class="solution">
 <button>

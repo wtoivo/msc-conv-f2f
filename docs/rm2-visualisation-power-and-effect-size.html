@@ -66,7 +66,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -112,8 +112,8 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="include/psyteachr.css" type="text/css" />
-<link rel="stylesheet" href="include/style.css" type="text/css" />
+<link rel="stylesheet" href="include\psyteachr.css" type="text/css" />
+<link rel="stylesheet" href="include\style.css" type="text/css" />
 </head>
 
 <body>
@@ -131,7 +131,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Overview</a><ul>
 <li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#how-to-use-this-book"><i class="fa fa-check"></i><b>0.1</b> How to use this book</a></li>
-<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#intended-learning-outcomes"><i class="fa fa-check"></i><b>0.2</b> Intended Learning Outcomes</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#data-files"><i class="fa fa-check"></i><b>0.2</b> Data files</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#intended-learning-outcomes"><i class="fa fa-check"></i><b>0.3</b> Intended Learning Outcomes</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="programming-basics.html"><a href="programming-basics.html"><i class="fa fa-check"></i><b>1</b> Programming Basics</a><ul>
 <li class="chapter" data-level="1.1" data-path="programming-basics.html"><a href="programming-basics.html#r-and-r-studio"><i class="fa fa-check"></i><b>1.1</b> R and R Studio</a><ul>
@@ -1235,7 +1236,7 @@ Helpful hint
 <li><strong>sig.level</strong> - Significance level (Type I error probability) or <span class="math inline">\(\alpha\)</span></li>
 <li><strong>power</strong> - Power of test (1 minus Type II error probability) or <span class="math inline">\(1-\beta\)</span></li>
 <li><strong>type</strong> - Type of t test : <code>one.sample</code>, <code>two.sample</code>, or <code>paired</code></li>
-<li><strong>alternative</strong> - the type of hypothesis; <code>&quot;two.sided&quot;, &quot;greater&quot;, &quot;less&quot;</code></li>
+<li><strong>alternative</strong> - the type of hypothesis; <code>"two.sided", "greater", "less"</code></li>
 </ul>
 <p>The function works on a leave one out principle. You give it all the information you have and it returns the element you are missing. So, for example, say you needed to know how many people per group (n) you would need to detect an effect size of <code>d = .4</code> with <code>power = .8</code>, <code>alpha = .05</code> in a <code>two.sample (between-subjects) t-test</code> on a <code>two.sided</code> hypothesis test.</p>
 <ul>
@@ -1360,8 +1361,8 @@ Helpful hint
 <h4><span class="header-section-number">7.2.13.1</span> Finished!</h4>
 <p><strong>Great!</strong> Hopefully you are now starting to see the interaction between alpha, power, effect sizes, and sample size. We should always want really high powered studies and depending on the size of the effect we are interested in (small to large), and our <span class="math inline">\(\alpha\)</span> level, this will mean we will need to run more or less participants to make sure our study is well powered. Points to note:</p>
 <ul>
-<li>Lowering the <span class="math inline">\(\alpha\)</span> level (e.g. .05 to .01) will reduce the power.</li>
-<li>Lowering the effect size (e.g. .8 to .2) will reduce the power.</li>
+<li>Lowering the <span class="math inline">\(\alpha\)</span> level (e.g. .05 to .01) will reduce the power.</li>
+<li>Lowering the effect size (e.g. .8 to .2) will reduce the power.</li>
 <li>Increasing power (.8 to .9) will require more participants.</li>
 </ul>
 <p>A high-powered study looking to detect a small effect size at a low alpha will require a large number of participants!</p>
