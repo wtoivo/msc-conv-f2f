@@ -9,22 +9,22 @@ In this chapter we will go over some basic programming concepts and terminology,
 
 We don't expect you to memorise the information that is contained in this chapter and some sections of it will make more sense when you start writing your own code in Lab 1 - just make sure you know what help is available!
 
-## R and RStudio
+## R and R Studio
 
-For this course, you need two different bits of software, [R]() and [RStudio](). R is a programming language that you will write code in and RStudio is an Integrated Development Environment (IDE) which makes working with R easier. Think of it as knowing English and using a plain text editor like NotePad to write a book versus using a word processor like Microsoft Word. You could do it, but it wouldn't look as good and it would be much harder without things like spell-checking and formatting. In a similar way, you can use R without RStudio but we wouldn't reccommend it. The key thing to remember is that although you will do all of your work using RStudio for this course, you are actually using two pieces of software which means that from time-to-time, both of them may have separate updates.
+For this course, you need two different bits of software, [R]() and [RStudio](). R is a programming language that you will write code in and R Studio is an Integrated Development Environment (IDE) which makes working with R easier. Think of it as knowing English and using a plain text editor like NotePad to write a book versus using a word processor like Microsoft Word. You could do it, but it wouldn't look as good and it would be much harder without things like spell-checking and formatting. In a similar way, you can use R without R Studio but we wouldn't recommend it. The key thing to remember is that although you will do all of your work using R Studio for this course, you are actually using two pieces of software which means that from time-to-time, both of them may have separate updates.
 
-All of the University of Glasgow computers should already have R and RStudio installed, however, both are freely available so you may wish to install them on your own machine.
+All of the University of Glasgow computers should already have R and R Studio installed, however, both are freely available so you may wish to install them on your own machine.
 
-### Getting to know RStudio
+### Getting to know R Studio
 
-RStudio has a console that you can try out code in (appearing as the bottom left window in Figure \@ref(fig:img-rstudio)), there is a script editor (top left), a window showing functions and objects you have created in the “Environment” tab (top right window in the figure), and a window that shows plots, files packages, and help documentation (bottom right).
+R Studio has a console that you can try out code in (appearing as the bottom left window in Figure \@ref(fig:img-rstudio)), there is a script editor (top left), a window showing functions and objects you have created in the “Environment” tab (top right window in the figure), and a window that shows plots, files packages, and help documentation (bottom right).
 
 <div class="figure" style="text-align: center">
 <img src="images/rstudio.png" alt="RStudio interface" width="100%" />
 <p class="caption">(\#fig:img-rstudio)RStudio interface</p>
 </div>
 
-You will learn more about how to use the features included in RStudio throughout this course, however, we highly reccommend watching [RStudio Essentials 1](https://www.rstudio.com/resources/webinars/rstudio-essentials-webinar-series-part-1/) from the RStudio team. The video lasts ~30 minutes and gives a tour of the main parts of RStudio. 
+You will learn more about how to use the features included in R Studio throughout this course, however, we highly recommend watching [RStudio Essentials 1](https://www.rstudio.com/resources/webinars/rstudio-essentials-webinar-series-part-1/) from the R Studio team. The video lasts ~30 minutes and gives a tour of the main parts of R Studio. 
 
 ## Functions and arguments
 
@@ -32,7 +32,7 @@ You will learn more about how to use the features included in RStudio throughout
 
 As an example, let’s look at the help documentation for the function `rnorm()` which randomly generates a set of numbers with a normal distribution. 
 
-Open up RStudio and in the console, type the following code:
+Open up R Studio and in the console, type the following code:
 
 
 ```r
@@ -103,7 +103,7 @@ In this course, we will always write out the argument names the first time we us
 
 ### Tab auto-complete
 
-One very useful feature of RStudio is the tab auto-complete for functions (see Figure \@ref(fig:img-autocomplete). If you write the name of the function and then press the tab key, RStudio will show you the arguments that function takes along with a brief description. If you press enter on the argument name it will fill in the name for you, just like auto-complete on your phone. This is incredibly useful when you are first learning R and you should remember to use this feature frequently. 
+One very useful feature of R Studio is the tab auto-complete for functions (see Figure \@ref(fig:img-autocomplete). If you write the name of the function and then press the tab key, R Studio will show you the arguments that function takes along with a brief description. If you press enter on the argument name it will fill in the name for you, just like auto-complete on your phone. This is incredibly useful when you are first learning R and you should remember to use this feature frequently. 
 
 <div class="figure" style="text-align: center">
 <img src="images/autocomplete.png" alt="Tab auto-complete" width="100%" />
@@ -142,7 +142,7 @@ Now that we've loaded the `tidyverse` package we can use any of the functions it
 
 ### Package updates
 
-In addition to updates to R and RStudio, the creators of packages also sometimes update their code. This can be to add functions to a package, or it can be to fix errors. One thing to avoid is unintentionally updating an installed package. When you run `install.packages()` it will always install the latest version of the package and it will overwrite any older versions you may have installed. Sometimes this isn't a problem, however, sometimes you will find that the update means your code no longer works as the package has changed substantially. It is possible to revert back to an older version of a package but try to avoid this anyway.
+In addition to updates to R and R Studio, the creators of packages also sometimes update their code. This can be to add functions to a package, or it can be to fix errors. One thing to avoid is unintentionally updating an installed package. When you run `install.packages()` it will always install the latest version of the package and it will overwrite any older versions you may have installed. Sometimes this isn't a problem, however, sometimes you will find that the update means your code no longer works as the package has changed substantially. It is possible to revert back to an older version of a package but try to avoid this anyway.
 
 <div class="danger">
 <p>To avoid accidentally overwriting a package with a later version, you should <strong>never</strong> include <code>install.packages()</code> in your analysis scripts in case you, or someone else runs the code by mistake. Remember, the University of Glasgow computers will already have all of the packages you need for this course so you only need to install packages if you are using your own machine.</p>
@@ -212,7 +212,7 @@ mean(data)
 
 ```
 ## [1] 43
-## Time difference of 192 days
+## Time difference of 180 days
 ## [1] 17.66644
 ```
 

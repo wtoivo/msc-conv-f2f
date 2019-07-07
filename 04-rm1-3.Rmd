@@ -1,5 +1,4 @@
 
-
 ```{r code, echo=FALSE, warning=FALSE, message=FALSE}
 library(tidyverse)
 library(lsr)
@@ -10,8 +9,7 @@ intent_recode <- intent_data %>%
          actualdonate = recode(actualdonate, "1" = "donated", "0" = "no_donation"))
 ```
 
-
-# RM1: Lab 3
+# RM1 Lab 3: Data Wrangling & Chi-Square
 
 ## Pre-lab activities
 
@@ -34,9 +32,9 @@ In terms of remembering all the functions, the truth is you don't have to know t
 ```
 `r unhide()`
 
-### Tidy Data 
+### Tidy data 
 
-We will use the most efficient format/layout of data which is known as **Tidy Data**. Any data in this format is easily processed through the `tidyverse` package. However, the data you work with will not always be formatted this way. If that happens then our first step is to put it into Tidy Data format. There are three fundamental rules defining Tidy Data:
+We will use the most efficient format/layout of data which is known as **tidy data**. Any data in this format is easily processed through the `tidyverse` package. However, the data you work with will not always be formatted this way. If that happens then our first step is to put it into tidy data format. There are three fundamental rules defining Tidy Data:
 
 1. Each variable must have its own column.
 2. Each observation must have its own row.
@@ -104,14 +102,14 @@ Now that we have the data loaded in it is always best to have a look at the data
 
 * Have a look at the data in `responses` to see if you think it is Tidy or not and answer the following question: The data in `responses` is in `r mcq(c("Tidy", answer = "Wide"))` format
 
-`r hide("Explain This Answer")`
+`r hide("Explain this answer")`
 ```{r, echo = FALSE, results='asis'}
 cat("The `responses` tibble is far from being tidy; each row represents multiple observations from the same participant, i.e. each row shows responses to multiple questions and there are the same number of rows as there are particpants (66) - `wide format`. Remember we want the data in tidy format as described above.
     ")
 ```
 `r unhide()`  
 
-### Activity 4: Gathering Data.
+### Activity 4: Gathering data.
 
 We now have all the data we need loaded in, but in order to make it easier for us to get the AQ score for each participant, we need to change the layout of the `responses` tibble to Tidy Data using the `gather()` function. 
 
@@ -169,7 +167,7 @@ Now you need to combine the information in our new table, `rlong2`, with the `sc
 rscores <- inner_join(rlong2, scoring, c("QFormat", "Response"))
 ```
 
-### Activity 7: Calculating the AQ Scores.
+### Activity 7: Calculating the AQ scores.
 
 You have now created `rscores` which has information on how each participant responded to each question and how each question should be coded and scored, all within the one tibble. All you need now is to sum the scores for each participant to get their AQ score. 
 
@@ -192,7 +190,7 @@ If we summed up the value for each Score we might get a full AQ Score for each p
 `r unhide()`  
 
 
-### Activity 8: One aast thing on pipes
+### Activity 8: One last thing on pipes
 
 You now have a complete code to load in your data, convert it to Tidy, combine the tables and calculate an AQ score for each participant. But, if you look at it, some of your code could be more efficient by using pipes. 
 
@@ -219,7 +217,7 @@ You have now recapped one-table and two-table verbs. These are great to know as 
 
 If you have any questions, please post them on the slack forum.
 
-### Activity solutions {.tabset .tabset-pills .tabset-fade}
+### Activity solutions
 
 Below you will find the solutions to the above questions. Only look at them after giving the questions a good try and trying to find help on Google or Slack about any issues.
 
@@ -294,7 +292,7 @@ cat("sandwich <- gather(data = responses, key = Jam, values = Strawberry, Q1:Q3)
 
 * The cut-off for the AQ10 is usually said to be around 6 meaning that anyone with a score of more than 6 should be referred for diagnostic assessment. Type in how many participants we should refer from our sample: `r fitb(6, width = 10, ignore_ws = TRUE)`  
 
-`r hide("Explain this - I dont get these answers")`
+`r hide("Explain these answers")`
 ```{r, echo = FALSE, results='asis'}
 cat("1. From the link above you can see that an appropriate citation for the AQ10 would be (Allison, Auyeung, and Baron-Cohen, (2012))
 
@@ -395,7 +393,7 @@ intent_recode <- intent_data %>%
          actualdonate = recode(actualdonate, "1" = "donated", "0" = "no_donation"))
 
 head(intent_recode)%>%
-  knitr::kable(align = 'c')  
+  knitr::kable(align = 'c', digits = 2)  
 
 ```
 
@@ -428,7 +426,7 @@ intent_percent <- intent_recode %>%
 ```
 
 ```{r percent_table, echo = FALSE}
-intent_percent %>% knitr::kable(digits = 2)
+intent_percent %>% knitr::kable(digits = 2, align = "c")
 ```
 
 ### `ggplot2()`
@@ -541,7 +539,7 @@ results$observed
 
 ```{r expected2, echo = FALSE}
 results$observed %>% 
-  knitr::kable(align = 'c')  
+  knitr::kable(align = 'c', digits = 2)  
 ```
 
 ### Assumption checks
@@ -579,7 +577,7 @@ eff_size <- cramersV(x = intent_recode$condition, y = intent_recode$actualdonate
 eff_size
 ```
 
-### Activity 11: Writing up
+### Activity 11: Write-up
 
 Now that you've run all of the analyses you can use inline coding to help you write up your results. This isn't something you're going to be tested on in this course but it's a really cool feature of Markdown so for each statistical test we'll show you the code that does it so that you can use it in the future if you wanted to. We're going to replicate the exact write-up of the results from the original paper (with the addition of the effect size). 
 
@@ -592,7 +590,7 @@ Those in the reminder-through-association condition performed the intended behav
 
 This will knit as:
 
-**Those in the reminder-through-association condition performed the intended behavior at a significantly higher rate (`r round(pluck(intent_percent$percent_condition, 3),0)`%, `r pluck(intent_percent$n, 3)` out of `r pluck(intent_percent$n, 3) + pluck(intent_percent$n, 4)`) than did those in the control condition (`r round(pluck(intent_percent$percent_condition, 1),0)`, `r pluck(intent_percent$n, 1)` out of `r pluck(intent_percent$n, 1) + pluck(intent_percent$n, 2)`)), χ2(`r results$parameter`, N = `r length(intent_recode$id)`) = `r round(results$statistic,2)`, p = `r round(results$p.value, 3)`,V = `r round(eff_size, 2)`.**
+> Those in the reminder-through-association condition performed the intended behavior at a significantly higher rate (`r round(pluck(intent_percent$percent_condition, 3),0)`%, `r pluck(intent_percent$n, 3)` out of `r pluck(intent_percent$n, 3) + pluck(intent_percent$n, 4)`) than did those in the control condition (`r round(pluck(intent_percent$percent_condition, 1),0)`, `r pluck(intent_percent$n, 1)` out of `r pluck(intent_percent$n, 1) + pluck(intent_percent$n, 2)`)), χ2(`r results$parameter`, N = `r length(intent_recode$id)`) = `r round(results$statistic,2)`, p = `r round(results$p.value, 3)`,V = `r round(eff_size, 2)`.
 
 If you're feeling comfortable with R at this point, push yourself to reverse-engineer what each bit of this inline code is doing so that you could use it yourself (remember the `?help` function).
 
@@ -654,7 +652,7 @@ results$expected
 
 1. You have a dataset where gender has been coded numerically. You want to recode this to use text labels. Which code will work? `r mcq(c("mutate(gender = recode(gender, \"male\" = \"1\", \"female\" = \"2\", \"nonbinary\" = \"3\"))", "mutate(gender = recode(gender, male = 1, \"female = 2, nonbinary = 3))", answer = "mutate(gender = recode(gender, \"1\" = \"male\", \"2\" = \"female\", \"3\" = \"nonbinary\"))"))`
 
-`r hide("Explain This Answer")`
+`r hide("Explain this answer")`
 ```{r, echo = FALSE, results='asis'}
 cat("The first option has the new and old codes in the wrong position, the second option is missing quotation marks, the third option is correct.
     ")
@@ -676,7 +674,7 @@ ggplot(data, aes(x = condition, fill = actualdonate)) +
   geom_bar()
 ```
 
-`r hide("Explain This Answer")`
+`r hide("Explain this answer")`
 ```{r, echo = FALSE, results='asis', eval = FALSE}
 cat("If you want the bars to be next to each other you would need to add `position = "dodge" to `geom_bar()`.
     ")
@@ -686,8 +684,4 @@ cat("If you want the bars to be next to each other you would need to add `positi
 <br>
 
 4. Which of the following is not an argument of `chisq.test()` (you may need to look at the help documention to answer this question)? `r mcq(c("x", "y", "p", answer = "continuity"))`
-
-
-  
-
   

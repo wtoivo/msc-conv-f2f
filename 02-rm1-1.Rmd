@@ -1,4 +1,4 @@
-# RM1: Lab 1
+# RM1 Lab 1: Intro to R
 
 ```{block, type="info"}
 This is the first lab in which students will be introduced to R. The key aims of this lab are a) to introduce R as a tool that will support their open science practices such as scripting and replicability and b) to reduce any anxiety about using R by starting out with small, stepped-out activities that produce a tangible output where success is visible. 
@@ -11,7 +11,6 @@ There are nine activities in total for this pre-lab, but don't worry, they are b
 ### Activity 1: Programming basics
 
 Please read Programming Basics and watch the two R videos available on Moodle.
-
 
 ### Activity 2: Create the working directory 
 
@@ -272,7 +271,7 @@ Run this code and then run `head(summarydata)`. If everything has gone to plan i
 ```{r, echo = FALSE, results='asis'}
 
 head(summarydata)%>%
-  knitr::kable(digits = 3)
+  knitr::kable(digits = 2, align = "c")
 
 ```
 
@@ -296,7 +295,7 @@ There is no portfolio assessment this week, instead, use the time to get comfort
 
 `r mcq(c(answer = "read_csv()", "read.csv()"))`
 
-`r hide("Explain This Answer")`
+`r hide("Explain this answer")`
 ```{r, echo = FALSE, results='asis'}
 cat("Remember, in this course we use `read_csv()` and it is important for the portfolio assignment that you use this function otherwise you may find that the variable names are slightly different and you won't get the marks")
 ```
