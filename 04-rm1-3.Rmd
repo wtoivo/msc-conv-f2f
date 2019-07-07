@@ -9,7 +9,7 @@ intent_recode <- intent_data %>%
          actualdonate = recode(actualdonate, "1" = "donated", "0" = "no_donation"))
 ```
 
-# RM1 Lab 3: Data Wrangling & Chi-Square
+# RM1 Data Wrangling & Chi-Square
 
 ## Pre-lab activities
 
@@ -71,7 +71,7 @@ There are four data files to work with that you should download from Moodle:
 
 ### Activity 1: Set-up
 
-Do the following. If you need help, consult Programming Basics and RM1: Lab 1.
+Do the following. If you need help, consult Chapter \@ref(ref2) and Chapter \@ref(ref3).
 
 * Open R Studio and set the working directory to your Lab 3 folder.  
 * Open a new R Markdown document and save it in your working directory. Call the file "Pre-class 3".    
@@ -109,7 +109,7 @@ cat("The `responses` tibble is far from being tidy; each row represents multiple
 ```
 `r unhide()`  
 
-### Activity 4: Gathering data.
+### Activity 4: Gathering data {#gather}
 
 We now have all the data we need loaded in, but in order to make it easier for us to get the AQ score for each participant, we need to change the layout of the `responses` tibble to Tidy Data using the `gather()` function. 
 
@@ -132,7 +132,7 @@ In the code above we have used the notation `Q1:Q10`. This means 'select all the
 
 * Look at the new dataset `rlong`. Compare it to the original dataset `responses` and try to understand how they relate to each other. 
 
-### Activity 5: Combining data
+### Activity 5: Combining data {#join}
 
 Now the `responses` data is in tidy format, you are closer to being able to calculate an AQ score for each person. However, you still need some extra information:
 
@@ -333,7 +333,7 @@ What we want to do is to run a chi-square analysis to determine whether those in
 
 ### Activity 1: Set-up
 
-Do the following. If you need help, consult Programming Basics and RM1: Lab 1.
+Do the following. If you need help, consult Chapter \@ref(ref2) and Chapter \@ref(ref3).
 
 * Open R Studio and set the working directory to your Lab 3 folder.  
 * Open a new R Markdown document and save it in your working directory. Call the file "In-class 3".    
@@ -441,7 +441,7 @@ knitr::include_graphics("images/layers.png")
 
 ```
 
-### Activity 5: Bar plot
+### Activity 5: Bar plot {#bar}
 
 We want to create a simple bar plot of our count data.  
 
@@ -566,7 +566,7 @@ We know that assumptions 1-5 have been met because we know the design of the stu
 
 Does the data meet assumption 6? `r mcq(c(answer = "Yes - all expected frequencies are > 5","No - one or more expected frequencies are < 5"))`
 
-### Activity 10: Effect size
+### Activity 10: Effect size {#cramer}
 
 Although it wasn't in the original paper, as our last step we will calculate an effect size so that we have a standardised measure of how large the association between our grouping variable is, the effect size measure for chi-square is Cramer's V that you covered in the lecture.
 

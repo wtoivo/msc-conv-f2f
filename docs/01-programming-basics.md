@@ -1,5 +1,5 @@
 
-# Programming Basics
+# Programming Basics {#ref3}
 
 <div class="info">
 <p>This chapter is intended to introduce key programming terminology to those students who may have had very little experience with coding, or indeed with computers. As a result of the diverse cohort, even basic practical steps are broken down and supported by screenshots. In my experience, for those with programming anxiety it is very difficult to overcome a bad start to learning R therefore extra effort is paid towards softening the learning curve in these initial labs and providing activities that have a tangible output so that the students can visualise their success.</p>

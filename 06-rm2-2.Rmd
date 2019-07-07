@@ -7,7 +7,7 @@ In this pre-lab we're going to focus on how to deal with missing data and to rei
 
 ### Activity 1: Set-up
 
-Do the following. If you need help, consult Programming Basics and RM1: Lab 1.
+Do the following. If you need help, consult Chapter \@ref(ref3) and Chapter \@(ref2).
 
 * Open R Studio and set the working directory to your RM2 Lab 2 folder.  
 * Open a new R Markdown document and save it in your working directory. Call the file "Pre-class 2".    
@@ -117,7 +117,7 @@ There are other options, for example, some researchers will replace missing valu
 
 ### Activity 4: Tidy data  
 
-For the rest of this pre-lab we're going to focus on tidy data. You already covered this in RM1 Lab 3 pre-lab when we introduced `gather()` but this is a very common task so it's worth repeating. 
+For the rest of this pre-lab we're going to focus on tidy data. You already covered this in Chapter \@ref(gather) when we introduced `gather()` but this is a very common task so it's worth repeating. 
 
 Remember the rules of tidy data:
 
@@ -141,7 +141,7 @@ cat("There are five variables. There are two demographic variables `id` and `gen
 `r unhide()`  
 <br>
 
-* Use `gather()` to tidy the `messy` data and save it as a new object named `tidy`. Refer back to RM1 Lab 3 pre-class if you need help with the code. Your tidy dataset should look like this:
+* Use `gather()` to tidy the `messy` data and save it as a new object named `tidy`. Refer back to Chapter \@ref(gather) if you need help with the code. Your tidy dataset should look like this:
 
 ```{r echo = FALSE}
 tidy <- gather(data = messy, key = test_time, value = score, pre:delay)
@@ -180,7 +180,7 @@ qdat_tidy <- qdat %>%
 
 Next, we want to add in the information in `scales`.
 
-* Join `qdat_tidy` and `scales` by "item" using `inner_join()`. If you need help with this, refer back to RM1 Lab 3 pre-class.
+* Join `qdat_tidy` and `scales` by "item" using `inner_join()`. If you need help with this, refer back to Chapter \@ref(join).
 
 ```{r echo = FALSE}
 qdat_tidy <- inner_join(x = qdat_tidy, y = scales, by = "item")
@@ -300,7 +300,7 @@ To summarise, 39 professional recruiters from Fortune 500 companies evaluated jo
 
 ### Activity 1: Set-up
 
-Your task is to reproduce the results from the article (p. 887). Do the following. If you need help, consult Programming Basics and RM1: Lab 1.
+Your task is to reproduce the results from the article (p. 887). Do the following. If you need help, consult Chapter \@ref(ref3) and Chapter \@(ref2).
 
 * Open R Studio and set the working directory to your RM2 Lab 2 folder.  
 * Open a new R Markdown document and save it in your working directory. Call the file "In-class 2".    
@@ -545,7 +545,7 @@ results_impression <-
 What do you do if the data don't meet the assumption of normality? There are a few options. 
 
 1. Transform your data to try and normalise the distribution. We won't cover this but if you'd like to know more, [this page](https://www.researchgate.net/profile/Jason_Osborne2/publication/200152356_Notes_on_the_Use_of_Data_Transformations/links/0deec5295f1eb10df8000000.pdf) is a good start.
-2. Use a non-parametric test. The non-parametric equivalent of the independent t-test is the Mann-Whitney and the equivalent of the paired-samples t-test  is the Wilcoxon. See the Supplementary Analyses chapter for more information.
+2. Use a non-parametric test. The non-parametric equivalent of the independent t-test is the Mann-Whitney and the equivalent of the paired-samples t-test  is the Wilcoxon. See the Chapter \@ref(supp) for more information.
 3. Do nothing. [Delacre, Lakens & Leys, 2017](https://www.rips-irsp.com/articles/10.5334/irsp.82/) argue that with a large enough sample (>30), the Welch test is robust and that using a two-step process actually causes more problems than it solves.
 ```
 

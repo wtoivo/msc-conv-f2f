@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 8 RM2 ANOVA | MSc Conversion in Psychological Studies/Science</title>
+  <title>Chapter 4 RM1 Data Wrangling &amp; Chi-Square | MSc Conversion in Psychological Studies/Science</title>
   <meta name="description" content="This is the materials for the one-year MSc Conversion in Psychological Studies/Science." />
   <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 8 RM2 ANOVA | MSc Conversion in Psychological Studies/Science" />
+  <meta property="og:title" content="Chapter 4 RM1 Data Wrangling &amp; Chi-Square | MSc Conversion in Psychological Studies/Science" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 8 RM2 ANOVA | MSc Conversion in Psychological Studies/Science" />
+  <meta name="twitter:title" content="Chapter 4 RM1 Data Wrangling &amp; Chi-Square | MSc Conversion in Psychological Studies/Science" />
   
   <meta name="twitter:description" content="This is the materials for the one-year MSc Conversion in Psychological Studies/Science." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="vis.html">
-<link rel="next" href="rm2-regression.html">
+<link rel="prev" href="rm1-data-wrangling.html">
+<link rel="next" href="rm2-r-markdown-correlations.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -459,615 +459,711 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="rm2-anova" class="section level1">
-<h1><span class="header-section-number">Chapter 8</span> RM2 ANOVA</h1>
-<div id="pre-class-activities-3" class="section level2">
-<h2><span class="header-section-number">8.1</span> Pre-class activities</h2>
-<div id="background-intrusive-memories" class="section level3">
-<h3><span class="header-section-number">8.1.1</span> Background: Intrusive memories</h3>
-<p>In the lecture we worked through the calculations for calculating an ANOVA by hand in order to gain a conceptual understanding. However, when you run an ANOVA, typically the computer does all of these calculations for you. In this lab we’ll show you how to run a one-factor and factorial ANOVA using the <code>afex</code> package and post-hoc tests using a package called <code>emmeans</code>.</p>
-<p>In this example we will be using data from experiment 2 of <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4526368/">James, E. L., Bonsall, M. B., Hoppitt, L., Tunbridge, E. M., Geddes, J. R., Milton, A. L., &amp; Holmes, E. A. (2015). Computer game play reduces intrusive memories of experimental trauma via reconsolidation-update mechanisms. Psychological Science, 26, 1201-1215</a>.</p>
-<p>The abstract for the paper is as follows:</p>
-<blockquote>
-<p>Memory of a traumatic event becomes consolidated within hours. Intrusive memories can then flash back repeatedly into the mind’s eye and cause distress. We investigated whether reconsolidation - the process during which memories become malleable when recalled - can be blocked using a cognitive task and whether such an approach can reduce these unbidden intrusions. We predicted that reconsolidation of a reactivated visual memory of experimental trauma could be disrupted by engaging in a visuospatial task that would compete for visual working memory resources. We showed that intrusive memories were virtually abolished by playing the computer game Tetris following a memory-reactivation task 24 hr after initial exposure to experimental trauma. Furthermore, both memory reactivation and playing Tetris were required to reduce subsequent intrusions (Experiment 2), consistent with reconsolidation-update mechanisms. A simple, noninvasive cognitive-task procedure administered after emotional memory has already consolidated (i.e., &gt; 24 hours after exposure to experimental trauma) may prevent the recurrence of intrusive memories of those emotional events.</p>
-</blockquote>
+<div id="rm1-data-wrangling-chi-square" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> RM1 Data Wrangling &amp; Chi-Square</h1>
+<div id="pre-lab-activities" class="section level2">
+<h2><span class="header-section-number">4.1</span> Pre-lab activities</h2>
+<div class="info">
+<p>
+This is the final lab of the first semester. In the pre-lab the focus is again on data wrangling skills and repetition of key functions they have covered in lab 1 and 2. The in-class introduces inferential analyses for the first time to coincide with their statistics lecture on chi-square. One of the key aims of this lab is to demonstrate that they have already done the difficult part of R - data wrangling - and that statistical analyses are frequently very easy to peform. We also introduce visualisations and <code>ggplot2</code> so that there is a tangible output to their coding.
+</p>
 </div>
-<div id="activity-1-set-up-10" class="section level3">
-<h3><span class="header-section-number">8.1.2</span> Activity 1: Set-up</h3>
-<p>Do the following. If you need help, consult Chapter <a href="ref3.html#ref3">1</a> and Chapter @(ref2).</p>
+<div id="data-wrangling-recap" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> Data wrangling recap</h3>
+<p>Last week we looked at using one-table Wickham verbs to <code>filter</code>, <code>arrange</code>, <code>group_by</code>, <code>select</code>, <code>mutate</code> and <code>summarise</code>. Now we will focus on working with data across two or more tables. The two main verbs we will practice adding to the Wickham six today are <code>gather()</code> and <code>inner_join()</code>and these will help you process your data for the mini-project.</p>
 <ul>
-<li>Open R Studio and set the working directory to your RM2 Lab 4 folder.<br />
+<li><code>gather()</code> allows us to <strong>transform</strong> a table from wide format to long format (more on this below).</li>
+<li><code>inner_join()</code> allows us to <strong>combine</strong> two tables together based on common columns.</li>
+</ul>
+<div class="try">
+<p>
+A function is a tool that takes an input, performs some action, and gives an output. They are nothing more than that. If you think about it your toaster is a function: it takes bread as an input; it perfoms the action of heating it up (nicely sometimes; on both sides would be a luxury); and it gives an output, the toast. A good thing about the Wickham six functions is that they are nicely named as verbs to describe what they do - <code>mutate()</code> mutates (adds on a column); <code>arrange()</code> arranges columns, <code>summarise()</code> summarises, etc.
+</p>
+<p>
+In terms of remembering all the functions, the truth is you don’t have to know them all. However, through practice and repetition, you will quickly learn to remember which ones are which and what package they come from. Sort of like where to find your spoons in your kitchen - you don’t look in the fridge, and then the washing machine, and then the drawer. Nope, you learnt, by repetition, to look in the drawer first time. It’s the same with functions. Keep in mind that research methods is like a language in that the more you use it and work with it the more it makes sense.
+</p>
+</div>
+</div>
+</div>
+<div id="tidy-data" class="section level3">
+<h3><span class="header-section-number">4.1.2</span> Tidy data</h3>
+<p>We will use the most efficient format/layout of data which is known as <strong>tidy data</strong>. Any data in this format is easily processed through the <code>tidyverse</code> package. However, the data you work with will not always be formatted this way. If that happens then our first step is to put it into tidy data format. There are three fundamental rules defining Tidy Data:</p>
+<ol style="list-style-type: decimal">
+<li>Each variable must have its own column.</li>
+<li>Each observation must have its own row.</li>
+<li>Each value must have its own cell (i.e. no grouping two variables together, e.g. time/date in one cell).
+<ol style="list-style-type: lower-roman">
+<li>A cell is where any specific row and column meet; a single data point in a tibble is a cell.</li>
+</ol></li>
+</ol>
+<div class="try">
+<p>
+If you’ve worked with any kind of data before, particularly if you’ve used Excel, it’s very likely that you will have used <strong>wide format</strong> data. In Wide format, each participant’s data is all in one row with multiple columns for different data points. This means that the data set tends to be very wide and you will have as many rows as you have participants.
+</p>
+<p>
+This layout can be easy to read, howver, it makes programming quite difficult. Whilst Tidy Data can be conceptually more difficult to understand at first, it means you can manipulate your data in whatever way you want very easily.
+</p>
+</div>
+</div>
+<div id="analysing-the-autism-specturm-quotient-aq" class="section level3">
+<h3><span class="header-section-number">4.1.3</span> Analysing the Autism Specturm Quotient (AQ)</h3>
+<p>To continue building your data wrangling skills in this pre-lab you will tidy data from the Autism Spectrum Quotient (AQ) questionnaire. The AQ10 is a non-diagnostic short form of the AQ with only 10 questions per participant. It is a discrete scale and the higher a participant scores on the AQ10 the more autistic-like traits they are said to display. Anyone scoring 7 or above is recommended for further diagnosis. You can see an example of the AQ10 through this link: <a href="http://docs.autismresearchcentre.com/tests/AQ10.pdf">AQ10 Example</a>.</p>
+<p>There are 66 participants and your goal in this pre-class activity is to find an AQ score for each of them through your data-wrangling skills.</p>
+<p>There are four data files to work with that you should download from Moodle:</p>
+<ul>
+<li><code>responses.csv</code> containing the AQ survey responses to each of the 10 questions for the 66 participants</li>
+<li><code>qformats.csv</code> containing information on how a question should be coded - i.e. forward or reverse coding</li>
+<li><code>scoring.csv</code> containing information on how many points a specific response should get; depending on whether it is forward or reverse coded</li>
+<li><code>pinfo.csv</code> containing participant information such as Age, Sex and importantly <code>ID</code> number.</li>
+</ul>
+<p><br></p>
+<div class="try">
+<p>
+<code>csv</code> stands for ‘comma separated variable’, and is a very basic way of transferring data. It really just stores numbers and text and nothing else. The great thing about being this basic is that it can be read by many different machines and does not need expensive licenses to open it.
+</p>
+</div>
+</div>
+<div id="activity-1-set-up-3" class="section level3">
+<h3><span class="header-section-number">4.1.4</span> Activity 1: Set-up</h3>
+<p>Do the following. If you need help, consult Chapter <a href="rm1-intro-to-r.html#ref2">2.1</a> and Chapter <a href="ref3.html#ref3">1</a>.</p>
+<ul>
+<li>Open R Studio and set the working directory to your Lab 3 folder.<br />
 </li>
-<li>Open a new R Markdown document and save it in your working directory. Call the file “Pre-class 4”.<br />
+<li>Open a new R Markdown document and save it in your working directory. Call the file “Pre-class 3”.<br />
 </li>
-<li>Download the <code>James Holmes_Expt 2_DATA.csv</code> file from Moodle and save it in your Lab 4 folder. Make sure that you do not change the file name at all.<br />
-</li>
-<li>Delete the default R Markdown welcome text and insert a new code chunk that loads <code>pwr</code>, <code>car</code>, <code>broom</code>, <code>ez</code>, <code>emmeans</code> and <code>tidyverse</code> using the <code>library()</code> function and loads the data into an object named <code>dat</code> using <code>read_csv()</code>. If you are working on your own machine you may need to install <code>afex</code> and <code>emmeans</code> but as always <strong>do not install packages on university machines</strong>.</li>
-<li>Add (hint: mutate) a column to <code>dat</code> called <code>subject</code>that equals <code>row_number()</code> to act as a participant ID which is currently missing from the data set.</li>
+<li>Download the four .csv files from Moodle and save them in your Lab 3 folder. Make sure that you do not change the file names at all.</li>
+<li>Delete the default R Markdown welcome text and insert a new code chunk that loads the package <code>tidyverse</code> using the <code>library()</code> function.</li>
 </ul>
 </div>
-<div id="activity-2-data-wrangling" class="section level3">
-<h3><span class="header-section-number">8.1.3</span> Activity 2: Data wrangling</h3>
-<p>There are a lot of columns in this data set that we don’t need for this analysis and the names of the variable are also long and difficult to work with.</p>
+<div id="activity-2-load-in-the-data" class="section level3">
+<h3><span class="header-section-number">4.1.5</span> Activity 2: Load in the data</h3>
+<p>Now you need to load in the <code>.csv</code> datafiles using the <code>read_csv()</code> function and save them as variables in the environment. For example, to load in the <code>responses</code> file we would type:</p>
+<pre class="sourceCode r"><code class="sourceCode r">responses &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;responses.csv&quot;</span>) </code></pre>
 <ul>
-<li>Create a new object called <code>dat2</code> that just has the three columns we need - use <code>select</code> to select the columns <code>subject</code>, <code>Condition</code>, and <code>Days_One_to_Seven_Image_Based_Intrusions_in_Intrusion_Diary</code></li>
-<li>Use <code>rename</code> to rename <code>Days_One_to_Seven_Image_Based_Intrusions_in_Intrusion_Diary</code> to <code>intrusions</code></li>
-<li>See if you can do this all in one pipeline</li>
+<li>Add the following lines of code to your Markdown and complete them to load in all four <code>.csv</code> datafiles. Use the above code as an example and name each variable the same as its original filename (minus the .csv part), again as above, e.g. <code>responses.csv</code> gets saved as <code>responses</code>. Remember to run the lines so that the data loaded in and is stored in your environment.</li>
 </ul>
+<pre class="sourceCode r"><code class="sourceCode r">responses &lt;-<span class="st">  </span><span class="kw">read_csv</span>()    <span class="co"># survey responses</span>
+qformats &lt;-<span class="st">                 </span><span class="co"># question formats</span>
+scoring &lt;-<span class="st">                  </span><span class="co"># scoring info</span>
+pinfo &lt;-<span class="st">                    </span><span class="co"># participant information</span></code></pre>
 </div>
-<div id="activity-3-numbers-and-factors" class="section level3">
-<h3><span class="header-section-number">8.1.4</span> Activity 3: Numbers and factors</h3>
-<p>In addition to the names of the variables being too long, the levels of <code>Condition</code> are named 1,2,3,4 which R will think is a number rather than a category. We’re going to overwrite the column <code>Condition</code> with a column that recodes these numbers as a factor. Copy and paste the code below into your Markdown and then run it.</p>
-<pre class="sourceCode r"><code class="sourceCode r">dat2 &lt;-<span class="st"> </span>dat2 <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Condition =</span> <span class="kw">as.factor</span>(Condition))</code></pre>
-<p><strong>This is a really important step</strong>. If you forget to recode variables as factors and R treats them as numbers, a lot of things won’t work. Trust us, we’ve spent a lot of time trying to figure out what was wrong because we forgot to do this step!</p>
-</div>
-<div id="activity-4-create-summary-statistics" class="section level3">
-<h3><span class="header-section-number">8.1.5</span> Activity 4: Create summary statistics</h3>
-<p>Next we want to calculate some descriptive statistics. We’re really interested in the scores from each experimental group rather than overall.<br />
-* Create an object called <code>sum_dat</code>that contains the mean, standard deviation and standard error for the number of intrusions grouped by <code>Condition</code><br />
-* Use the pipe to achieve this in one pipeline<br />
-* Your table should have four columns, <code>Condition</code>, <code>mean</code>, <code>sd</code>, and <code>se</code>.</p>
+<div id="activity-3-look-at-your-data" class="section level3">
+<h3><span class="header-section-number">4.1.6</span> Activity 3: Look at your data</h3>
+<p>Now that we have the data loaded in it is always best to have a look at the data to get an idea of its layout. We showed you ways of doing this before, but you can also use the <code>glimpse()</code> or <code>View()</code> functions in your Console window and put the name of the data between the brackets to see how it is arranged. Don’t add these to your script though they are just one-offs for testing.</p>
+<ul>
+<li>Have a look at the data in <code>responses</code> to see if you think it is Tidy or not and answer the following question: The data in <code>responses</code> is in <select class='solveme' data-answer='["Wide"]'> <option></option> <option>Tidy</option> <option>Wide</option></select> format</li>
+</ul>
 <div class="solution">
 <button>
-Hint
+Explain this answer
 </button>
-<pre><code>## 
-## * Use group_by(some_grouping_variable) %&gt;% summarise(...)
-## * standard error = sd/sqrt(n) =  sd/sqrt(length(some_variable_name)</code></pre>
+<p>The <code>responses</code> tibble is far from being tidy; each row represents multiple observations from the same participant, i.e. each row shows responses to multiple questions and there are the same number of rows as there are particpants (66) - <code>wide format</code>. Remember we want the data in tidy format as described above.</p>
 </div>
 </div>
-<div id="activity-5-visualisation" class="section level3">
-<h3><span class="header-section-number">8.1.6</span> Activity 5: Visualisation</h3>
-<p>Now we can visualise the data. In the original paper they use a bar plot, which we will reproduce later but for now let’s use a better plot that gives us more information about the data.</p>
+<div id="gather" class="section level3">
+<h3><span class="header-section-number">4.1.7</span> Activity 4: Gathering data</h3>
+<p>We now have all the data we need loaded in, but in order to make it easier for us to get the AQ score for each participant, we need to change the layout of the <code>responses</code> tibble to Tidy Data using the <code>gather()</code> function.</p>
 <ul>
-<li>Create the below violin-boxplot with number of intrusions on the y-axis and condition on the x-axis (see Chapter <a href="vis.html#viobox">7.1.8</a>)</li>
-<li>Change the labels on the x-axis to something more informative (hint: <code>scale_x_discrete(labels = c("label names")</code>)</li>
+<li>Copy the below code line to a new code chunk and run it.</li>
 </ul>
-<div class="figure" style="text-align: center">
-<img src="08-rm2-4_files/figure-html/violin%20plot-1.png" alt="Number of intrusions by condition" width="100%" />
-<p class="caption">
-(#fig:violin plot)Number of intrusions by condition
+<pre class="sourceCode r"><code class="sourceCode r">rlong &lt;-<span class="st"> </span><span class="kw">gather</span>(<span class="dt">data =</span> responses, <span class="co"># the dataset we want to work on</span>
+                <span class="dt">key =</span> Question, <span class="co"># the name of the variable that will store what is currently the names of each column (question numbers)</span>
+                <span class="dt">value =</span> Response, <span class="co"># the name of the new column that will store the values (data points)</span>
+                Q1<span class="op">:</span>Q10) <span class="co"># the columns we want to gather together</span></code></pre>
+<p>In case you are wondering if we wanted to go back the way, and ungather the data we just gathered, we would use the <code>spread()</code> function: e.g. <code>rwide &lt;- spread(rlong, Questions, Response)</code>. But we do not want to do that here so let’s not add this to the code.</p>
+<div class="warning">
+<p>
+In the code above we have used the notation <code>Q1:Q10</code>. This means ’select all the columns from Q1 to Q10. We could have written out the name of each column individually, for example <code>Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10</code> but obviously it is much easier to use the shorthand notation. You must be careful though to know what you are selecting. R isn’t clever enough to realise that what you want is all the Question columns - it would take any and all columns that exist between Q1 and Q10. This means that if your dataset is out of order you may end up selecting columns you didn’t mean to. Always look at your data and make sure you know the layout.
 </p>
 </div>
-<p>We can see from this plot that there are outliers in each of the groups. This information isn’t present in the bar plot, which is why it’s not a good idea to use them but we will reproduce it anyway.The below code shows your how to produce the bar plot that is presented in the paper. Try and figure out what each bit of code is doing in the plot and see what happens when you change the values for each argument.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(sum_dat, <span class="kw">aes</span>(<span class="dt">x =</span> Condition, <span class="dt">y =</span> mean, <span class="dt">fill =</span> Condition))<span class="op">+</span>
-<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> mean, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>, <span class="dt">show.legend =</span> <span class="ot">FALSE</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> mean <span class="op">-</span><span class="st"> </span>se, <span class="dt">ymax =</span> mean <span class="op">+</span><span class="st"> </span>se), <span class="dt">width =</span> <span class="fl">0.25</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">7</span>), 
-                     <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>), 
-                     <span class="dt">name =</span> <span class="st">&quot;Intrusive-Memory Frequency (Mean for the Week&quot;</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;No-task control&quot;</span>, <span class="st">&quot;Reactivation plus Tetris&quot;</span>, <span class="st">&quot;Tetris only&quot;</span>,
-                                <span class="st">&quot;Reactivation only&quot;</span>))</code></pre>
-<div class="figure" style="text-align: center">
-<img src="08-rm2-4_files/figure-html/bar%20plot-1.png" alt="Bar plot of instrusions by condition" width="100%" />
-<p class="caption">
-(#fig:bar plot)Bar plot of instrusions by condition
+<ul>
+<li>Look at the new dataset <code>rlong</code>. Compare it to the original dataset <code>responses</code> and try to understand how they relate to each other.</li>
+</ul>
+</div>
+<div id="join" class="section level3">
+<h3><span class="header-section-number">4.1.8</span> Activity 5: Combining data</h3>
+<p>Now the <code>responses</code> data is in tidy format, you are closer to being able to calculate an AQ score for each person. However, you still need some extra information:</p>
+<ul>
+<li>Is the question is reverse or forward scored (i.e., is strongly agree a positive or negative response)? This information is found in <code>qformats</code></li>
+<li>How many points are given to give a specific response? This informatio is found in <code>scoring</code>.</li>
+</ul>
+<p>This is a typical analysis situation where different information is in different tables and you need to join them altogether. Both these pieces of information are contained in <code>qformats</code> and <code>scoring</code> respectively, but we want to join them to <code>responses</code> to create one informative tidy table with all the information we need. We can do this through the function <code>inner_join()</code>; a function to combine information in two tibbles using a column common to both tibbles.</p>
+<ul>
+<li>Replace the <code>NULL</code> values in the below code with the necessary variable names to join <code>rlong1</code> and <code>qformats</code> by <code>Question</code>. If you need extra help, revisit Lab 1 In-class Activity 4 - you used the same function then! You can also check the solutions for the answer (but make sure you try yourself first).</li>
+</ul>
+<pre class="sourceCode r"><code class="sourceCode r">rlong2 &lt;-<span class="st"> </span><span class="kw">inner_join</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="ot">NULL</span>, <span class="dt">by =</span> <span class="st">&quot;NULL&quot;</span>)</code></pre>
+<ul>
+<li>Now view <code>rlong2</code>. You have matched each question with its scoring format, <code>forward</code> or <code>reverse</code>.</li>
+</ul>
+<div class="try">
+<p>
+A lot of questionnaires have some questions that are Forward scored and some questions that are Reverse scored. What does this mean? Imagine a situation where your options in replying to a question are: 1 - extremely agree, 2 - agree, 3 - neutral, 4 - disagree, 5 - extremely disagree. In a forward-scoring question you would get 1 point for extremely agree, 2 for agree, 3 for neutral, etc. In a reverse scoring question you would get 5 for extremely agree, 4 for agree, 3 for neutral, etc.
+</p>
+<p>
+The reasoning behind this shift is that sometimes agreeing or disagreeing might be more favourable depending on how the question is worded. Secondly, sometimes these questions are used just to catch people out - imagine if you had two similar questions where one has the reverse meaning of the other. In this scenario, people should respond opposites. If they respond the same then they might not be paying attention.
 </p>
 </div>
 </div>
-<div id="activity-6-one-way-anova" class="section level3">
-<h3><span class="header-section-number">8.1.7</span> Activity 6: One-way ANOVA</h3>
-<p>Now we can run the one-way ANOVA using <code>aov_ez</code> from the <code>afex</code> package and save it to the object <code>mod</code>. As well as running the ANOVA, the <code>aov_ez</code> function also conducts a Levene’s test for homogeneity of variance so that we can test our final assumption.</p>
-<p><code>aov_ez()</code> will likely produce some messages that look like errors, do not worry about these, they are just letting you know what it’s done.</p>
+<div id="activity-6-combining-more-data" class="section level3">
+<h3><span class="header-section-number">4.1.9</span> Activity 6: Combining more data</h3>
+<p>Now you need to combine the information in our new table, <code>rlong2</code>, with the <code>scoring</code> table so you know how many points to attribute each question based on the answer the participant gave, and whether the question was forward or reverse coded. Again, you can use the <code>inner_join()</code> function, but this time the common columns found in <code>rlong2</code> and <code>scoring</code> are <code>QFormat</code> and <code>Response</code>. To combine by two columns you just write them in sequence as shown below. **Note: when there is more than one common column between two tibbles you are joining, it is best to combine by all the columns to avoid repeat columns names in the new tibble.</p>
 <ul>
-<li>Copy and paste the below code to run and then view the results of the ANOVA using <code>anova()</code>.</li>
+<li>Copy the below line into a code chunk, run it, and then view the new object.</li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r">mod &lt;-<span class="st"> </span><span class="kw">aov_ez</span>(<span class="dt">id =</span> <span class="st">&quot;subject&quot;</span>, <span class="co"># the column containing the subject IDs</span>
-              <span class="dt">dv =</span> <span class="st">&quot;intrusions&quot;</span>, <span class="co"># the DV </span>
-              <span class="dt">between =</span> <span class="st">&quot;Condition&quot;</span>, <span class="co"># the between-subject variable</span>
-              <span class="dt">es =</span> <span class="st">&quot;pes&quot;</span>, <span class="co"># sets effect size to partial eta-squared</span>
-              <span class="dt">type =</span> <span class="dv">3</span>, <span class="co"># this affects how the sum of squares is calculated, set this to 3</span>
-              <span class="dt">data =</span> dat2)</code></pre>
-<pre><code>## Contrasts set to contr.sum for the following variables: Condition</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(mod)</code></pre>
-<p>Just like with the t-tests and correlations, we can use <code>tidy()</code> to make the output easier to work with.</p>
-<ul>
-<li>Run the below code to transform the output. Don’t worry about the warning message, it is just telling you it doesn’t know how to automatically rename the columns so it will keep the original names.</li>
-</ul>
-<pre class="sourceCode r"><code class="sourceCode r">mod_output &lt;-<span class="st"> </span><span class="kw">anova</span>(mod) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>()</code></pre>
-<pre><code>## Warning in tidy.anova(.): The following column names in ANOVA output were
-## not recognized or transformed: num.Df, den.Df, MSE, ges</code></pre>
-<ul>
-<li><code>term</code> = the IV<br />
-</li>
-<li><code>num.Df</code> = degrees of freedom effect</li>
-<li><code>den.Df</code> = degrees of freedom residuals</li>
-<li><code>MSE</code> = Mean-squared errors</li>
-<li><code>statistic</code> = F-statistic</li>
-<li><code>ges</code> = effect size<br />
-</li>
-<li><code>p.value</code> = p.value</li>
-</ul>
-<p>You should refer to the lecture for more information on what each variable means and how it is calculated.</p>
-<ul>
-<li>Is the overall effect of Condition significant? <select class='solveme' data-answer='["Yes"]'> <option></option> <option>Yes</option> <option>No</option></select></li>
-<li>What is the F-statistics to 2 decimal places? <input class='solveme nospaces' size='4' data-answer='["3.79"]'/></li>
-<li>According to the rules of thumb, the effect size is <select class='solveme' data-answer='["Large"]'> <option></option> <option>Small</option> <option>Medium</option> <option>Large</option></select></li>
-</ul>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># combine rows in rlong2 and scoring based on QFormat and Response</span>
+rscores &lt;-<span class="st"> </span><span class="kw">inner_join</span>(rlong2, scoring, <span class="kw">c</span>(<span class="st">&quot;QFormat&quot;</span>, <span class="st">&quot;Response&quot;</span>))</code></pre>
 </div>
-<div id="activity-7-assumption-checking" class="section level3">
-<h3><span class="header-section-number">8.1.8</span> Activity 7: Assumption checking</h3>
-<p>You may be wondering why we haven’t yet checked the assumptions. Well, unlike the t-tests and correlations, in order to test the assumptions we need to use the model we created with <code>aov_ez()</code>, so we couldn’t assess them all until this point. For a one-way independent ANOVA, the assumptions are the same as for a Student’s t-test:</p>
+<div id="activity-7-calculating-the-aq-scores." class="section level3">
+<h3><span class="header-section-number">4.1.10</span> Activity 7: Calculating the AQ scores.</h3>
+<p>You have now created <code>rscores</code> which has information on how each participant responded to each question and how each question should be coded and scored, all within the one tibble. All you need now is to sum the scores for each participant to get their AQ score.</p>
 <ol style="list-style-type: decimal">
-<li>The DV is interval or ratio data</li>
-<li>The observations should be independent</li>
-<li>The residuals should be normally distributed</li>
-<li>There should be homogeneity of variance between the groups</li>
+<li>Based on your knowledge from last week, copy the below line into your code and replace the NULLs to obtain individual <code>aq_scores</code> for each participant.<br />
+</li>
+<li>Save your Markdown and knit it to make sure all your code works.</li>
 </ol>
-<p>We know that 1 and 2 are met because of the design of our study. To test 3, as we have done before we can look at the QQ-plot of the residuals and test for normality with the Shapiro-Wilk test. The residuals have been stored as one of the components of <code>mod</code>. To access them we specify <code>mod$aov$residuals</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqPlot</span>(mod<span class="op">$</span>aov<span class="op">$</span>residuals)</code></pre>
-<div class="figure" style="text-align: center">
-<img src="08-rm2-4_files/figure-html/fig_qq-1.png" alt="qq-plot for model residuals" width="100%" />
-<p class="caption">
-(#fig:fig_qq)qq-plot for model residuals
-</p>
+<pre class="sourceCode r"><code class="sourceCode r">aq_scores &lt;-<span class="st"> </span>rscores <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">             </span><span class="kw">group_by</span>(<span class="ot">NULL</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># how will you group individual participants?</span>
+<span class="st">             </span><span class="kw">summarise</span>(<span class="dt">AQ =</span> <span class="kw">sum</span>(<span class="ot">NULL</span>)) <span class="co"># which column will you sum to obtain AQ scores?</span></code></pre>
+<div class="solution">
+<button>
+Helpful Hint
+</button>
+<p>Each participant could be grouped by their Id.</p>
+<p>If we summed up the value for each Score we might get a full AQ Score for each particpipant.</p>
 </div>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shapiro.test</span>(mod<span class="op">$</span>aov<span class="op">$</span>residuals)</code></pre>
-<pre><code>## [1] 11 60
-## 
-##  Shapiro-Wilk normality test
-## 
-## data:  mod$aov$residuals
-## W = 0.87739, p-value = 4.252e-06</code></pre>
-<p>There are a few things to note about the assumption test results. First, look at the p-value for the Shapiro-Wilk test - <code>4.252e-06</code>. Whenever you see the <code>e</code> at the end of a number it means that R is using <strong>scientific notation</strong>. Scientific notation is a way of writing very large or very small numbers. Because the number after the <code>e</code> is negative it means the number should be divided by 10 to the power of six. Put simply, move the decimal place six places to the left and you will get the standard number. When reporting p-values in your results section, you should not use scientific notation, instead you should round to 3 decimal places.</p>
+</div>
+<div id="activity-8-one-last-thing-on-pipes" class="section level3">
+<h3><span class="header-section-number">4.1.11</span> Activity 8: One last thing on pipes</h3>
+<p>You now have a complete code to load in your data, convert it to Tidy, combine the tables and calculate an AQ score for each participant. But, if you look at it, some of your code could be more efficient by using pipes.</p>
+<p>Go back through your code and try to rewrite it using pipes <code>%&gt;%</code> so that it is as efficient as possible.</p>
+<div class="solution">
+<button>
+Helpful Hint
+</button>
+<p>At any point where the first argument of your function is the name of a variable created before that line, there is a good chance you could have used a pipe! Here are all the bits of this code that could be piped together into one chain:</p>
+<p><code>rlong &lt;- gather(responses, Question, Response, Q1:Q10)</code></p>
+<p><code>rlong2 &lt;- inner_join(rlong, qformats, "Question")</code></p>
+<p><code>rscores &lt;- inner_join(rlong2, scoring, c("QFormat", "Response"))</code></p>
+<p><code>aq_scores &lt;- rscores %&gt;% group_by(Id) %&gt;% summarise(AQ = sum(Score))</code></p>
+</div>
+<p><br></p>
+<p>You have now recapped one-table and two-table verbs. These are great to know as for example, in the above, it actually only took a handful of reproducible steps to get from messy data to tidy data; could you imagine doing this by hand in Excel through cutting and pasting? Not to mention the mistakes you could make!</p>
+<p>If you have any questions, please post them on the slack forum.</p>
+</div>
+<div id="activity-solutions-1" class="section level3">
+<h3><span class="header-section-number">4.1.12</span> Activity solutions</h3>
+<p>Below you will find the solutions to the above questions. Only look at them after giving the questions a good try and trying to find help on Google or Slack about any issues.</p>
+<div id="activity-2" class="section level4">
+<h4><span class="header-section-number">4.1.12.1</span> Activity 2</h4>
+<div class="solution">
+<button>
+Activity 2
+</button>
+<pre class="sourceCode r"><code class="sourceCode r">responses &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;responses.csv&quot;</span>)                  
+qformats &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;qformats.csv&quot;</span>)                 
+scoring &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;scoring.csv&quot;</span>)                  
+pinfo &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;pinfo.csv&quot;</span>)</code></pre>
+</div>
+<p><strong>Click the tab to see the solution</strong></p>
+</div>
+<div id="activity-5-1" class="section level4">
+<h4><span class="header-section-number">4.1.12.2</span> Activity 5</h4>
+<div class="solution">
+<button>
+Solution Task 5
+</button>
+<pre class="sourceCode r"><code class="sourceCode r">rlong2 &lt;-<span class="st"> </span><span class="kw">inner_join</span>(<span class="dt">x =</span> rlong, <span class="dt">y =</span> qformats, <span class="dt">by =</span> <span class="st">&quot;Question&quot;</span>)</code></pre>
+</div>
+<p><strong>Click the tab to see the solution</strong></p>
+</div>
+<div id="activity-7-1" class="section level4">
+<h4><span class="header-section-number">4.1.12.3</span> Activity 7</h4>
+<div class="solution">
+<button>
+Solution Task 7
+</button>
+<pre class="sourceCode r"><code class="sourceCode r">aq_scores &lt;-<span class="st"> </span>rscores <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">             </span><span class="kw">group_by</span>(Id) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># group by the ID number in column Id</span>
+<span class="st">             </span><span class="kw">summarise</span>(<span class="dt">AQ =</span> <span class="kw">sum</span>(Score)) <span class="co"># sum column Score to obtain AQ scores.</span></code></pre>
+</div>
+<p><strong>Click the tab to see the solution</strong></p>
+</div>
+<div id="activity-8-1" class="section level4">
+<h4><span class="header-section-number">4.1.12.4</span> Activity 8</h4>
+<div class="solution">
+<button>
+Activity 8
+</button>
+<pre class="sourceCode r"><code class="sourceCode r">aq_scores2 &lt;-<span class="st"> </span>responses <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># take the data in `responses` and then</span>
+<span class="st">  </span><span class="kw">gather</span>(Question, Response, Q1<span class="op">:</span>Q10) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># gather up columns Q1 to Q10, put the column names in Question and the scores in Response and then</span>
+<span class="st">  </span><span class="kw">inner_join</span>(qformats, <span class="st">&quot;Question&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># join with `qformats` and match the data by the column `Question` and then</span>
+<span class="st">  </span><span class="kw">inner_join</span>(scoring, <span class="kw">c</span>(<span class="st">&quot;QFormat&quot;</span>, <span class="st">&quot;Response&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># join with `scoring` and match the data by the columns `Qformat` and `Response` and then</span>
+<span class="st">  </span><span class="kw">group_by</span>(Id) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># group by participant ID and then</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">AQ =</span> <span class="kw">sum</span>(Score)) <span class="co"># calculate the total AQ score</span></code></pre>
+</div>
+<p><strong>Click the tab to see the solution</strong></p>
+</div>
+</div>
+<div id="test-yourself-3" class="section level3">
+<h3><span class="header-section-number">4.1.13</span> Test yourself</h3>
 <ul>
-<li>What is the value of <code>4.252e-06</code>? <select class='solveme' data-answer='[".000004252"]'> <option></option> <option>.004252</option> <option>42.52</option> <option>.000004252</option></select></li>
+<li>You want to gather the first three columns of a file called <code>responses</code> (Q1, Q2, Q3), put the question numbers in a column called <code>Jam</code>, the responses in a column called <code>Strawberry</code>, and store everything in a tibble called <code>sandwich</code>. Fill in the box with what you would write: <input class='solveme nospaces' size='60' data-answer='["sandwich <- gather(data = responses, key = Jam, values = Strawberry, Q1:Q3)"]'/></li>
 </ul>
-<p>If you want R to round this for you to make it easier to read, you could use the below code to save it to an object, tidy it and then round the p.value. Just remember that in APA style you should never write “p = 0”, instead, you should write “p &lt; .001” (because p will never equal actual zero, it can just be very, very, very small).</p>
-<pre class="sourceCode r"><code class="sourceCode r">shapiro &lt;-<span class="st"> </span><span class="kw">shapiro.test</span>(mod<span class="op">$</span>aov<span class="op">$</span>residuals) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>()<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">p.value =</span> <span class="kw">round</span>(p.value, <span class="dt">digits =</span> <span class="dv">3</span>))</code></pre>
-<p>The second thing to note is that from both the qq-plot and the Shapiro-Wilk test it is clear that the assumption of normality has not been met. Is this a problem? Well, Field et al. (2009) say that if the sample sizes for each group are equal then ANOVA is robust to violations of both normality and of homogeneity of variance. There’s also a good discussion of this <a href="https://link.springer.com/article/10.3758/s13428-017-0918-2">here</a> but it is a bit technical. We can check how many participants are in each condition using <code>count()</code>:</p>
-<pre class="sourceCode r"><code class="sourceCode r">dat2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(Condition)</code></pre>
+<div class="solution">
+<button>
+Explain this answer
+</button>
+<p>sandwich &lt;- gather(data = responses, key = Jam, values = Strawberry, Q1:Q3)</p>
+<p><code>gather</code> wants the data first, then the name of the new column to store the gathered column names, then the name of the new column to store the data, and then finally which columns to gather.</p>
+</div>
+<ul>
+<li><p>Complete the sentence, the higher the AQ score…<select class='solveme' data-answer='["the more autistic-like traits displayed"]'> <option></option> <option>the less autistic-like traits displayed</option> <option>has no relation to autistic-like traits</option> <option>the more autistic-like traits displayed</option></select></p></li>
+<li><p>Type in the AQ score (just the number) of Participant ID No. 87: <input class='solveme nospaces' size='10' data-answer='["2"]'/></p></li>
+<li><p>Type how many participants had an AQ score of 3 (again just the number): <input class='solveme nospaces' size='10' data-answer='["13"]'/></p></li>
+<li><p>The cut-off for the AQ10 is usually said to be around 6 meaning that anyone with a score of more than 6 should be referred for diagnostic assessment. Type in how many participants we should refer from our sample: <input class='solveme nospaces' size='10' data-answer='["6"]'/></p></li>
+</ul>
+<div class="solution">
+<button>
+Explain these answers
+</button>
+<ol style="list-style-type: decimal">
+<li><p>From the link above you can see that an appropriate citation for the AQ10 would be (Allison, Auyeung, and Baron-Cohen, (2012))</p></li>
+<li><p>As mentioned, the higher the score on the AQ10 the more autistic-like traits a participant is said to show.</p></li>
+<li><p>You could do this by code with <code>filter(aq_scores, Id == 87)</code>, which would give you a tibble of 1x2 showing the ID number and score. If you just wanted the score you could use <code>pull()</code> which we havent shown you that yet: <code>filter(aq_scores, Id == 87) %&gt;% pull(AQ)</code>. The answer is an AQ score of 2.</p></li>
+<li><p>Same as above but changing the arguement of the filter. <code>filter(aq_scores, AQ == 3) %&gt;% count()</code>. The answer is 13. Remember you can do this by counting but the code makes it reproducible and accurate every time. You might make mistakes.</p></li>
+<li><p><code>filter(aq_scores, AQ &gt; 6) %&gt;% count()</code> or <code>filter(aq_scores, AQ &gt;= 7) %&gt;% count()</code>. The answer is 6.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="in-class-activities-2" class="section level2">
+<h2><span class="header-section-number">4.2</span> In-class activities</h2>
+<div id="data-analysis" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> Data analysis</h3>
+<p>We have spent the last few weeks focusing on the basics of R and data wrangling. You may think that the tasks we ask you to do in R will get harder as this course progresses but that isn’t true. The hardest part of learning R is at the very beginning, trying to learn the new terminology, figuring out how to load in data and wrangle it into the format you need. It may feel like you are still struggling so it’s worth reflecting on just how far you’ve come in less than 3 weeks.</p>
+<p>You can now:</p>
+<ul>
+<li>Understand what functions, arguments, objects, variables, and tibbles are<br />
+</li>
+<li>Read data into R<br />
+</li>
+<li>Tidy data into an appropriate format<br />
+</li>
+<li>Calculate a range of descriptive statistics</li>
+</ul>
+<p>That’s amazing! Now we’re going to move on to performing some simple inferential analyses and creating a plot to visualise the data.</p>
+</div>
+<div id="reminders-through-association" class="section level3">
+<h3><span class="header-section-number">4.2.2</span> Reminders through association</h3>
+<p>For the final lab of RM1, we will focus on chi-square that you covered in the lecture last week. For this lab, we’re going to use data from <a href="https://journals.sagepub.com/stoken/default+domain/6XgDSfr6ZHSDs47tx5bu/full">Rogers, T. &amp; Milkman, K. L. (2016). Reminders through association. Psychological Science, 27, 973-986</a>. You can read the full paper online but the short version is that the authors looked at how people remember to follow through with the intention of doing something. Although there are lots of potential reasons (e.g., some people may lack the self-control resources), Rogers and Milkman (2016) propose that some people fail to follow through simply because they forget about their good intentions. If this is the case, the authors argue, then having visual reminders to follow through on their intentions may help people remember to keep them. For example, a person may choose to put a sticker for their gym on their car window, so that every time they get in the car they remember to go to the gym.</p>
+<p>In Study 1, participants took part in an unrelated experiment but at the start of the task they were asked to return a small stack of paper clips to the reception of the building at the end of the study and if they did so the researchers would donate $1 to a charity. They were then asked if they intended to do this. Those in the reminder-through-association (RTA) condition read “Thank you! To remind you to pick up a paper clip, an elephant statuette will be sitting on the counter as you collect your payment.” This message was followed by a picture of the elephant statuette. Those in the control condition simply read “Thank you!”.</p>
+<p>What we want to do is to run a chi-square analysis to determine whether those in the RTA condition were more likely to remember to return the paperclips than those in the control condition.</p>
+</div>
+<div id="activity-1-set-up-4" class="section level3">
+<h3><span class="header-section-number">4.2.3</span> Activity 1: Set-up</h3>
+<p>Do the following. If you need help, consult Chapter <a href="rm1-intro-to-r.html#ref2">2.1</a> and Chapter <a href="ref3.html#ref3">1</a>.</p>
+<ul>
+<li>Open R Studio and set the working directory to your Lab 3 folder.<br />
+</li>
+<li>Open a new R Markdown document and save it in your working directory. Call the file “In-class 3”.<br />
+</li>
+<li>Download the <code>RTA_study1.csv</code> file from Moodle and save it in your Lab 3 folder. Make sure that you do not change the file name at all.</li>
+<li>If you are working on your own computer, install the package <code>lsr</code>. Remember <strong>do not install packages on university computers, they are already installed</strong>.</li>
+<li>Delete the default R Markdown welcome text and insert a new code chunk that loads the packages <code>tidyverse</code> and <code>lsr</code> using the <code>library()</code> function and loads the data into an object named <code>intent_data</code> using <code>read_csv()</code>.</li>
+</ul>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="ot">NULL</span>)
+intent_data &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="ot">NULL</span>)</code></pre>
+</div>
+<div id="activity-2-look-at-the-data-1" class="section level3">
+<h3><span class="header-section-number">4.2.4</span> Activity 2: Look at the data</h3>
+<p>Using your preferred method, look at the data. It is a fairly simple data file that contains four variables for 87 participants:</p>
+<ul>
+<li><code>condition</code>: this variable indicates which condition participants were in, 1 = reminder-through-association condition, 2 = control condition</li>
+<li><code>intend</code>: this variable indicates whether particpants said they were intending to return the paperclips, 1 = yes, 0 = no</li>
+<li><code>actualdonate</code>: this variable indicates whether participants actually ended up returning the paperclips and therefore donating to charity, 1 = yes, 0 = no</li>
+<li><code>id</code>: this variable indicates the participant ID number</li>
+</ul>
+</div>
+<div id="activity-3-wrangle-and-recode-the-data" class="section level3">
+<h3><span class="header-section-number">4.2.5</span> Activity 3: Wrangle and recode the data</h3>
+<p>We need to do a little bit of wrangling to get our data into the format we need. First, we need to remove all the participants who said that they did not intend to return the paperclips (<code>intend = 0</code>) as we are only interested in whether people follow through on an intention. Second, to make the output easier to read, we’re going to recode <code>condition</code> to have text labels rather than numerical values.</p>
+<ul>
+<li>Use <code>filter()</code> to remove all participants who said that they did not intend to return the paperclips</li>
+<li>Use <code>mutate()</code> and <code>recode()</code> to recode the values in <code>condition</code> to make 1 = rta and 2 = control and the values in <code>actualdonate</code> to 1 = donated and 0 = no_donation. If you need help with this, consult Lab 3 in-class activity 7.</li>
+<li>You can do this in two separate steps, or you can use pipes. Regardless of how you do it, save the final output to an object named <code>intent_recode</code>.</li>
+</ul>
+<p>The solutions are at the end of this chapter but make sure you try it yourself and ask your peers and tutor for help first.</p>
+<pre class="sourceCode r"><code class="sourceCode r">intent_recode &lt;-</code></pre>
+<div class="solution">
+<button>
+Helpful hint
+</button>
+<p>You will need to put both sides of each recode argument (i.e., 1 and rta) in quotation marks, even though 1 and 2 are numbers, they actually represent categories rather than numerical data.</p>
+</div>
+<p><br></p>
+<p><code>intent_recode</code> should have data from 77 participants and should look something like this:</p>
 <table>
 <thead>
 <tr class="header">
-<th align="center">Condition</th>
-<th align="center">n</th>
+<th align="center">condition</th>
+<th align="center">intend</th>
+<th align="center">actualdonate</th>
+<th align="center">id</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
+<td align="center">rta</td>
 <td align="center">1</td>
-<td align="center">18</td>
+<td align="center">donated</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
+<td align="center">rta</td>
+<td align="center">1</td>
+<td align="center">donated</td>
 <td align="center">2</td>
-<td align="center">18</td>
 </tr>
 <tr class="odd">
+<td align="center">rta</td>
+<td align="center">1</td>
+<td align="center">donated</td>
 <td align="center">3</td>
-<td align="center">18</td>
 </tr>
 <tr class="even">
+<td align="center">rta</td>
+<td align="center">1</td>
+<td align="center">donated</td>
 <td align="center">4</td>
-<td align="center">18</td>
+</tr>
+<tr class="odd">
+<td align="center">rta</td>
+<td align="center">1</td>
+<td align="center">donated</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="center">rta</td>
+<td align="center">1</td>
+<td align="center">donated</td>
+<td align="center">6</td>
 </tr>
 </tbody>
 </table>
-<p>Thankfully the sample sizes are equal so we should be OK to proceed with the ANOVA. It is not clear whether normality was checked in the original paper.</p>
-<p>For the last assumption, we can test homogeneity of variance with Levene’s test and the function <code>test_levene()</code> from <code>afex</code>. The code for this is very simple, you just need to supply the ANOVA model we created earlier <code>mod</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">test_levene</span>(mod)</code></pre>
-<pre><code>## Levene&#39;s Test for Homogeneity of Variance (center = center)
-##       Df F value  Pr(&gt;F)  
-## group  3  2.9551 0.03854 *
-##       68                  
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>The results from Levene’s test show that the assumption of homogeneity of variance has also not been met. The paper does indicate this might be the case as it specifies that the ANOVAs do not assume equal variance, however, the results of the ANOVA that are reported are identical to our results above where no correction has been made although the post-hoc tests are Welch tests (you can tell this because the degrees of freedom have been adjusted and are not whole numbers).</p>
-<p>Whilst all of this might seem very confusing - we imagine you might be wondering what the point of assumption testing is given that it seems to be ignored - we’re showing you this for three reasons:</p>
-<ol style="list-style-type: decimal">
-<li>To reassure you that sometimes the data can fail to meet the assumptions and it is still ok to use the test. To put this in statistical terms, many tests are <strong>robust</strong> to mild deviations of normality and unequal variance, particularly with equal sample sizes.</li>
-<li>As a critical thinking point, to remind you that just because a piece of research has been published does not mean it is perfect and you should always evaluate whether the methods used are appropriate.</li>
-<li>To reinforce the importance of pre-registration where these decisions could be made in advance, and/or open data and code so that analyses can be reproduced exactly to avoid any ambiguity about exactly what was done. In this example, given the equal sample sizes and the difference in variance between the groups isn’t too extreme, it looks like it is still appropriate to use an ANOVA but the decisions and justification for those decisions could have been more transparent.</li>
-</ol>
 </div>
-<div id="activity-8-post-hoc-tests" class="section level3">
-<h3><span class="header-section-number">8.1.9</span> Activity 8: Post-hoc tests</h3>
-<p>For post-hoc comparisons, as mentioned, the paper appears to have computed Welch t-tests but there is no mention of any multiple comparison correction. We could reproduce these results by using <code>t.test</code> for each of the contrasts.</p>
-<p>For example, to compare condition 1 (the control group) with condition 2 (the reactivation plus tetris group) we could run:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(dat2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Condition <span class="op">==</span><span class="st"> &quot;1&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(intrusions), dat2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Condition <span class="op">==</span><span class="st"> &quot;2&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(intrusions))</code></pre>
-<div class="warning">
-<p>
-This t-test code is a little different to what you used in the t-test lab. Because <code>Condition</code> has four levels, we can’t just specify <code>intrustion ~ Condition</code> because a t-test compares two groups and it wouldn’t know which of the four to compare. What we’re doing with this code is telling it to use the intrusion score from a specific level of Condition
-</p>
-</div>
-<p>However, a quicker and better way of doing this that allows you apply a correction for multiple comparisons easily is to use <code>emmeans()</code> which computes all possible pairwise comparison t-tests and applies a correction to the p-value.</p>
-<p>First, we use <code>emmeans()</code> to run the comparisons and then we can pull out the contrasts and use <code>tidy()</code> to make it easier to work with.</p>
+<div id="activity-4-descriptive-statistics" class="section level3">
+<h3><span class="header-section-number">4.2.6</span> Activity 4: Descriptive statistics</h3>
+<p>Next you need to calculate descriptive statistics. For frequency data these are simply counts so we can use the function <code>count()</code> rather than having to use <code>summarise</code>. We want to know how many participants are in each group (rta - donated, rta - didn’t donate, control - donated, control - didn’t donate) so we will need to use <code>group_by</code> to display the results for all combinations of <code>condition</code> and <code>actualdonate</code>.</p>
 <ul>
-<li>Run the code below. Which conditions are significantly different from each other? Are any of the comparisons different from the ones reported in the paper now that a correction for multiple comparisons has been applied?</li>
+<li>Replace the NULLs in the below code to calculate the number of participants in each category and save it to an object named <code>intent_counts</code>.</li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r">mod_pairwise &lt;-<span class="kw">emmeans</span>(mod<span class="op">$</span>aov, pairwise <span class="op">~</span><span class="st"> </span>Condition, <span class="dt">adjust =</span> <span class="st">&quot;bonferroni&quot;</span>)
-mod_contrasts &lt;-<span class="st"> </span>mod_pairwise<span class="op">$</span>contrasts <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>()</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">intent_counts &lt;-<span class="st"> </span>intent_recode <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(<span class="ot">NULL</span>, <span class="ot">NULL</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">count</span>()</code></pre>
+<p>How many participants in the control condition didn’t donate? <input class='solveme nospaces' size='2' data-answer='["22"]'/><br />
+How many participants in the control condition donated? <input class='solveme nospaces' size='2' data-answer='["16"]'/><br />
+How many participants in the rta condition didn’t donate? <input class='solveme nospaces' size='2' data-answer='["10"]'/><br />
+How many participants in the rta condition donated? <input class='solveme nospaces' size='2' data-answer='["29"]'/></p>
+<p>You may also want to calculate the percentage of people who donated in each condition, if so you can adapt the code like this:</p>
+<pre class="sourceCode r"><code class="sourceCode r">intent_percent &lt;-<span class="st"> </span>intent_recode <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(condition, actualdonate) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">count</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># ungroups the code</span>
+<span class="st">  </span><span class="kw">group_by</span>(condition) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># then groups it again but just by condition</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">percent_condition =</span> n<span class="op">/</span><span class="kw">sum</span>(n) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="center">condition</th>
+<th align="center">actualdonate</th>
+<th align="center">n</th>
+<th align="center">percent_condition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">control</td>
+<td align="center">donated</td>
+<td align="center">16</td>
+<td align="center">42.11</td>
+</tr>
+<tr class="even">
+<td align="center">control</td>
+<td align="center">no_donation</td>
+<td align="center">22</td>
+<td align="center">57.89</td>
+</tr>
+<tr class="odd">
+<td align="center">rta</td>
+<td align="center">donated</td>
+<td align="center">29</td>
+<td align="center">74.36</td>
+</tr>
+<tr class="even">
+<td align="center">rta</td>
+<td align="center">no_donation</td>
+<td align="center">10</td>
+<td align="center">25.64</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="activity-9-power" class="section level3">
-<h3><span class="header-section-number">8.1.10</span> Activity 9: Power</h3>
-<p>Finally, we can replicate their power analysis using <code>pwr.anova.test</code>.</p>
-<blockquote>
-<p>On the basis of the effect size of d = 1.14 from Experiment 1, we assumed a large effect size of f = 0.4. A sample size of 18 per condition was required in order to ensure an 80% power to detect this difference at the 5% significance level.</p>
-</blockquote>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pwr.anova.test</span>(<span class="dt">k =</span> <span class="dv">4</span>, <span class="dt">f =</span> <span class="fl">.4</span>, <span class="dt">sig.level =</span> <span class="fl">.05</span>, <span class="dt">power =</span> <span class="fl">.8</span>)</code></pre>
-<pre><code>## 
-##      Balanced one-way analysis of variance power calculation 
-## 
-##               k = 4
-##               n = 18.04262
-##               f = 0.4
-##       sig.level = 0.05
-##           power = 0.8
-## 
-## NOTE: n is number in each group</code></pre>
-<div class="warning">
-<p>
-What are your options if the data don’t meet the assumptions and it’s really not appropriate to continue with a regular one-way ANOVA? As always, there are multiple options and it is a judgement call.
-</p>
-<ol style="list-style-type: decimal">
-<li>
-You could run a non-parametric test, the Kruskal-Wallis for between-subject designs and the Friedman test for within-subject designs. There is more information about how to do this in Chapter <span class="citation">(<span class="citeproc-not-found" data-reference-id="ref"><strong>???</strong></span>)</span>(supp).
-</li>
-<li>
-If normality is the problem, you could try transforming the data. Field et al. (2009) has a good section on data transformation.
-</li>
-<li>
-You could use bootstrapping, which is not something we will cover in this course at all. Again, Field et al. (2009) covers this although it is a little complicated.
-</li>
-</ol>
-</div>
-</div>
-<div id="activity-10-write-up" class="section level3">
-<h3><span class="header-section-number">8.1.11</span> Activity 10: Write-up</h3>
-<p>The below code replicates the write-up in the paper, although has changed the Welch t-test for the pairwise comparisons.</p>
-<pre class="sourceCode r"><code class="sourceCode r">Second, and critically, <span class="cf">for</span> the <span class="dv">7</span><span class="op">-</span>day diary postintervention, there was a significant difference between groups <span class="cf">in</span> overall intrusion frequency <span class="cf">in</span> daily life, <span class="kw">F</span>(<span class="st">`</span><span class="dt">r mod_output$num.Df</span><span class="st">`</span>, <span class="st">`</span><span class="dt">r mod_output$den.Df</span><span class="st">`</span>) =<span class="st"> `</span><span class="dt">r mod_output$statistic %&gt;% round(2)</span><span class="st">`</span>, p =<span class="st"> `</span><span class="dt">r mod_output$p.value %&gt;% round(3)</span><span class="st">`</span>, ηp2 =<span class="st"> </span>.<span class="st">`</span><span class="dt">r mod_output$ges %&gt;% round(2)</span><span class="st">`</span> (Fig. 4b). Planned comparisons demonstrated that relative to the no<span class="op">-</span>task control group, only those <span class="cf">in</span> the reactivation<span class="op">-</span>plus<span class="op">-</span>Tetris group, <span class="kw">t</span>(<span class="st">`</span><span class="dt">r mod_contrasts$df[1]</span><span class="st">`</span>) =<span class="st"> `</span><span class="dt">r mod_contrasts$statistic[1] %&gt;% round(2)</span><span class="st">`</span>, p =<span class="st"> `</span><span class="dt">r mod_contrasts$p.value[1] %&gt;% round(2)</span><span class="st">`</span>, experienced significantly fewer intrusive memories; this finding replicated Experiment <span class="fl">1.</span> Critically, as predicted by reconsolidation theory, the reactivation<span class="op">-</span>plus<span class="op">-</span>Tetris group had significantly fewer intrusive memories than the Tetris<span class="op">-</span>only group, <span class="kw">t</span>(<span class="st">`</span><span class="dt">r mod_contrasts$df[4]</span><span class="st">`</span>) =<span class="st"> `</span><span class="dt">r mod_contrasts$statistic[4] %&gt;% round(2)</span><span class="st">`</span>, p =<span class="st"> `</span><span class="dt">r mod_contrasts$p.value[4] %&gt;% round(2)</span><span class="st">`</span>, as well as the reactivation<span class="op">-</span>only group, <span class="kw">t</span>(<span class="st">`</span><span class="dt">r mod_contrasts$df[5]</span><span class="st">`</span>) =<span class="st"> `</span><span class="dt">r mod_contrasts$statistic[5] %&gt;% round(2)</span><span class="st">`</span>, p =<span class="st"> `</span><span class="dt">r mod_contrasts$p.value[5] %&gt;% round(2)</span><span class="st">`</span>. Further, there were no significant differences between the no<span class="op">-</span>task control group and the reactivation<span class="op">-</span>only group, <span class="kw">t</span>(<span class="st">`</span><span class="dt">r mod_contrasts$df[3]</span><span class="st">`</span>) =<span class="st"> `</span><span class="dt">r mod_contrasts$statistic[3] %&gt;% round(2)</span><span class="st">`</span>, p =<span class="st"> `</span><span class="dt">r mod_contrasts$p.value[3] %&gt;% round(2)</span><span class="st">`</span>, or between the no<span class="op">-</span>task control group and the Tetris<span class="op">-</span>only group, <span class="kw">t</span>(<span class="st">`</span><span class="dt">r mod_contrasts$df[2]</span><span class="st">`</span>) =<span class="st"> `</span><span class="dt">r mod_contrasts$statistic[2] %&gt;% round(2)</span><span class="st">`</span>, p =<span class="st"> `</span><span class="dt">r mod_contrasts$p.value[2] %&gt;% round(2)</span><span class="st">`</span></code></pre>
-<p>Second, and critically, for the 7-day diary post intervention, there was a significant difference between groups in overall intrusion frequency in daily life, F(3, 68) = 3.79, p = 0.014, ηp2 = .0.14 (Fig. 4b). Planned comparisons demonstrated that relative to the no-task control group, only those in the reactivation-plus-Tetris group, t(68) = 3.04, p = 0.02, experienced significantly fewer intrusive memories; this finding replicated Experiment 1. Critically, as predicted by reconsolidation theory, the reactivation-plus-Tetris group had significantly fewer intrusive memories than the Tetris-only group, t(68) = -1.89, p = 0.38, as well as the reactivation-only group, t(68) = -2.78, p = 0.04. Further, there were no significant differences between the no-task control group and the reactivation-only group, t(68) = 0.26, p = 1, or between the no-task control group and the Tetris-only group, t(68) = 1.15, p = 1</p>
-</div>
-<div id="activity-solutions-7" class="section level3">
-<h3><span class="header-section-number">8.1.12</span> Activity solutions</h3>
-<p>Below this line you will find the solutions to the above tasks. Only look at them after giving the tasks a good try and speaking to the tutor about any issues</p>
-<div id="activity-1-5" class="section level4">
-<h4><span class="header-section-number">8.1.12.1</span> Activity 1</h4>
-<div class="solution">
-<button>
-Activity 1
-</button>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;car&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;broom&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;afex&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;emmeans&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)
-
-dat &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;James Holmes_Expt 2_DATA.csv&quot;</span>)<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">subject =</span> <span class="kw">row_number</span>())</code></pre>
-</div>
-<p>** Click tab to see solution **</p>
-</div>
-<div id="activity-2-3" class="section level4">
-<h4><span class="header-section-number">8.1.12.2</span> Activity 2</h4>
-<div class="solution">
-<button>
-Activity 2
-</button>
-<pre class="sourceCode r"><code class="sourceCode r">dat2 &lt;-<span class="st"> </span>dat<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(subject,Condition,Days_One_to_Seven_Image_Based_Intrusions_in_Intrusion_Diary)<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">rename</span>(<span class="dt">intrusions =</span> Days_One_to_Seven_Image_Based_Intrusions_in_Intrusion_Diary)</code></pre>
-</div>
-<p>** Click tab to see solution **</p>
-</div>
-<div id="activity-4-3" class="section level4">
-<h4><span class="header-section-number">8.1.12.3</span> Activity 4</h4>
-<div class="solution">
-<button>
-Activity 4
-</button>
-<pre class="sourceCode r"><code class="sourceCode r">sum_dat&lt;-dat2<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">group_by</span>(Condition)<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(intrusions),
-            <span class="dt">sd =</span> <span class="kw">sd</span>(intrusions),
-            <span class="dt">se =</span> sd<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">length</span>(intrusions)))</code></pre>
-</div>
-<p>** Click tab to see solution **</p>
-</div>
-<div id="activity-5-4" class="section level4">
-<h4><span class="header-section-number">8.1.12.4</span> Activity 5</h4>
-<div class="solution">
-<button>
-Activity 5
-</button>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(dat2, <span class="kw">aes</span>(<span class="dt">x =</span> Condition, <span class="dt">y =</span> intrusions))<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_violin</span>(<span class="dt">trim =</span> <span class="ot">FALSE</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">width =</span> <span class="fl">.2</span>)</code></pre>
-</div>
-<p>** Click tab to see solution **</p>
-</div>
-</div>
-</div>
-<div id="in-class-activities-6" class="section level2">
-<h2><span class="header-section-number">8.2</span> In-class activities</h2>
-<div id="factorial-anova" class="section level3">
-<h3><span class="header-section-number">8.2.1</span> Factorial ANOVA</h3>
-<p>For the second part of our ANOVA lab we’re going to look at an example of a factorial ANOVA. You’ll learn more about interpreting these in the second lecture, but for now, we’ll just focus on the code.</p>
-<p>We’re going to reproduce the analysis from Experiment 3 of <a href="https://journals.sagepub.com/doi/abs/10.1177/0956797614542274">Zhang, T., Kim, T., Brooks, A. W., Gino, F., &amp; Norton, M. I. (2014). A “present” for the future: The unexpected value of rediscovery. Psychological Science, 25, 1851-1860.</a>. You may remember this study from the Chapter {#vis} pre-class activity.</p>
-<p>This experiment has a 2 x 2 mixed design:</p>
-<ul>
-<li>The first IV is time (time1, time2) and is within-subjects</li>
-<li>The second IV is type of event (ordinary vs. extraordinary) and is a between-subjects factor</li>
-<li>The DV we will use is <code>interest</code></li>
-</ul>
-</div>
-<div id="activity-1-set-up-11" class="section level3">
-<h3><span class="header-section-number">8.2.2</span> Activity 1: Set-up</h3>
-<ul>
-<li>Open R Studio and set the working directory to your RM2 Lab 4 folder.<br />
-</li>
-<li>Open a new R Markdown document and save it in your working directory. Call the file “In-class 4”.<br />
-</li>
-<li>Download the <code>Zhang et al. 2014 Study 3.csv</code> file from Moodle and save it in your Lab 4 folder. Make sure that you do not change the file name at all.</li>
-<li>If you are working on your own computer, install the package <code>rcompanion</code>. Remember <strong>do not install packages on university computers, they are already installed</strong>.</li>
-<li>Delete the default R Markdown welcome text and insert a new code chunk that loads <code>pwr</code>, <code>rcompanion</code>, <code>car</code>, <code>broom</code>, <code>afex</code>, <code>emmeans</code> and <code>tidyverse</code> using the <code>library()</code> function.</li>
-</ul>
-<p>Run the below code to load the data and wrangle it into the format we need. You don’t need to write this code yourself but do make sure you can understand what each line is doing - a good way to do this when the code uses pipes (<code>%&gt;%</code>) is to highlight and run each line progressively so you can see how it builds up. Line-by-line the code:</p>
-<ul>
-<li>Reads in the data file</li>
-<li>Select the three columns we need<br />
-</li>
-<li>Adds on a column of subject IDs<br />
-</li>
-<li>Tidies the data</li>
-<li>Recodes the values of <code>Condition</code> from numeric to text labels</li>
-<li>Recodes the values of <code>time</code> to be easier to read/write</li>
-</ul>
-<pre class="sourceCode r"><code class="sourceCode r">factorial &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;Zhang et al. 2014 Study 3.csv&quot;</span>)<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(Condition, T1_Predicted_Interest_Composite, T2_Actual_Interest_Composite)<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">subject =</span> <span class="kw">row_number</span>())<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> time,
-         <span class="dt">value =</span> interest,
-         T1_Predicted_Interest_Composite,T2_Actual_Interest_Composite)<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Condition =</span> dplyr<span class="op">::</span><span class="kw">recode</span>(Condition, <span class="st">&quot;1&quot;</span> =<span class="st"> &quot;Ordinary&quot;</span>, <span class="st">&quot;2&quot;</span> =<span class="st"> &quot;Extraordinary&quot;</span>))<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">time =</span> dplyr<span class="op">::</span><span class="kw">recode</span>(time, <span class="st">&quot;T1_Predicted_Interest_Composite&quot;</span> =<span class="st"> &quot;time1_interest&quot;</span>,
-                       <span class="st">&quot;T2_Actual_Interest_Composite&quot;</span> =<span class="st"> &quot;time2_interest&quot;</span>))</code></pre>
-</div>
-<div id="activity-2-descriptive-statistics" class="section level3">
-<h3><span class="header-section-number">8.2.3</span> Activity 2: Descriptive statistics</h3>
-<ul>
-<li>Calculate descriptive statistics (mean, ci min and max, SD) for <code>interest</code> for each <code>Condition</code> for each <code>time</code> (hint: you will need to <code>group_by()</code> two variables) and store it in an object named <code>sum_dat_factorial</code>. These are known as the cells means.</li>
-</ul>
-</div>
-<div id="activity-3-violin-boxplots" class="section level3">
-<h3><span class="header-section-number">8.2.4</span> Activity 3: Violin-boxplots</h3>
-<p>We’re going to produce two kinds of plots to visualise our data. First, we’ll produce violin-boxplots so that we can see the distribution of our data.</p>
-<ul>
-<li>Write the code that produces the below violin-boxplots for the scores in each group.
-<ul>
-<li>Hint 1: you will need to add in the second IV in the first call to ggplot as a fill argument (aes(x,y,fill)).</li>
-<li>Hint 2: you will need to add <code>position = position_dodge(.9)</code> to geom_boxplot to get the plots to align.</li>
-</ul></li>
-</ul>
-<p>You don’t need to replicate the exact colour scheme used below, see if you can play around with the settings to whatever colour scheme you think works best.</p>
-<div class="figure" style="text-align: center"><span id="fig:plt1"></span>
-<img src="08-rm2-4_files/figure-html/plt1-1.png" alt="Violin-boxplot by condition and time" width="100%" />
+<div id="ggplot2" class="section level3">
+<h3><span class="header-section-number">4.2.7</span> <code>ggplot2()</code></h3>
+<p>Now you have calculated how many participants are in each cell (or combination of the categories), however, it is also useful to create a visualisation of the data - the old saying is true, a picture is worth a thousand words. To make our data visualisations we’re going to use the package <code>ggplot2()</code> which was loaded as part of the <code>tidyverse</code>.</p>
+<p><code>ggplot()</code> builds plots by combining layers (see Figure <a href="rm1-data-wrangling-chi-square.html#fig:img-layers">4.1</a>)). If you’re used to making plots in Excel this might seem a bit odd at first, however, it means that you can customise each layer and R is capable of making very complex and beautiful figures (<a href="https://www.data-to-viz.com/">this website</a> gives you a good sense of what’s possible).</p>
+<div class="figure" style="text-align: center"><span id="fig:img-layers"></span>
+<img src="images/layers.png" alt="ggplot2 layers from Field et al. (2012)" width="100%" />
 <p class="caption">
-Figure 8.1: Violin-boxplot by condition and time
+Figure 4.1: ggplot2 layers from Field et al. (2012)
 </p>
 </div>
 </div>
-<div id="activity-4-interaction-plots" class="section level3">
-<h3><span class="header-section-number">8.2.5</span> Activity 4: Interaction plots</h3>
-<p>Now we’re going to produce an interaction plot that makes it easier to see how the IVs are interacting, which requires some ggplot2 functions we haven’t come across yet. Rather than using the raw data in <code>dat_factorial</code>, we use the means that we produced in <code>sum_dat_factorial</code>. This type of plot requires two geoms, one to draw the points, and one to draw the lines that connect them.</p>
-<p>This plot reproduces the plot used in the paper.</p>
+<div id="bar" class="section level3">
+<h3><span class="header-section-number">4.2.8</span> Activity 5: Bar plot</h3>
+<p>We want to create a simple bar plot of our count data.</p>
 <ul>
-<li>Run the code and then play around with how it looks by changing the arguments for e.g., colour, line-type, and the theme.</li>
+<li>Copy and paste the below code into a new R chunk and run it.<br />
+</li>
+<li>The first line (or layer) sets up the base of the graph: the data to use and the aesthetics (what will go on the x and y axis, how the plot will be grouped).<br />
+</li>
+<li><code>aes()</code> can take both an <code>x</code> and <code>y</code> argument, however, with a bar plot you are just asking R to count the number of data points in each group so you don’t need to specify this.<br />
+</li>
+<li><code>fill</code> will separate the data into each level of the grouping variable and give it a different colour. In this case, there is a different coloured bar for each level of <code>actualdonate</code>.<br />
+</li>
+<li>The next layer adds a <strong>geom</strong> or a shape, in this case we use <code>geom_bar()</code> as we want to draw a bar plot.<br />
+</li>
+<li><code>position = "dodge"</code> places the bars next to each other, rather than on top of each other. Try removing this argument and just running the code with <code>geom_bar()</code> to see what happens.</li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(sum_dat_factorial, <span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> mean, <span class="dt">group =</span> Condition, <span class="dt">shape =</span> Condition)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">linetype =</span> Condition))<span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Time 1&quot;</span>, <span class="st">&quot;Time 2&quot;</span>))<span class="op">+</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> intent_recode, <span class="kw">aes</span>(<span class="dt">x =</span> condition, <span class="dt">fill =</span> actualdonate)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:layer1"></span>
+<img src="04-rm1-3_files/figure-html/layer1-1.png" alt="Bar plot of RTA Study 1 data" width="100%" />
+<p class="caption">
+Figure 4.2: Bar plot of RTA Study 1 data
+</p>
+</div>
+<div class="warning">
+<p>
+In R terms, <code>ggplot2</code> is a fairly old package. As a result, the use of pipes wasn’t included when it was originally written. As you can see in the code above, the layers of the code are separated by <code>+</code> rather than <code>%&gt;%</code>. In this case, <code>+</code> is doing essentially the same job as a pipe - be careful not to confuse them.
+</p>
+</div>
+<p>As you can see, the plot makes it much easier to visualise the data - participants in the RTA condition appear to have been more likely to remember to donate than those in the control condition.</p>
+</div>
+<div id="activity-6-make-the-plot-pretty" class="section level3">
+<h3><span class="header-section-number">4.2.9</span> Activity 6: Make the plot pretty</h3>
+<p>As mentioned, <code>ggplot2</code> allows you to customise all aspects of your plots, so let’s tidy ours up a little bit. We’re going to do the following:<br />
+* Edit the labels on the x-axis, y-axis and fill<br />
+* Change the colours of the bars by using <code>scale_fill_manual()</code> and specifying the colours we want in the <code>values</code> argument<br />
+* Change the theme of the plot to change how it looks visually</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> intent_recode, <span class="kw">aes</span>(<span class="dt">x =</span> condition, <span class="dt">fill =</span> actualdonate)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;Condition&quot;</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Control&quot;</span>, <span class="st">&quot;RTA&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;Count&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">name =</span> <span class="st">&quot;Behaviour&quot;</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Donated&quot;</span>, <span class="st">&quot;Did not donate&quot;</span>), <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;grey&quot;</span>))<span class="op">+</span>
 <span class="st">  </span><span class="kw">theme_classic</span>()</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:plot2"></span>
-<img src="08-rm2-4_files/figure-html/plot2-1.png" alt="Interaction plot" width="100%" />
+<div class="figure" style="text-align: center">
+<img src="04-rm1-3_files/figure-html/plot_edits-1.png" alt="Prettier bar plot of RTA Study" width="100%" />
 <p class="caption">
-Figure 8.2: Interaction plot
+(#fig:plot_edits)Prettier bar plot of RTA Study
 </p>
 </div>
+<p>There are a few things to note about the code we just added on:<br />
+* The first two lines are the same code as we used in Activity 4, what we’ve done now is add on extra layers.<br />
+* If you use simple colour names then you are restricted in the options you can choose, however, if you want more flexiblity you can use hexadecimal colour codes, <a href="http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/">see here</a> for more information.
+* There are multiple themes that you can apply. If you type <code>theme_</code> the auto-complete will show you the options - try a few out and see which one you prefer.
+* If you want more information on any of these functions, remember you can look at the help documentation by typing <code>?function</code>.</p>
 </div>
-<div id="activity-5-anova" class="section level3">
-<h3><span class="header-section-number">8.2.6</span> Activity 5: ANOVA</h3>
-<ul>
-<li>Complete the below code to run the factorial ANOVA. Remember that you will need to specify both IVs and that one of them is between and one of them is within-subjects. Look up the help documentation for <code>aov_ez</code> to find out how to do this.</li>
-<li>Save the ANOVA model to an object called <code>mod_factorial</code></li>
-<li>Use <code>tidy()</code> and save the <code>anova()</code> output to an object named <code>factorial_output</code>.</li>
-<li>Hint: refer to pre-class Activity 6</li>
-</ul>
-<pre class="sourceCode r"><code class="sourceCode r">mod_factorial &lt;-<span class="st"> </span><span class="kw">aov_ez</span>(<span class="dt">id =</span> <span class="st">&quot;NULL&quot;</span>,
-               <span class="dt">data =</span> <span class="ot">NULL</span>, 
-               <span class="dt">between =</span> <span class="st">&quot;NULL&quot;</span>, 
-               <span class="dt">within =</span> <span class="st">&quot;NULL&quot;</span>,
-               <span class="dt">dv =</span> <span class="st">&quot;NULL&quot;</span>, 
-               <span class="dt">type =</span> <span class="dv">3</span>,
-               <span class="dt">es =</span> <span class="st">&quot;NULL&quot;</span>) 
-
-factorial_output &lt;-<span class="st"> </span></code></pre>
-<p>Look at the results. Remember the pre-class information about how to read p-values in scientific notation.</p>
-<ul>
-<li>Is the main effect of condition significant? <select class='solveme' data-answer='["No"]'> <option></option> <option>Yes</option> <option>No</option></select></li>
-<li>Is the main effect of time significant? <select class='solveme' data-answer='["Yes"]'> <option></option> <option>Yes</option> <option>No</option></select></li>
-<li>Is the two-way interaction significant? <select class='solveme' data-answer='["Yes"]'> <option></option> <option>Yes</option> <option>No</option></select></li>
-</ul>
-</div>
-<div id="activity-6-assumption-checking" class="section level3">
-<h3><span class="header-section-number">8.2.7</span> Activity 6: Assumption checking</h3>
-<p>The assumptions for a factorial ANOVA are the same as the one-way ANOVA.</p>
+<div id="activity-7-chi-square" class="section level3">
+<h3><span class="header-section-number">4.2.10</span> Activity 7: Chi-square</h3>
+<p>So, let’s finally run that chi-square analysis to see whether our intuition from the plot holds up and there is a significant association between the grouping variables. As promised, the code is quite simple - copy and paste the below code into a new R chunk and run it.</p>
+<pre class="sourceCode r"><code class="sourceCode r">results &lt;-<span class="st"> </span><span class="kw">chisq.test</span>(<span class="dt">x =</span> intent_recode<span class="op">$</span>condition, <span class="co"># the first grouping variable</span>
+                      <span class="dt">y =</span> intent_recode<span class="op">$</span>actualdonate, <span class="co"># the second grouping variable</span>
+                      <span class="dt">correct =</span> <span class="ot">FALSE</span>) <span class="co"># whether we want to apply the continuity correction</span>
+results</code></pre>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  intent_recode$condition and intent_recode$actualdonate
+## X-squared = 8.244, df = 1, p-value = 0.004089</code></pre>
+<p>This code looks a little different to code you’ve used up until this point as it comes from Base R. The x and y variables use the notation <code>object$variable</code> so our x variable could be read as "use the variable <code>condition</code> from the object <code>intent_recode</code>. The reason that we chose not to apply the continuity correction is because this is what the analysis in the original paper did.</p>
 <ol style="list-style-type: decimal">
-<li>The DV is interval or ratio data</li>
-<li>The observations should be independent</li>
-<li>The residuals should be normally distributed</li>
-<li>There should be homogeneity of variance between the groups</li>
+<li>What is the chi-square statistic? <input class='solveme nospaces' size='5' data-answer='["8.244"]'/></li>
+<li>Is the p-value significant? <select class='solveme' data-answer='["Yes"]'> <option></option> <option>Yes</option> <option>No</option></select><br />
+</li>
+<li>What are the degrees of freedom for the test? <input class='solveme nospaces' size='1' data-answer='["1"]'/></li>
 </ol>
-<p>As before, we know 2 is met from the design of the study. 1 throws up an interesting issue which is the problem of ordinal data. Ordinal data is the kind of data that comes from Likert scales and is very, very common in psychology. The problem is that ordinal data isn’t interval or ratio data, there’s a very fixed number of values it can take (the values of the Likert scale) and you can’t claim that the distance between the values is equal (is the difference between strongly agree and agree the same as the difference between agree and neutral?).</p>
-<p>Technically, we shouldn’t use an ANOVA to analyse ordinal data - but <em>almost everyone does</em>. Most people would argue that if there are multiple Likert scale items that are averaged (which is the case in our study) and this averaged data is normally distributed, then it is not a problem. There is a minority (who are actually correct) that argue you should use non-parametric methods or more complicated tests such as ordinal regression for this type of data. Whichever route you choose, you should understand the data you have and you should be able to justify your decision.</p>
-<ul>
-<li><p>To test 3, extract the residuals from the model (<code>mod_factorial$lm$residuals</code>), create a qq-plot and conduct a Shapiro-Wilk test.</p></li>
-<li><p>Are the residuals normally distributed? <select class='solveme' data-answer='["No, but given the sample it is acceptable to proceed"]'> <option></option> <option>Yes</option> <option>No</option> <option>No, but given the sample it is acceptable to proceed</option></select></p></li>
-</ul>
-<p>For the final assumption, we can again use <code>test_levene()</code> to test homogeneity of variance.</p>
-<ul>
-<li>Conduct Levene’s test. Is assumption 4 met? <select class='solveme' data-answer='["Yes"]'> <option></option> <option>Yes</option> <option>No</option></select></li>
-</ul>
+<div class="solution">
+<button>
+Explain these answers
+</button>
+<ol style="list-style-type: decimal">
+<li>The chi-square statistic is noted in the output as X-squared. Refer to the lecture for more information on how this number is calculated.<br />
+</li>
+<li>The traditional cut-off for significance is p &lt; .05. This means that if your p-value is smaller than .05 there is a statistically significant association, that is, you would be unlikely to observe this pattern of data by chance if the null hypothesis was true. If p is larger than .05 it means that there is a higher probability that any difference you see would be likely to occur even if the null hypothesis was true. Pay attention to the decimal places, they make a huge difference!<br />
+</li>
+<li>Degrees of freedom are noted as <code>df</code> in the output. Refer to the lecture for more information on what they are and how they are calculated.</li>
+</ol>
 </div>
-<div id="activity-7-post-hoc-tests" class="section level3">
-<h3><span class="header-section-number">8.2.8</span> Activity 7: Post-hoc tests</h3>
-<p>Because the interaction is significant, we should follow this up with post-hoc tests using <code>emmeans()</code> to determine which comparisons are significant. If the overall interaction is not significant, you should not conduct additional test.</p>
-<p><code>emmeans()</code> requires you to specify the aov object, and then the factors you want contrasts for. For an interaction, we use the notation <code>pairwise ~ IV1 | IV2</code> and you specify which multiple comparison correction you want to apply. Finally, you can use <code>tidy()</code> to tidy up the output of the contrasts and save it into a tibble.</p>
-<ul>
-<li>Run the below code and view the results.</li>
-</ul>
-<pre class="sourceCode r"><code class="sourceCode r">posthoc_factorial &lt;-<span class="st"> </span><span class="kw">emmeans</span>(mod_factorial<span class="op">$</span>aov, 
-                             pairwise <span class="op">~</span><span class="st"> </span>time<span class="op">|</span><span class="st"> </span>Condition, 
-                             <span class="dt">adjust =</span> <span class="st">&quot;bonferroni&quot;</span>) 
-contrasts_factorial &lt;-<span class="st"> </span>posthoc_factorial<span class="op">$</span>contrasts <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">tidy</span>()</code></pre>
-<p>Note that because there are two factors, we could also reverse the order of the IVs. Above, we get the results contrasting time 1 and time 2 for each condition. Instead, we could look at the difference between ordinary and extraordinary events at each time point.</p>
-<ul>
-<li>Run the below code and look at the output of <code>contrast_factorial</code> and <code>contrasts_factorial2</code> carefully making sure you understand how to interpret the results. You will find it useful to refer to the interaction plot we made earlier.</li>
-</ul>
-<pre class="sourceCode r"><code class="sourceCode r">posthoc_factorial2 &lt;-<span class="st"> </span><span class="kw">emmeans</span>(mod_factorial<span class="op">$</span>aov, 
-                             pairwise <span class="op">~</span><span class="st"> </span>Condition<span class="op">|</span><span class="st"> </span>time, 
-                             <span class="dt">adjust =</span> <span class="st">&quot;bonferroni&quot;</span>) 
-
-contrasts_factorial2 &lt;-<span class="st"> </span>posthoc_factorial2<span class="op">$</span>contrasts <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">tidy</span>()</code></pre>
-<p>Finally, because our main effects (condition and time) only have two levels, we don’t need to do any post-hoc tests to determine which conditions differ from each other, however, if one of our factors had three levels then we could use <code>emmeans()</code> to calculate the contrast for the main effects, like we did for the one-way ANOVA.</p>
+<p><br></p>
+<p>Go and find the results section in the original paper, do your numbers match the ones they report?</p>
 </div>
-<div id="activity-8-write-up" class="section level3">
-<h3><span class="header-section-number">8.2.9</span> Activity 8: Write-up</h3>
+<div id="activity-8-additional-analysis-information" class="section level3">
+<h3><span class="header-section-number">4.2.11</span> Activity 8: Additional analysis information</h3>
+<p>You may have noticed that when you ran the chi-square an object appeared in the environment that saved the results of the analysis. This object is a <strong>list</strong> which is a bit different to the type of objects we’ve worked with so far. Lists don’t just contain one data table or a vector of numbers or characters, they can contain multiple different types of information and multiple different tables. We can see that our object <code>results</code> is a list of 9, which means it has 9 components. Click on <code>results</code> in the environment pane to view the contents of the list (you could also type <code>str(list)</code>).</p>
+<div class="figure" style="text-align: center"><span id="fig:img-lists"></span>
+<img src="images/lists.png" alt="Contents of a list" width="100%" />
+<p class="caption">
+Figure 4.3: Contents of a list
+</p>
+</div>
+<p>Each of these components can be viewed separately using the same <code>object$variable</code> notation we used above. For example, if we wanted to view the observed frequencies (refer to the lecture), we would run the following code:</p>
+<pre class="sourceCode r"><code class="sourceCode r">results<span class="op">$</span>observed</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">donated</th>
+<th align="center">no_donation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>control</td>
+<td align="center">16</td>
+<td align="center">22</td>
+</tr>
+<tr class="even">
+<td>rta</td>
+<td align="center">29</td>
+<td align="center">10</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="assumption-checks" class="section level3">
+<h3><span class="header-section-number">4.2.12</span> Assumption checks</h3>
+<p>The assumptions for chi-square are as follows:</p>
+<ol style="list-style-type: decimal">
+<li><p>The data in the cells should be frequencies, or counts of cases rather than percentages or some other transformation of the data.</p></li>
+<li><p>The levels (or categories) of the variables are mutually exclusive. That is, a particular participant fits into one and only one group of each of the variables.</p></li>
+<li><p>Each subject may contribute data to one and only one cell in the χ2. If, for example, the same subjects are tested over time such that the comparisons are of the same subjects at Time 1, Time 2, Time 3, etc., then χ2 may not be used.</p></li>
+<li><p>The study groups must be independent. This means that a different test must be used if the two groups are related. For example, a different test must be used if the researcher’s data consists of paired samples, such as in studies in which a parent is paired with his or her child.</p></li>
+<li><p>There are 2 variables, and both are measured as categories, usually at the nominal level. While Chi-square has no rule about limiting the number of cells (by limiting the number of categories for each variable), a very large number of cells (over 20) can make it difficult to meet assumption #6 below, and to interpret the meaning of the results.</p></li>
+<li><p>The expected cell frequencies should be greater than 5.</p></li>
+</ol>
+</div>
+<div id="activity-9-check-the-expected-frequencies" class="section level3">
+<h3><span class="header-section-number">4.2.13</span> Activity 9: Check the expected frequencies</h3>
+<p>We know that assumptions 1-5 have been met because we know the design of the study and the type of data we have fits these criteria. The final assumption we need to test is that all expected frequencies are greater than 5.</p>
 <ul>
-<li>p-values of &lt; .001 have been entered manually. There is a way to get R to produce this formatting but it’s overly complicated for our purposes. If you want to push yourself, look up the <a href="https://github.com/crsh/papaja">papaja</a> package.</li>
-<li>The values of partial eta-squared do not match between our analysis and those reported in the paper. I haven’t figured out why this is yet - if you know, please get in touch!</li>
-<li>We have replaced the simple effects in the main paper with our pairwise comparisons.</li>
+<li>Using the same <code>object$variable</code> code as in Activity 7, view the expected frequencies</li>
 </ul>
-<p>First we need to calculate descriptives for the main effect of time as we didn’t do this earlier.</p>
-<pre class="sourceCode r"><code class="sourceCode r">time_descrip &lt;-<span class="st"> </span>factorial <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(time) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_interest =</span> <span class="kw">mean</span>(interest, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),
-            <span class="dt">sd_interest =</span> <span class="kw">sd</span>(interest, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),
-            <span class="dt">min =</span> <span class="kw">mean</span>(interest) <span class="op">-</span><span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>)<span class="op">*</span><span class="kw">sd</span>(interest)<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">n</span>()),
-            <span class="dt">max =</span> <span class="kw">mean</span>(interest) <span class="op">+</span><span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>)<span class="op">*</span><span class="kw">sd</span>(interest)<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">n</span>()))</code></pre>
-<p>Copy and paste the below into <strong>white-space</strong>.</p>
-<pre class="sourceCode r"><code class="sourceCode r">We conducted the same repeated measures ANOVA with interest as the dependent measure and again found a main effect of time, <span class="kw">F</span>(<span class="st">`</span><span class="dt">r factorial_output$num.DF[2]</span><span class="st">`</span>, <span class="st">`</span><span class="dt">r factorial_output$den.DF[2]</span><span class="st">`</span>) =<span class="st"> `</span><span class="dt">r factorial_output$statistic[2] %&gt;% round(2)</span><span class="st">`</span>, p <span class="op">&lt;</span><span class="st"> </span><span class="fl">.001</span>, ηp2 =<span class="st"> `</span><span class="dt">r factorial_output$ges[2] %&gt;% round(3)</span><span class="st">`</span>; anticipated interest at Time <span class="dv">1</span> (<span class="dt">M =</span> <span class="st">`</span><span class="dt">r time_descrip$mean_interest[1]</span><span class="st">`</span>), SD =<span class="st"> `</span><span class="dt">r time_descrip$sd_interest[1]</span><span class="st">`</span><span class="er">)</span>, <span class="dv">95</span><span class="op">% CI = [`r time_descrip$min[1]`, `r time_descrip$max[1]`]) was lower than actual interest at Time 2 (M = `r time_descrip$mean_interest[2]`, SD = `r time_descrip$sd_interest[2]`, 95%</span><span class="st"> </span>CI =<span class="st"> </span>[<span class="st">`</span><span class="dt">r time_descrip$min[2]</span><span class="st">`</span>, <span class="st">`</span><span class="dt">r time_descrip$max[2]</span><span class="st">`</span>]<span class="er">)</span>.We also observed an interaction between time and type of experience, <span class="kw">F</span>(<span class="st">`</span><span class="dt">r factorial_output$num.DF[3]</span><span class="st">`</span>, <span class="st">`</span><span class="dt">r factorial_output$den.DF[3]</span><span class="st">`</span>) =<span class="st"> `</span><span class="dt">r factorial_output$statistic[3] %&gt;% round(3)</span><span class="st">`</span>, p =<span class="st"> `</span><span class="dt">r factorial_output$p.value[3] %&gt;% round(2)</span><span class="st">`</span>, ηp2 =<span class="st"> `</span><span class="dt">r factorial_output$ges[3] %&gt;% round(3)</span><span class="st">`</span>. Pairwise comparisons revealed that <span class="cf">for</span> ordinary events, predicted interest at Time <span class="dv">1</span> (<span class="dt">M =</span> <span class="st">`</span><span class="dt">r sum_dat_factorial$mean[3]</span><span class="st">`</span>, <span class="dt">SD =</span> <span class="st">`</span><span class="dt">r sum_dat_factorial$sd[3]</span><span class="st">`</span>, <span class="dv">95</span><span class="op">% CI = [`r sum_dat_factorial$min[3]`, `r sum_dat_factorial$max[3]`]) was lower than experienced interest at Time 2 (M = `r sum_dat_factorial$mean[4]`, SD = `r sum_dat_factorial$sd[4]`, 95%</span><span class="st"> </span><span class="dt">CI =</span> [<span class="st">`</span><span class="dt">r sum_dat_factorial$min[4]</span><span class="st">`</span>, <span class="st">`</span><span class="dt">r sum_dat_factorial$max[4]</span><span class="st">`</span>]), <span class="kw">t</span>(<span class="st">`</span><span class="dt">r contrasts_factorial$df[2]</span><span class="st">`</span>) =<span class="st"> `</span><span class="dt">r contrasts_factorial$statistic[2]</span><span class="st">`</span>, p <span class="op">&lt;</span><span class="st"> </span>.<span class="fl">001.</span> Although predicted interest <span class="cf">for</span> extraordinary events at Time <span class="dv">1</span> (<span class="dt">M =</span> <span class="st">`</span><span class="dt">r sum_dat_factorial$mean[1]</span><span class="st">`</span>, <span class="dt">SD =</span> <span class="st">`</span><span class="dt">r sum_dat_factorial$sd[1]</span><span class="st">`</span>, <span class="dv">95</span><span class="op">% CI = [`r sum_dat_factorial$min[1]`, `r sum_dat_factorial$max[1]`]) was lower than experienced interest at Time 2 (M = `r sum_dat_factorial$mean[2]`, SD = `r sum_dat_factorial$sd[2]`, 95%</span><span class="st"> </span><span class="dt">CI =</span> [<span class="st">`</span><span class="dt">r sum_dat_factorial$min[2]</span><span class="st">`</span>, <span class="st">`</span><span class="dt">r sum_dat_factorial$max[2]</span><span class="st">`</span>), <span class="kw">t</span>(<span class="st">`</span><span class="dt">r contrasts_factorial$df[1]</span><span class="st">`</span>) =<span class="st"> `</span><span class="dt">r contrasts_factorial$statistic[1]</span><span class="st">`</span>, p <span class="op">&lt;</span><span class="st"> </span>.<span class="fl">001.</span> , the magnitude of underestimation was smaller than <span class="cf">for</span> ordinary events.</code></pre>
+<p>Does the data meet assumption 6? <select class='solveme' data-answer='["Yes - all expected frequencies are > 5"]'> <option></option> <option>Yes - all expected frequencies are &gt; 5</option> <option>No - one or more expected frequencies are &lt; 5</option></select></p>
+</div>
+<div id="cramer" class="section level3">
+<h3><span class="header-section-number">4.2.14</span> Activity 10: Effect size</h3>
+<p>Although it wasn’t in the original paper, as our last step we will calculate an effect size so that we have a standardised measure of how large the association between our grouping variable is, the effect size measure for chi-square is Cramer’s V that you covered in the lecture.</p>
+<p>To calculate Cramer’s V we’re going to use the function <code>cramersv()</code> from the <code>lsr</code> package. This function is very easy to use - you copy and paste the code you gave to <code>chisq.test()</code> in Activity 7.</p>
+<pre class="sourceCode r"><code class="sourceCode r">eff_size &lt;-<span class="st"> </span><span class="kw">cramersV</span>(<span class="dt">x =</span> intent_recode<span class="op">$</span>condition, <span class="dt">y =</span> intent_recode<span class="op">$</span>actualdonate, <span class="dt">correct =</span> <span class="ot">FALSE</span>)
+eff_size</code></pre>
+<pre><code>## [1] 0.327207</code></pre>
+</div>
+<div id="activity-11-write-up" class="section level3">
+<h3><span class="header-section-number">4.2.15</span> Activity 11: Write-up</h3>
+<p>Now that you’ve run all of the analyses you can use inline coding to help you write up your results. This isn’t something you’re going to be tested on in this course but it’s a really cool feature of Markdown so for each statistical test we’ll show you the code that does it so that you can use it in the future if you wanted to. We’re going to replicate the exact write-up of the results from the original paper (with the addition of the effect size).</p>
+<p>In the <strong>whitespace</strong> in your Markdown document, copy and paste the following (do not change anything):</p>
+<pre class="sourceCode r"><code class="sourceCode r">Those <span class="cf">in</span> the reminder<span class="op">-</span>through<span class="op">-</span>association condition performed the intended behavior at a significantly higher <span class="kw">rate</span> (<span class="st">`</span><span class="dt">r round(pluck(intent_percent$percent_condition, 3),0)</span><span class="st">`</span>%, <span class="st">`</span><span class="dt">r pluck(intent_percent$n, 3)</span><span class="st">`</span> out of <span class="st">`</span><span class="dt">r pluck(intent_percent$n, 3) + pluck(intent_percent$n, 4)</span><span class="st">`</span>) than did those <span class="cf">in</span> the control <span class="kw">condition</span> (<span class="st">`</span><span class="dt">r round(pluck(intent_percent$percent_condition, 1),0)</span><span class="st">`</span>, <span class="st">`</span><span class="dt">r pluck(intent_percent$n, 1)</span><span class="st">`</span> out of <span class="st">`</span><span class="dt">r pluck(intent_percent$n, 1) + pluck(intent_percent$n, 2)</span><span class="st">`</span>)<span class="er">)</span>, χ2(<span class="st">`</span><span class="dt">r results$parameter</span><span class="st">`</span>, <span class="dt">N =</span> <span class="st">`</span><span class="dt">r length(intent_recode$id)</span><span class="st">`</span>) =<span class="st"> `</span><span class="dt">r round(results$statistic,2)</span><span class="st">`</span>, p =<span class="st"> `</span><span class="dt">r round(results$p.value, 3)</span><span class="st">`</span>, V =<span class="st"> `</span><span class="dt">r round(eff_size, 2)</span><span class="st">`</span>.</code></pre>
+<p>This will knit as:</p>
 <blockquote>
-<p>We conducted the same repeated measures ANOVA with interest as the dependent measure and again found a main effect of time, F(, ) = 25.88, p &lt; .001, ηp2 = 0.044; anticipated interest at Time 1 (M = 4.2038462), SD = 1.1214024), 95% CI = [4.0110769, 4.3966155]) was lower than actual interest at Time 2 (M = 4.6923077, SD = 1.1867887, 95% CI = [4.4882985, 4.8963169]).We also observed an interaction between time and type of experience, F(, ) = 4.445, p = 0.04, ηp2 = 0.008. Pairwise comparisons revealed that for ordinary events, predicted interest at Time 1 (M = 4.0390625, SD = 1.092197, 95% CI = [3.7714791, 4.3066459]) was lower than experienced interest at Time 2 (M = 4.734375, SD = 1.2407395, 95% CI = [4.4303994, 5.0383506]), t(128) = -5.0493433, p &lt; .001. Although predicted interest for extraordinary events at Time 1 (M = 4.3636364, SD = 1.1344109, 95% CI = [4.0899542, 4.6373185]) was lower than experienced interest at Time 2 (M = 4.6515152, SD = 1.1400732, 95% CI = [4.3764669, 4.9265634), t(128) = -2.122983, p &lt; .001. , the magnitude of underestimation was smaller than for ordinary events.</p>
+<p>Those in the reminder-through-association condition performed the intended behavior at a significantly higher rate (74%, 29 out of 39) than did those in the control condition (42, 16 out of 38)), χ2(1, N = 77) = 8.24, p = 0.004,V = 0.33.</p>
 </blockquote>
-</div>
-<div id="activity-9-transforming-data" class="section level3">
-<h3><span class="header-section-number">8.2.10</span> Activity 9: Transforming data</h3>
-<p>In this chapter we decided that the violation of the assumption of normality was ok so that we could replicate the results in the paper. But what if we weren’t happy with this or if the violation had been more extreme? One option to deal with normality is to <strong>transform your data</strong>. If you want more information on this you should consult Chapter <a href="supp.html#supp">11</a>.</p>
-<p>First, we are going to transform the data. There are various options for how you can transform data but we’re going to use Tukeys Ladder of Powers transformation. This finds the power transformation that makes the data fit the normal distribution as closely as possible with this type of transformation.</p>
-<ul>
-<li>Run the below code. This will use <code>mutate()</code> to add a new variable to the data-set, <code>interest_tukey</code> which is going to be our transformed DV. The function <code>transformTukey()</code> is from the <code>rcompanion</code> package. Setting <code>plotit = TRUE</code> will automatically create qqPlots and histograms so that we can immediately visualise the new variable.</li>
-</ul>
-<pre class="sourceCode r"><code class="sourceCode r">factorial &lt;-<span class="st"> </span>factorial <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">interest_log =</span> <span class="kw">log</span>(interest),
-         <span class="dt">interest_sqrt =</span> <span class="kw">sqrt</span>(interest),
-         <span class="dt">interest_cube =</span> <span class="kw">sign</span>(interest) <span class="op">*</span><span class="st"> </span><span class="kw">abs</span>(interest)<span class="op">^</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">3</span>),
-         <span class="dt">interest_tukey =</span> <span class="kw">transformTukey</span>(interest, <span class="dt">plotit=</span><span class="ot">TRUE</span>)
-)</code></pre>
-<p>Now that you’ve transformed the DV we can re-run the ANOVA with this new variable.</p>
-<pre class="sourceCode r"><code class="sourceCode r">tukey_factorial &lt;-<span class="st"> </span><span class="kw">aov_ez</span>(<span class="dt">id =</span> <span class="st">&quot;subject&quot;</span>,
-               <span class="dt">data =</span> factorial, 
-               <span class="dt">between =</span> <span class="st">&quot;Condition&quot;</span>, 
-               <span class="dt">within =</span> <span class="st">&quot;time&quot;</span>,
-               <span class="dt">dv =</span> <span class="st">&quot;interest_tukey&quot;</span>, 
-               <span class="dt">type =</span> <span class="dv">3</span>)
-
-tukey_factorial</code></pre>
-<p>Notice that doing this hasn’t changed the pattern of the ANOVA results, the p-values for the main effects and interactions are very slightly different but the overall conclusions remain the same. This is likely because the violations of normality was quite mild and there is a large sample size, however, with the transformation we can be more confident in our results and it may not always be the case that the transformed ANOVA is the same if the violations were more extreme.</p>
-<div id="finished-10" class="section level4">
-<h4><span class="header-section-number">8.2.10.1</span> Finished!</h4>
-<p>And we’re done! There’s only one more week of R left. I know that for some of you, you will be breathing a sigh of relief but we really want you to reflect on just how far you’ve come and the skills that you’ve learned. Even if you don’t continue with quantitative research, your understanding of how data is manipulated and how the final results of journal articles actually happen will have substantially increased and that level of critical awareness is an all-round good skill to have.</p>
+<p>If you’re feeling comfortable with R at this point, push yourself to reverse-engineer what each bit of this inline code is doing so that you could use it yourself (remember the <code>?help</code> function).</p>
+<div id="finished-3" class="section level4">
+<h4><span class="header-section-number">4.2.15.1</span> Finished!</h4>
+<p>And you’re done! The second and final R Portfolio for RM1 will be available on Moodle and again will only assess you on code we have covered in this book. If you need to, take the time over the break to revise what we’ve covered so far - if you can get comfortable with the content of the last few weeks, RM2 won’t pose a problem. If you’re ok with, or even enjoying R so far then please feel free to work through this book at your own pace ahead of the scheduled classes.</p>
 </div>
 </div>
-<div id="activity-solutions-8" class="section level3">
-<h3><span class="header-section-number">8.2.11</span> Activity solutions</h3>
-<div id="activity-1-6" class="section level4">
-<h4><span class="header-section-number">8.2.11.1</span> Activity 1</h4>
+<div id="activity-solutions-2" class="section level3">
+<h3><span class="header-section-number">4.2.16</span> Activity solutions</h3>
+<div id="activity-1" class="section level4">
+<h4><span class="header-section-number">4.2.16.1</span> Activity 1</h4>
 <div class="solution">
 <button>
 Activity 1
 </button>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;pwr&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;rcompanion&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;car&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;broom&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;afex&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;emmeans&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+intent_data &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;RTA_study1.csv&quot;</span>)</code></pre>
 </div>
-<p>** Click tab to see solution **</p>
+<p><strong>click the tab to see the solution</strong>
+<br></p>
 </div>
-<div id="activity-2-4" class="section level4">
-<h4><span class="header-section-number">8.2.11.2</span> Activity 2</h4>
-<div class="solution">
-<button>
-Activity 2
-</button>
-<pre class="sourceCode r"><code class="sourceCode r">sum_dat_factorial&lt;-factorial<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">group_by</span>(Condition, time)<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(interest, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),
-            <span class="dt">min =</span> <span class="kw">mean</span>(interest) <span class="op">-</span><span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>)<span class="op">*</span><span class="kw">sd</span>(interest)<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">n</span>()), <span class="co"># this is standard error</span>
-            <span class="dt">max =</span> <span class="kw">mean</span>(interest) <span class="op">+</span><span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>)<span class="op">*</span><span class="kw">sd</span>(interest)<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">n</span>()),
-            <span class="dt">sd =</span> <span class="kw">sd</span>(interest)
-            )</code></pre>
-</div>
-<p>** Click tab to see solution **</p>
-</div>
-<div id="activity-3-4" class="section level4">
-<h4><span class="header-section-number">8.2.11.3</span> Activity 3</h4>
+<div id="activity-3-1" class="section level4">
+<h4><span class="header-section-number">4.2.16.2</span> Activity 3</h4>
 <div class="solution">
 <button>
 Activity 3
 </button>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(factorial, <span class="kw">aes</span>(<span class="dt">x =</span> time , <span class="dt">y =</span> interest, <span class="dt">fill =</span> Condition))<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_violin</span>(<span class="dt">trim =</span> <span class="ot">FALSE</span>, <span class="dt">alpha =</span> <span class="fl">.6</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>(.<span class="dv">9</span>), <span class="dt">width =</span> <span class="fl">.2</span>, <span class="dt">colour =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">alpha =</span> <span class="fl">.7</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Time 1&quot;</span>, <span class="st">&quot;Time 2&quot;</span>))<span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_fill_viridis_d</span>(<span class="dt">option =</span> <span class="st">&quot;E&quot;</span>)<span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="dt">data =</span> sum_dat_factorial,
-                  <span class="kw">aes</span>(time, mean, <span class="dt">ymin=</span>min, <span class="dt">ymax=</span>max),
-                  <span class="dt">shape =</span> <span class="dv">20</span>, 
-                  <span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="dt">width =</span> <span class="fl">0.9</span>))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># solution using pipes</span>
+
+intent_recode &lt;-<span class="st"> </span>intent_data <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(intend <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">condition =</span> <span class="kw">recode</span>(condition, <span class="st">&quot;1&quot;</span> =<span class="st"> &quot;rta&quot;</span>, <span class="st">&quot;2&quot;</span> =<span class="st"> &quot;control&quot;</span>),
+         <span class="dt">actualdonate =</span> <span class="kw">recode</span>(actualdonate, <span class="st">&quot;1&quot;</span> =<span class="st"> &quot;donated&quot;</span>, <span class="st">&quot;0&quot;</span> =<span class="st"> &quot;no_donation&quot;</span>))
+
+<span class="co"># solution using separate steps</span>
+
+intent_filter &lt;-<span class="st"> </span><span class="kw">filter</span>(intent_data, intend <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)
+intent_recode &lt;-<span class="st"> </span><span class="kw">mutate</span>(intent_filter, <span class="dt">condition =</span> <span class="kw">recode</span>(condition, <span class="st">&quot;1&quot;</span> =<span class="st"> &quot;rta&quot;</span>, <span class="st">&quot;2&quot;</span> =<span class="st"> &quot;control&quot;</span>),
+                        <span class="dt">actualdonate =</span> <span class="kw">recode</span>(actualdonate, <span class="st">&quot;1&quot;</span> =<span class="st"> &quot;donated&quot;</span>, <span class="st">&quot;0&quot;</span> =<span class="st"> &quot;no_donation&quot;</span>))</code></pre>
 </div>
-<p>** Click tab to see solution **</p>
+<p><strong>click the tab to see the solution</strong>
+<br></p>
 </div>
-<div id="activity-5-5" class="section level4">
-<h4><span class="header-section-number">8.2.11.4</span> Activity 5</h4>
+<div id="activity-9-1" class="section level4">
+<h4><span class="header-section-number">4.2.16.3</span> Activity 9</h4>
 <div class="solution">
 <button>
-Activity 5
+Activity 9
 </button>
-<pre class="sourceCode r"><code class="sourceCode r">mod_factorial &lt;-<span class="st"> </span><span class="kw">aov_ez</span>(<span class="dt">id =</span> <span class="st">&quot;subject&quot;</span>,
-               <span class="dt">data =</span> factorial, 
-               <span class="dt">between =</span> <span class="st">&quot;Condition&quot;</span>, 
-               <span class="dt">within =</span> <span class="st">&quot;time&quot;</span>,
-               <span class="dt">dv =</span> <span class="st">&quot;interest&quot;</span>, 
-               <span class="dt">type =</span> <span class="dv">3</span>) 
-
-factorial_output &lt;-<span class="st"> </span><span class="kw">anova</span>(mod_factorial) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>()</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">results<span class="op">$</span>expected</code></pre>
 </div>
-<p>** Click tab to see solution **</p>
+<p><strong>click the tab to see the solution</strong>
+<br></p>
 </div>
-<div id="activity-6-3" class="section level4">
-<h4><span class="header-section-number">8.2.11.5</span> Activity 6</h4>
+</div>
+<div id="test-yourself-4" class="section level3">
+<h3><span class="header-section-number">4.2.17</span> Test yourself</h3>
+<p>** This question is currently borked</p>
+<ol style="list-style-type: decimal">
+<li>You have a dataset where gender has been coded numerically. You want to recode this to use text labels. Which code will work? <select class='solveme' data-answer='["mutate(gender = recode(gender, \"1\" = \"male\", \"2\" = \"female\", \"3\" = \"nonbinary\"))"]'> <option></option> <option>mutate(gender = recode(gender, “male” = “1”, “female” = “2”, “nonbinary” = “3”))</option> <option>mutate(gender = recode(gender, male = 1, “female = 2, nonbinary = 3))</option> <option>mutate(gender = recode(gender,”1" = “male”, “2” = “female”, “3” = “nonbinary”))</option></select></li>
+</ol>
 <div class="solution">
 <button>
-Activity 6
+Explain this answer
 </button>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># normality testing</span>
-<span class="kw">qqPlot</span>(mod_factorial<span class="op">$</span>lm<span class="op">$</span>residuals)
-<span class="kw">shapiro.test</span>(mod_factorial<span class="op">$</span>lm<span class="op">$</span>residuals)
-
-<span class="co"># levene&#39;s test</span>
-<span class="kw">test_levene</span>(mod_factorial)</code></pre>
+<p>The first option has the new and old codes in the wrong position, the second option is missing quotation marks, the third option is correct.</p>
 </div>
-<p>** Click tab to see solution **</p>
-
+<p><br></p>
+<ol start="2" style="list-style-type: decimal">
+<li>From the below code, what would the plot have on the x-axis? <select class='solveme' data-answer='["gender"]'> <option></option> <option>exp_data</option> <option>gender</option> <option>score</option></select></li>
+</ol>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> exp_data, <span class="kw">aes</span>(gender, score))</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>From the below code, how would the bars in the plot be positioned? <select class='solveme' data-answer='["On top of each other"]'> <option></option> <option>On top of each other</option> <option>Next to each other</option></select></li>
+</ol>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(data, <span class="kw">aes</span>(<span class="dt">x =</span> condition, <span class="dt">fill =</span> actualdonate)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>()</code></pre>
+<div class="solution">
+<button>
+Explain this answer
+</button>
 </div>
+<p><br></p>
+<ol start="4" style="list-style-type: decimal">
+<li>Which of the following is not an argument of <code>chisq.test()</code> (you may need to look at the help documention to answer this question)? <select class='solveme' data-answer='["continuity"]'> <option></option> <option>x</option> <option>y</option> <option>p</option> <option>continuity</option></select></li>
+</ol>
+
 </div>
 </div>
 </div>
@@ -1181,8 +1277,8 @@ window.onload = function() {
           </div>
         </div>
       </div>
-<a href="vis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="rm2-regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="rm1-data-wrangling.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="rm2-r-markdown-correlations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
