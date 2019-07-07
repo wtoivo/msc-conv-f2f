@@ -271,7 +271,7 @@ Below this line you will find the solutions to the above tasks. Only look at the
 
 <div class="solution"><button>Activity 1</button>
 ```{r a1, eval=FALSE}
-Library("car")
+library("car")
 library("broom")
 library("afex")
 library("emmeans")

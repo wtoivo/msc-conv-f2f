@@ -1,8 +1,7 @@
 
 --- 
 title: "MSc Conversion in Psychological Studies/Science"
-author: "Emily Nordmann"
-date: "2019-07-05"
+date: "2019-07-07"
 bibliography:
 - book.bib
 - packages.bib
@@ -18,6 +17,8 @@ biblio-style: apalike
 
 
 # Overview {-}
+
+<img src="images/msc_conv.png" style="width: 200px; float: right;">
 
 <div class="info">
 <p>This book contains the materials for students on the MSc Conversion in Psychological Studies/Science. This course is a one-year postgraduate degree where students who already hold a non-psychology undergraduate degree receive a British Psychological Society accredited MSc. The students are typically a diverse cohort and range from those with no STEM or programming background to engineering and computing science graduates. Compared to the undergraduate degree, the students are older, and there is a greater incidence of computer anxiety.</p>
