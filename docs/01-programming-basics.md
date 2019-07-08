@@ -1,5 +1,5 @@
 
-# Programming Basics
+# Programming Basics {#ref3}
 
 <div class="info">
 <p>This chapter is intended to introduce key programming terminology to those students who may have had very little experience with coding, or indeed with computers. As a result of the diverse cohort, even basic practical steps are broken down and supported by screenshots. In my experience, for those with programming anxiety it is very difficult to overcome a bad start to learning R therefore extra effort is paid towards softening the learning curve in these initial labs and providing activities that have a tangible output so that the students can visualise their success.</p>
@@ -110,7 +110,7 @@ One very useful feature of R Studio is the tab auto-complete for functions (see 
 <p class="caption">(\#fig:img-autocomplete)Tab auto-complete</p>
 </div>
 
-## Base R and packages
+## Base R and packages {#packages}
 
 When you install R you will have access to a range of functions including options for data wrangling and statistical analysis. The functions that are included in the default installation are typically referred to as **Base R** and there is a useful cheat sheet that shows many Base R functions [here](https://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf).
 
@@ -148,7 +148,7 @@ In addition to updates to R and R Studio, the creators of packages also sometime
 <p>To avoid accidentally overwriting a package with a later version, you should <strong>never</strong> include <code>install.packages()</code> in your analysis scripts in case you, or someone else runs the code by mistake. Remember, the University of Glasgow computers will already have all of the packages you need for this course so you only need to install packages if you are using your own machine.</p>
 </div>
 
-### Package conflicts
+### Package conflicts {#conflicts}
 
 There are thousands of different R packages with even more functions. Unfortunately, sometimes different packages have the same function names. For example, the packages `dplyr` and `MASS` both have a function named `select()`. If you load both of these packages, R will produce a warning telling you that there is a conflict.
 
@@ -212,7 +212,7 @@ mean(data)
 
 ```
 ## [1] 43
-## Time difference of 178 days
+## Time difference of 177 days
 ## [1] 17.66644
 ```
 
