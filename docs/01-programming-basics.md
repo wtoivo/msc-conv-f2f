@@ -1,9 +1,11 @@
 
 # Programming Basics {#ref3}
 
-<div class="info">
-<p>This chapter is intended to introduce key programming terminology to those students who may have had very little experience with coding, or indeed with computers. As a result of the diverse cohort, even basic practical steps are broken down and supported by screenshots. In my experience, for those with programming anxiety it is very difficult to overcome a bad start to learning R therefore extra effort is paid towards softening the learning curve in these initial labs and providing activities that have a tangible output so that the students can visualise their success.</p>
-</div>
+## Notes for instructors
+
+This chapter is intended to introduce key programming terminology to those students who may have had very little experience with coding, or indeed with computers. As a result of the diverse cohort, even basic practical steps are broken down and supported by screenshots. In my experience, for those with programming anxiety it is very difficult to overcome a bad start to learning R therefore extra effort is paid towards softening the learning curve in these initial labs and providing activities that have a tangible output so that the students can visualise their success. 
+
+## Introduction
 
 In this chapter we will go over some basic programming concepts and terminology, common pitfalls, helpful hints, and where to get help. Those of you who have no programming experience should find this chapter particularly helpful, however, even if you've used R before there may be some helpful hints and tips so please make sure you read through this chapter before Lab 1.
 
@@ -212,7 +214,7 @@ mean(data)
 
 ```
 ## [1] 43
-## Time difference of 177 days
+## Time difference of 176 days
 ## [1] 17.66644
 ```
 
@@ -230,7 +232,7 @@ decade <- age + 10
 You will constantly be creating objects throughout this course and you will learn more about them and how they behave as we go along, however, for now it is enough to understand that they are a way of saving values, that these values can numbers, text, or the result of operations, and that they can be used in further operations to create new variables.
 
 <div class="info">
-<p>You may also see objects referred to as ‘variables’. There is a difference between the two in programming terms, however, they are used synonomously very frequently.</p>
+<p>You may also see objects referred to as ‘variables’. There is a difference between the two in programming terms, however, they are used synonymously very frequently.</p>
 </div>
 
 ## Help and additional resources
@@ -246,11 +248,11 @@ Getting good at programming really means getting good trying stuff out,  searchi
 * If you get an error message, copy and paste it in to Google - it's very likely someone else has had the same problem.
 * In addition to these course materials there are a number of excellent resources for learning R:
   * [R Cookbook](http://www.cookbook-r.com/)
-  * [StackOverlow](https://stackoverflow.com/)
+  * [StackOverflow](https://stackoverflow.com/)
   * [R for Data Science](https://r4ds.had.co.nz/)
   * Search or use the [#rstats](https://twitter.com/search?f=tweets&q=%23rstats&src=typd) hashtag on Twitter
 
-If you would like to push yourself further with R, we reccomend working through [R for Data Science](https://r4ds.had.co.nz/) in full and/or the materials for the [MSc Data Skills course](https://gupsych.github.io/data_skills/) run by Prof. Lisa DeBruine and Dr. Dale Barr at the University of Glasgow.
+If you would like to push yourself further with R, we recommend working through [R for Data Science](https://r4ds.had.co.nz/) in full and/or the materials for the [MSc Data Skills course](https://gupsych.github.io/data_skills/) run by Prof. Lisa DeBruine and Dr. Dale Barr at the University of Glasgow.
 
 ## Debugging tips
 
