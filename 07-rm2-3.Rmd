@@ -16,9 +16,9 @@ To help you understand the data we're visualising, here is the abstract:
 
 Do the following. If you need help, consult Chapter \@ref(ref3) and Chapter \@(ref2).
 
-* Open R Studio and set the working directory to your Lab 3 folder.  
+* Open R Studio and set the working directory to your Chapter 7 folder. Ensure the environment is clear.   
 * Open a new R Markdown document and save it in your working directory. Call the file "Pre-class 3".    
-* Download `Zhang et al. 2014 Study 3.csv` from Moodle and save it in your Lab 3 folder. Make sure that you do not change the file name at all.
+* Download `Zhang et al. 2014 Study 3.csv` from Moodle and save it in your Chapter 7 folder. Make sure that you do not change the file name at all.
 * Delete the default R Markdown welcome text and insert a new code chunk that loads the package `tidyverse` using the `library()` function. 
 * Run the below code to load and wrangle the data into tidy data.
 
@@ -627,15 +627,15 @@ Let's now try out some calculations. We will start with just looking at effect s
 
 ### Activity 1: Set-up
 
-Do the following. If you need help, consult Chapter \@ref(ref3) and Chapter \@(ref2).
+Do the following. 
 
-* Open R Studio and set the working directory to your Lab 3 folder.  
+* Open R Studio and set the working directory to your Chapter 7 folder.  
 * Open a new R Markdown document and save it in your working directory. Call the file "In-class 3".    
 * Delete the default R Markdown welcome text and insert a new code chunk that loads the packages `pwr`, `broom`, and `tidyverse` using the `library()` function. You may need to install `pwr` if you are working on your own machine but remember **never install packages on a university machine**.
 
 ### Activity 2: Effect size from a one-sample t-test
 
-* You run a one-sample t-test and discover a significant effect, t(25) = 3.24, p < .05. Calculate `d` and determine whether the effect size is small, medium or large.
+* You run a one-sample t-test and discover a significant effect, t(25) = 3.24, p < .05. Using the above formulas, calculate `d` and determine whether the effect size is small, medium or large.
 
 `r hide("Helpful hint")`
 ```{r, echo = FALSE, results = 'asis'}
@@ -715,7 +715,7 @@ We've asked you to calculate Cohen's D by hand above to reinforce your understan
 
 ### Activity 5: `pwr.t.test()`
 
-Today we will use the function `pwr.t.test()`, `pwr.r.test()` and `pwr.chisq.test` from the package `pwr` to run power calculations for t-tests, correlations and chi-square.
+Today we will use the functions `pwr.t.test()`, `pwr.r.test()` and `pwr.chisq.test` from the package `pwr` to run power calculations for t-tests, correlations and chi-square.
 
 Remember that for more information on this function, simply do `?pwr.t.test` in the console. On doing this you will see that `pwr.t.test()` takes a series of inputs:
 
@@ -726,7 +726,7 @@ Remember that for more information on this function, simply do `?pwr.t.test` in 
 * **type** - Type of t test : `one.sample`, `two.sample`, or `paired`
 * **alternative** - the type of hypothesis; `"two.sided", "greater", "less"`
 
-The function works on a leave one out principle. You give it all the information you have and it returns the element you are missing.  So, for example, say you needed to know how many people per group (n) you would need to detect an effect size of `d = .4` with `power = .8`, `alpha = .05` in a `two.sample (between-subjects) t-test` on a `two.sided` hypothesis test.  
+The function works on a leave one out principle. You give it all the information you have and it returns the element you are missing.  So, for example, say you needed to know how many people per group (n) you would need to detect an effect size of `d = .4` with `power = .8`, `alpha = .05` in a `two.sample` (between-subjects) t-test on a `two.sided` hypothesis test.  
 
 * Run the below code:
 
@@ -845,7 +845,7 @@ Imagine you were conducting a chi-square analysis with 30 observations, 1 df, an
 * Using `pwr.chisq.test()`, what is the smallest effect size that you could reliably detect, rounded to 2 decimal places? `r fitb("0.51", ".51")`
 
 
-### Activity 11: Power of Published Research
+### Activity 11: Power of published research
 
 Thus far we have used hypothetical situations - now go look at the paper on the [Open Stats Lab](https://sites.trinity.edu/osl/data-sets-and-activities/t-test-activities) website called Does Music Convey Social Information to Infants? (we have used this dataset in the t-test lab). You can download the pdf and look at it, but here we will determine the power of the significant t-tests reported in Experiment 1 under the Results section on Pg489. There is a one-sample t-test and a paired-samples t-test to consider, summarised below. Assume testing was at power = .8, alpha = .05. Based on your calculations are either of the stated effects underpowered?
 

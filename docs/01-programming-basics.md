@@ -7,13 +7,13 @@ This chapter is intended to introduce key programming terminology to those stude
 
 ## Introduction
 
-In this chapter we will go over some basic programming concepts and terminology, common pitfalls, helpful hints, and where to get help. Those of you who have no programming experience should find this chapter particularly helpful, however, even if you've used R before there may be some helpful hints and tips so please make sure you read through this chapter before Lab 1.
+In this chapter we will go over some basic programming concepts and terminology, common pitfalls, helpful hints, and where to get help. Those of you who have no programming experience should find this chapter particularly helpful, however, even if you've used R before there may be some helpful hints and tips so please make sure you read through this chapter before the lab.
 
-We don't expect you to memorise the information that is contained in this chapter and some sections of it will make more sense when you start writing your own code in Lab 1 - just make sure you know what help is available!
+We don't expect you to memorise the information that is contained in this chapter and some sections of it will make more sense when you start writing your own code in the lab - just make sure you know what help is available!
 
 ## R and R Studio
 
-For this course, you need two different bits of software, [R]() and [RStudio](). R is a programming language that you will write code in and R Studio is an Integrated Development Environment (IDE) which makes working with R easier. Think of it as knowing English and using a plain text editor like NotePad to write a book versus using a word processor like Microsoft Word. You could do it, but it wouldn't look as good and it would be much harder without things like spell-checking and formatting. In a similar way, you can use R without R Studio but we wouldn't recommend it. The key thing to remember is that although you will do all of your work using R Studio for this course, you are actually using two pieces of software which means that from time-to-time, both of them may have separate updates.
+For this course, you need two different bits of software, [R](https://www.r-project.org/) and [RStudio](https://www.rstudio.com/products/rstudio/download/#download). R is a programming language that you will write code in and R Studio is an Integrated Development Environment (IDE) which makes working with R easier. Think of it as knowing English and using a plain text editor like NotePad to write a book versus using a word processor like Microsoft Word. You could do it, but it wouldn't look as good and it would be much harder without things like spell-checking and formatting. In a similar way, you can use R without R Studio but we wouldn't recommend it. The key thing to remember is that although you will do all of your work using R Studio for this course, you are actually using two pieces of software which means that from time-to-time, both of them may have separate updates.
 
 All of the University of Glasgow computers should already have R and R Studio installed, however, both are freely available so you may wish to install them on your own machine.
 
@@ -129,7 +129,7 @@ install.packages("tidyverse")
 
 You only need to install a package once, however, each time you start R you need to load the packages you want to use, in a similar way that you need to install an app on your phone once, but you need to open it every time you want to use it.
 
-To load packages we use the function `library()`. Typically you would start any analysis script by loading all of the packages you need, but we will come back to that in Lab 1.
+To load packages we use the function `library()`. Typically you would start any analysis script by loading all of the packages you need, but we will come back to that in the lab.
 
 
 ```r
@@ -214,7 +214,7 @@ mean(data)
 
 ```
 ## [1] 43
-## Time difference of 176 days
+## Time difference of 164 days
 ## [1] 17.66644
 ```
 
@@ -234,6 +234,32 @@ You will constantly be creating objects throughout this course and you will lear
 <div class="info">
 <p>You may also see objects referred to as ‘variables’. There is a difference between the two in programming terms, however, they are used synonymously very frequently.</p>
 </div>
+
+## Looking after the environment
+
+If you've been writing a lot of code you may find that the environment pane (or workspace) has become cluttered with many objects. This can make it difficult to figure out which object you need and therefore you run the risk of using the wrong data frame. If you're working on a new dataset, or if you've tried lots of different code before getting the final version, it is good practice to remember to clear the environment to avoid using the wrong object. You can do this in several way.
+
+1. To remove individual objects, you can type `rm(object_name)` in the console. Try this now to remove one of the objects you created in the previous section. 
+2. To clear all objects from the environment run `rm(list = ls())` in the console.
+3. To clear all objects from the environment you can also click the broom icon in the environment pane. 
+
+
+<div class="figure" style="text-align: center">
+<img src="images/broom.png" alt="Clearing the workspace" width="100%" />
+<p class="caption">(\#fig:img-broom)Clearing the workspace</p>
+</div>
+
+## R sessions
+
+When you open up R and start writing code, loading packages, and creating objects, you're doing so in a new **session**. In addition to clearing the workspace, it can sometimes be useful to start a new session. This will happen automatically each time you start R, however, if you find your code isn't working and you can't figure out why, it might be worth starting a new session. This will clear the environment and detach all loaded packages - think of it like restarting your phone.
+
+To do this, click 'Session - Restart R'. Remember that you will then need to load the packages you need and your data again. 
+
+<div class="figure" style="text-align: center">
+<img src="images/new_session.png" alt="The truth about programming" width="100%" />
+<p class="caption">(\#fig:img-session)The truth about programming</p>
+</div>
+
 
 ## Help and additional resources
 
