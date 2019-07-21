@@ -22,9 +22,9 @@ If our hypothesis is correct then there should be `r mcq(c("a positive", "no", "
 
 Do the following. If you need help, consult Chapter \@ref(ref3) and Chapter \@(ref2).
 
-* Open R Studio and set the working directory to your RM2 Lab 5 folder.  
+* Open R Studio and set the working directory to your RM2 Chapter 9 folder. Ensure the environment is clear.   
 * Open a new R Markdown document and save it in your working directory. Call the file "Pre-class 5".    
-* Download `L3_stars.csv` and `psess.csv`. from Moodle and save them in your Lab 5 folder. Make sure that you do not change the file name at all.    
+* Download `L3_stars.csv` and `psess.csv`. from Moodle and save them in your Chapter 9 folder. Make sure that you do not change the file name at all.    
 * Delete the default R Markdown welcome text and insert a new code chunk that loads `pwr`, `car`, `broom`, and `tidyverse` using the `library()` function.
 * Load the two CSV datasets into variables called `stars` and `engage` using `read_csv()`.
 
@@ -220,7 +220,7 @@ f <-mod_summary$fstatistic
 mod_p <- pf(f[1], f[2], f[3], lower=FALSE) 
 ```
 
-Now, copy and paste the below code into **white-space**.
+Now, copy and paste the below code into **white-space** and knit the document.
 
 ```{r writeup1, eval = FALSE}
 A simple linear regression was performed with engagment (M = `r descriptives$mean_weeks %>% round(2)`, SD = `r descriptives$sd_anx %>% round(2)`) as the outcome variable and statistics anxiety (M = `r descriptives$mean_anx %>% round(2)`, SD = `r descriptives$sd_anx %>% round(2)`) as the predictor variable. The results of the regression indicated that the model significantly predicted course engagement (F(`r mod_summary$fstatistic[2]`, `r mod_summary$fstatistic[3]`) = `r mod_summary$fstatistic[1] %>% round(2)`, p < .001, Adjusted R2 = `r mod_summary$adj.r.squared %>% round(2)`, f2 = .63), accounting for `r (mod_summary$adj.r.squared %>% round(2))*100`% of the variance. Anxiety was a significant positive predictor (β = `r mod$coefficients[2] %>% round(2)`, p < `mod_p %>% round(3)`.
@@ -345,9 +345,9 @@ But the expressive power of regression allows us to do this all within a single 
 
 ### Activity 1: Set-up
 
-* Open R Studio and set the working directory to your RM2 Lab 5 folder.  
+* Open R Studio and set the working directory to your RM2 Chapter 9 folder. Ensure the environment is clear.    
 * Open a new R Markdown document and save it in your working directory. Call the file "In-class 5".    
-* Download `wellbeing.csv`, `participant_info.csv`, and `screen_time.csv` from Moodle and save them in your Lab 5 folder. Make sure that you do not change the file names at all.    
+* Download `wellbeing.csv`, `participant_info.csv`, and `screen_time.csv` from Moodle and save them in your Chapter 9 folder. Make sure that you do not change the file names at all.    
 * Delete the default R Markdown welcome text and insert a new code chunk that loads `pwr`, `car`, `broom`, and `tidyverse` using the `library()` function.
 * Load the CSV datasets into variables called `pinfo`, `wellbeing` and `screen` using `read_csv()`.
 
@@ -624,7 +624,7 @@ f2
 
 ### Activity 11: Write-up
 
-Now, copy and paste the below code into **white-space**. Note that the p-values are entered manually because of the APA `p < .001` formatting.
+Now, copy and paste the below code into **white-space** and then knit the document. Note that the p-values are entered manually because of the APA `p < .001` formatting.
 
 ```{r writeup2, eval = FALSE}
 All continuous predictors were mean-centered and deviation coding was used for categorical predictors. The results of the regression indicated that the model significantly predicted course engagement (F(`r mod_summary$fstatistic[2]`, `r mod_summary$fstatistic[3]`) = `r mod_summary$fstatistic[1] %>% round(2)`, p < .001, Adjusted R2 = `r mod_summary$adj.r.squared %>% round(2)`, f2 = .63), accounting for `r (mod_summary$adj.r.squared %>% round(2))*100`% of the variance. Total screen time was a significant negative predictor of wellbeing scores (β = `r mod$coefficients[2] %>% round(2)`, p < .001, as was gender (β = `r mod$coefficients[3] %>% round(2)`, p < .001, with girls having lower wellbeing scores than boys. Importantly, there was a significant interaction between screentime and gender (β = `r mod$coefficients[4] %>% round(2)`, p < .001), smartphone use was more negatively associated with wellbeing for girls than for boys. 
@@ -634,9 +634,9 @@ All continuous predictors were mean-centered and deviation coding was used for c
 
 ### Finished!
 
-And you're done! Not just with this week but with the R component of RM2! Well, aside from the final portfolio worksheet. The progress that you have made is truly astonishing. Even if you struggled with R and haven't quite understood every single line of code we've shown, what you're capable of with data wrangling and visualisations alone makes you some of the most highly competitive psychology graduates in the world. 
+And you're done! Not just with this week but with the R component of RM2! Well, aside from the final portfolio worksheet. The progress that you have made is truly astonishing. Even if you struggled with R and haven't quite understood every single line of code we've shown, what you're capable of with data wrangling and visualisation alone makes you some of the most highly competitive psychology graduates in the world. 
 
-Regardless of whether you continue with quantitative methods and using R, remember the more important critical skills that you have learned as part of this process. The next time you see a dataset or you see data being talked about in the news, think about all work that was put into getting the data into the final format.More importantly, think about all the decisions that the researcher needed to make along the way and how that might have affected the outcome. 
+Regardless of whether you continue with quantitative methods and using R, remember the more important critical skills that you have learned as part of this process. The next time you see a dataset or you see data being talked about in the news, think about all work that was put into getting the data into the final format. More importantly, think about all the decisions that the researcher needed to make along the way and how that might have affected the outcome. 
 
 ![](https://media.giphy.com/media/ujGfBmVppmgEg/giphy.gif) 
 

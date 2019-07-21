@@ -45,7 +45,7 @@ To demonstrate the power of the six `dplyr` verbs, we will use them to work with
 
 Do the following. If you need help, consult Chapter \@ref(ref2) and Chapter \@ref(ref3).
 
-* Open R Studio and set the working directory to your Lab 2 folder.  
+* Open R Studio and set the working directory to your Chapter 3 folder. Ensure the environment is clear.  
 * Open a new R Markdown document and save it in your working directory. Call the file "Pre-class 2".    
 * If you are working on your own computer, install the package `babynames`. Remember, **never install packages if you are working on a university computer**. The university computers will already have this package installed.  
 * Delete the default R Markdown welcome text and insert a new code chunk that loads the packages `tidyverse` and `babynames` using `library()`.  
@@ -337,8 +337,8 @@ Today we are going to be using data from this paper: [Is there a Chastity Belt o
 
 If you need help with any of these steps, you should refer to the pre-lab activities:  
 
-* Download the data files from Moodle into your Lab 2 folder.  
-* Set the working directory to your Lab 2 folder.  
+* Download the data files from Moodle into your Chapter 3 folder.  
+* Set the working directory to your Chapter 3 folder. Ensure the environment is clear.    
 * Open a new R Markdown document and save it in your working directory. Call the file "In-class 1".    
 * Delete the default R Markdown welcome text and insert a new code chunk.
 * Copy and paste the below code into this code chunk and then run the code.
