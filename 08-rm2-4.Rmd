@@ -1,10 +1,117 @@
+```{r include=FALSE, cache=FALSE}
+# psyTeachR styles and functions
+# do not edit!!!!!
+
+library(tidyverse)
+library(webex)
+
+# default knitr options
+knitr::opts_chunk$set(
+  echo       = TRUE,
+  results    = "hold",
+  out.width = '100%',
+  fig.width  = 8, 
+  fig.height = 5, 
+  fig.align = 'center',
+  fig.cap='**CAPTION THIS FIGURE!!**'
+)
+
+# make docs directory and include .nojekyll file for github
+if (!dir.exists('docs')) dir.create('docs')
+file.create('docs/.nojekyll')
+
+## set global theme options for figures
+theme_set(theme_bw())
+
+## set class for a chunk using class="className"
+knitr::knit_hooks$set(class = function(before, options, envir) {
+  if (before) {
+    sprintf("<div class = '%s'>", options$class)
+  } else {
+    "</div>"
+  }
+})
+
+## verbatim code chunks
+knitr::knit_hooks$set(verbatim = function(before, options, envir) {
+  if (before) {
+    sprintf("<div class='verbatim'><code>&#96;&#96;&#96;{%s}</code>", options$verbatim)
+  } else {
+    "<code>&#96;&#96;&#96;</code></div>"
+  }
+})
+
+## verbatim inline R in backticks
+backtick <- function(code) {
+  paste0("<code>&#096;", code, "&#096;</code>")
+}
+
+
+myglossary <- list()
+
+## link to glossary with shortdef on hover
+glossary <- function(term, display = NULL, shortdef = "", link = TRUE) {
+  lcterm <- gsub(" ", "-", tolower(term), fixed = TRUE)
+  if (is.null(display)) display <- term
+  first_letter <- substr(lcterm, 1, 1)
+  url <- paste0("https://psyteachr.github.io/glossary/", first_letter)
+  if (shortdef == "") {
+    hash <- paste0("#", lcterm, " dfn")
+    shortdef <- xml2::read_html(url) %>% 
+      rvest::html_node(hash) %>%
+      rvest::html_text() %>%
+      gsub("\'", "&#39;", .)
+  }
+  
+  ## add to global glossary for this book
+  myglossary[lcterm] <<- shortdef
+  
+  if (link) {
+    paste0("<a class='glossary' target='_blank' title='", shortdef, 
+         "' href='", url, "#", lcterm, "'>", display, "</a>")
+  } else {
+    paste0("<a class='glossary' title='", shortdef, "'>", display, "</a>")
+  }
+}
+
+glossary_table <- function() {
+  as.data.frame(myglossary) %>% 
+    t() %>% 
+    as.data.frame() %>%
+    rownames_to_column(var="term") %>%
+    rename("definition" = V1) %>%
+    mutate(term = paste0("<a class='glossary' target='_blank' ",
+                         "href='https://psyteachr.github.io/glossary/",
+                         substr(term, 1, 1), "#", term, "'>",
+                         gsub(".", " ", term, fixed = 1), "</a>")) %>%
+    arrange(term) %>%
+    knitr::kable(escape = FALSE)
+}
+
+## palette with psyTeachR logo colour
+psyteachr_colours <- function(vals = 1:6) {
+  ptrc <- c(
+    "pink" = "#983E82",
+    "orange" = "#E2A458",
+    "yellow" = "#F5DC70",
+    "green" = "#59935B",
+    "blue" = "#467AAC",
+    "purple" = "#61589C"
+  )
+  
+  unname(ptrc[vals])
+}
+psyteachr_colors <- psyteachr_colours
+
+# book-specific code to include on every page
+```
 # RM2 ANOVA
 
 ## Pre-class activities
 
 ### Background: Intrusive memories
 
-In the lecture we worked through the calculations for calculating an ANOVA by hand in order to gain a conceptual understanding. However, when you run an ANOVA, typically the computer does all of these calculations for you. In this lab we'll show you how to run a one-factor and factorial ANOVA using the `afex` package and post-hoc tests using a package called `emmeans`. 
+In the lecture we worked through calculating an ANOVA by hand in order to gain a conceptual understanding. However, when you run an ANOVA, typically the computer does all of these calculations for you. In this lab we'll show you how to run a one-factor and factorial ANOVA using the `afex` package and post-hoc tests using a package called `emmeans`. 
 
 In this example we will be using data from experiment 2 of [James, E. L., Bonsall, M. B., Hoppitt, L., Tunbridge, E. M., Geddes, J. R., Milton, A. L., & Holmes, E. A. (2015). Computer game play reduces intrusive memories of experimental trauma via reconsolidation-update mechanisms. Psychological Science, 26, 1201-1215](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4526368/).
 
@@ -14,7 +121,7 @@ The abstract for the paper is as follows:
 
 ### Activity 1: Set-up
 
-Do the following. If you need help, consult Chapter \@ref(ref3) and Chapter \@(ref2).
+Do the following.
 
 * Open R Studio and set the working directory to your RM2 Chapter 8 folder. Ensure the environment is clear.    
 * Open a new R Markdown document and save it in your working directory. Call the file "Pre-class 4".    
@@ -63,7 +170,8 @@ dat2 <- dat2 %>%
 
 ### Activity 4: Create summary statistics
 
-Next we want to calculate some descriptive statistics. We're really interested in the scores from each experimental group rather than overall.  
+Next we want to calculate some descriptive statistics. We're really interested in the scores from each experimental group rather than overall.
+
 * Create an object called `sum_dat`that contains the mean, standard deviation and standard error for the number of intrusions grouped by `Condition`  
 * Use the pipe to achieve this in one pipeline  
 * Your table should have four columns, `Condition`, `mean`, `sd`, and `se`.  
@@ -72,8 +180,10 @@ Next we want to calculate some descriptive statistics. We're really interested i
 `r hide(" Hint")`
 ```{r, echo = FALSE}
 cat("
+
 * Use group_by(some_grouping_variable) %>% summarise(...)
 * standard error = sd/sqrt(n) =  sd/sqrt(length(some_variable_name)"
+
 )
 ```
 `r unhide()`
@@ -94,16 +204,18 @@ Now we can visualise the data. In the original paper they use a bar plot, which 
 * Create the below violin-boxplot with number of intrusions on the y-axis and condition on the x-axis (see Chapter \@ref(viobox)) 
 * Change the labels on the x-axis to something more informative (hint: `scale_x_discrete(labels = c("label names")`)  
 
-```{r violin plot, echo = FALSE, fig.cap = "Number of intrusions by condition"}
+```{r violin-plot, echo = FALSE, fig.cap = "Number of intrusions by condition"}
+
 ggplot(dat2, aes(x = Condition, y = intrusions))+
   geom_violin(trim = FALSE)+
   geom_boxplot(width = .2)
+
 ```
 
-We can see from this plot that there are outliers in each of the groups. This information isn't present in the bar plot, which is why it's not a good idea to use them but we will reproduce it anyway.The below code shows your how to produce the bar plot that is presented in the paper. Try and figure out what each bit of code is doing in the plot and see what happens when you change the values for each argument.
+We can see from this plot that there are outliers in each of the groups. This information isn't present in the bar plot, which is why it's not a good idea to use them but we will reproduce it anyway.The below code shows your how to produce the bar plot that is presented in the paper. Try and figure out what each bit of code is doing in the plot (remember to use the help documentation for each function) and see what happens when you change the values for each argument.
 
 
-```{r bar plot, echo = TRUE, fig.cap = "Bar plot of instrusions by condition"}
+```{r bar-plot, echo = TRUE, fig.cap = "Bar plot of instrusions by condition"}
 ggplot(sum_dat, aes(x = Condition, y = mean, fill = Condition))+
   stat_summary(fun.y = mean, geom = "bar", show.legend = FALSE)+
   geom_errorbar(aes(ymin = mean - se, ymax = mean + se), width = 0.25)+
@@ -122,7 +234,7 @@ Now we can run the one-way ANOVA using `aov_ez` from the `afex` package and save
 
 * Copy and paste the below code to run and then view the results of the ANOVA using `anova()`.
 
-```{r one-way anova, results='hide'}
+```{r one-way-anova, results='hide', message=FALSE, warning=FALSE}
 
 mod <- aov_ez(id = "subject", # the column containing the subject IDs
               dv = "intrusions", # the DV 
@@ -130,8 +242,7 @@ mod <- aov_ez(id = "subject", # the column containing the subject IDs
               es = "pes", # sets effect size to partial eta-squared
               type = 3, # this affects how the sum of squares is calculated, set this to 3
               data = dat2)
-
-anova(mod)
+mod
 ```
 
 Just like with the t-tests and correlations, we can use `tidy()` to make the output easier to work with.
@@ -139,7 +250,7 @@ Just like with the t-tests and correlations, we can use `tidy()` to make the out
 * Run the below code to transform the output. Don't worry about the warning message, it is just telling you it doesn't know how to automatically rename the columns so it will keep the original names.
 
 ```{r tidy_aov}
-mod_output <- anova(mod) %>% tidy()
+mod_output <- (mod$anova_table) %>% tidy()
 ```
 
 * `term` = the IV  
@@ -168,7 +279,8 @@ You may be wondering why we haven't yet checked the assumptions. Well, unlike th
 
 We know that 1 and 2 are met because of the design of our study. To test 3, as we have done before we can look at the QQ-plot of the residuals and test for normality with the Shapiro-Wilk test. The residuals have been stored as one of the components of `mod`. To access them we specify `mod$aov$residuals`.
 
-```{r fig_qq, fig.cap = "qq-plot for model residuals"}
+```{r fig-qq, fig.cap = "qq-plot for model residuals"}
+
 qqPlot(mod$aov$residuals)
 shapiro.test(mod$aov$residuals)
 ```
@@ -180,12 +292,14 @@ There are a few things to note about the assumption test results. First, look at
 If you want R to round this for you to make it easier to read, you could use the below code to save it to an object, tidy it and then round the p.value. Just remember that in APA style you should never write "p = 0", instead, you should write "p < .001" (because p will never equal actual zero, it can just be very, very, very small).
 
 ```{r}
-shapiro <- shapiro.test(mod$aov$residuals) %>% tidy()%>% mutate(p.value = round(p.value, digits = 3))
+shapiro <- shapiro.test(mod$aov$residuals) %>% #run the test
+  tidy() %>% # tidy the output
+  mutate(p.value = round(p.value, digits = 3)) # overwrite the p-value with one rounded to 3 decimal places
 ```
 
 The second thing to note is that from both the qq-plot and the Shapiro-Wilk test it is clear that the assumption of normality has not been met. Is this a problem? Well, Field et al. (2009) say that if the sample sizes for each group are equal then ANOVA is robust to violations of both normality and of homogeneity of variance. There's also a good discussion of this [here](https://link.springer.com/article/10.3758/s13428-017-0918-2) but it is a bit technical. We can check how many participants are in each condition using `count()`:
 
-```{r count_condition, eval=FALSE}
+```{r count-condition, eval=FALSE}
 dat2 %>% count(Condition)
 ```
 
@@ -217,11 +331,16 @@ For post-hoc comparisons, as mentioned, the paper appears to have computed Welch
 For example, to compare condition 1 (the control group) with condition 2 (the reactivation plus tetris group) we could run:
 
 ```{r t-test, eval = FALSE}
-t.test(dat2 %>% filter(Condition == "1") %>% pull(intrusions), dat2 %>% filter(Condition == "2") %>% pull(intrusions))
+t.test(dat2) %>% filter(Condition == "1") %>% pull(intrusions), dat2 %>% filter(Condition == "2") %>% pull(intrusions))
+
+dat2 %>%
+  filter(Condition %in% c("1", "2")) %>%
+  droplevels() %>% 
+  t.test(intrusions ~ Condition, data = .)
 ```
 
-```{block, type="warning"}
-This t-test code is a little different to what you used in the t-test lab. Because `Condition` has four levels, we can't just specify `intrustion ~ Condition` because a t-test compares two groups and it wouldn't know which of the four to compare. What we're doing with this code is telling it to use the intrusion score from a specific level of Condition
+```{block, type="info"}
+Because `Condition` has four levels, we can’t just specify `intrustion ~ Condition` because a t-test compares two groups and it wouldn’t know which of the four to compare so first we have to filter the data and use a new function `droplevels()`. It's important to remember that when it comes to R there are two things to consider, the data you can see and the underlying structure of that data. In the above code we use `filter()` to select only conditions 1 and 2 so that we can compare them. However, that doesn't change the fact that R "knows" that `Condition` has four levels - it doesn't matter if two of those levels don't have any observations any more, the underlying structure still says there are four groups. `droplevels()` tells R to remove any unused levels from a factor. Try running the above code but without `droplevels()` and see what happens.
 ```
 
 However, a quicker and better way of doing this that allows you apply a correction for multiple comparisons easily is to use `emmeans()` which computes all possible pairwise comparison t-tests and applies a correction to the p-value. 
@@ -235,6 +354,10 @@ mod_pairwise <-emmeans(mod$aov, pairwise ~ Condition, adjust = "bonferroni")
 mod_contrasts <- mod_pairwise$contrasts %>% tidy()
 ```
 
+```{block, type="warning"}
+The inquisitive amongst you may have noticed that `mod` is a list of 5 and seemingly contains the same thing three times: `anova_table`, `aov` and `Anova`. The reasons behind the differences are too complex to go into detail on this course (see [here](https://rcompanion.org/rcompanion/d_04.html) for more info) but the simple version is that `anova_table` and `Anova`use one method of calculating the results (type 3 sum of squares) and `aov` uses a different method (type 1 sum of squares). What's important for your purposes is that you need to use `anova_table` to view the overall results (and replicate the results from papers) and `aov`to run the follow-up tests and to get access to the residuals (or `lm()` for factorial ANOVA). As always, precision and attention to detail is key.
+```
+
 ### Activity 9: Power and effect size
 
 Finally, we can replicate their power analysis using `pwr.anova.test`.
@@ -245,21 +368,33 @@ Finally, we can replicate their power analysis using `pwr.anova.test`.
 pwr.anova.test(k = 4, f = .4, sig.level = .05, power = .8)
 ```
 
-We've already got the effect size for the overall ANOVA, however, we should also really calculate Cohen's D usings `cohensD` from `lsr` for each of the pairwise comparisons. This code is a little complicated because you need to do it separately for each comparison, bind them all together and then add them to `mod_contrasts` - just make sure your understand which bits of the code you would need to change to run this on different data.
+We've already got the effect size for the overall ANOVA, however, we should also really calculate Cohen's D using `cohensD` from `lsr` for each of the pairwise comparisons. This code is a little complicated because you need to do it separately for each comparison, bind them all together and then add them to `mod_contrasts` - just make sure your understand which bits of the code you would need to change to run this on different data.
 
 ```{r}
 
-d_1_2 <- cohensD(intrusions ~ Condition, data = filter(dat2, Condition %in% c(1,2)) %>% droplevels())
+d_1_2 <- cohensD(intrusions ~ Condition, 
+                 data = filter(dat2, Condition %in% c(1,2)) %>% 
+                   droplevels())
 
-d_1_3 <- cohensD(intrusions ~ Condition, data = filter(dat2, Condition %in% c(1,3)) %>% droplevels()) 
+d_1_3 <- cohensD(intrusions ~ Condition, 
+                 data = filter(dat2, Condition %in% c(1,3)) %>%
+                   droplevels()) 
 
-d_1_4 <- cohensD(intrusions ~ Condition, data = filter(dat2, Condition %in% c(1,4)) %>% droplevels())
+d_1_4 <- cohensD(intrusions ~ Condition, 
+                 data = filter(dat2, Condition %in% c(1,4)) %>%
+                   droplevels())
 
-d_2_3 <- cohensD(intrusions ~ Condition, data = filter(dat2, Condition %in% c(2,3)) %>% droplevels())
+d_2_3 <- cohensD(intrusions ~ Condition, 
+                 data = filter(dat2, Condition %in% c(2,3)) %>% 
+                   droplevels())
 
-d_2_4 <- cohensD(intrusions ~ Condition, data = filter(dat2, Condition %in% c(2,4)) %>% droplevels())
+d_2_4 <- cohensD(intrusions ~ Condition, 
+                 data = filter(dat2, Condition %in% c(2,4)) %>% 
+                   droplevels())
 
-d_3_4 <- cohensD(intrusions ~ Condition, data = filter(dat2, Condition %in% c(3,4)) %>% droplevels())
+d_3_4 <- cohensD(intrusions ~ Condition, 
+                 data = filter(dat2, Condition %in% c(3,4)) %>%
+                   droplevels())
 
 pairwise_ds <- c(d_1_2,d_1_3,d_1_4,d_2_3,d_2_4,d_3_4)
 
@@ -271,7 +406,7 @@ mod_contrasts <- mod_contrasts %>%
 ```{block, type="warning"}
 What are your options if the data don't meet the assumptions and it's really not appropriate to continue with a regular one-way ANOVA? As always, there are multiple options and it is a judgement call.  
 
-1. You could run a non-parametric test, the Kruskal-Wallis for between-subject designs and the Friedman test for within-subject designs. There is more information about how to do this in Chapter \@ref(supp). 
+1. You could run a non-parametric test, the Kruskal-Wallis for between-subject designs and the Friedman test for within-subject designs. There is more information about how to do this in Chapter \@ref(refsup). 
 2. If normality is the problem, you could try transforming the data. Field et al. (2009) has a good section on data transformation.
 3. You could use bootstrapping, which is not something we will cover in this course at all. Again, Field et al. (2009) covers this although it is a little complicated.
 
@@ -282,10 +417,10 @@ What are your options if the data don't meet the assumptions and it's really not
 The below code replicates the write-up in the paper, although has changed the Welch t-test for the pairwise comparisons.
 
 ```{r writeup1, eval = FALSE}
-Second, and critically, for the 7-day diary postintervention, there was a significant difference between groups in overall intrusion frequency in daily life, F(`r mod_output$num.Df`, `r mod_output$den.Df`) = `r mod_output$statistic %>% round(2)`, p = `r mod_output$p.value %>% round(3)`, ηp2 = .`r mod_output$ges %>% round(2)`. Planned comparisons demonstrated that relative to the no-task control group, only those in the reactivation-plus-Tetris group, t(`r mod_contrasts$df[1]`) = `r mod_contrasts$statistic[1] %>% round(2)`, p = `r mod_contrasts$p.value[1] %>% round(2)`, d = `mod_contrasts$eff_size[1] %>% round(2)`, experienced significantly fewer intrusive memories; this finding replicated Experiment 1. Critically, as predicted by reconsolidation theory, the reactivation-plus-Tetris group had significantly fewer intrusive memories than the Tetris-only group, t(`r mod_contrasts$df[4]`) = `r mod_contrasts$statistic[4] %>% round(2)`, p = `r mod_contrasts$p.value[4] %>% round(2)`, d = mod_contrasts$eff_size[4] %>% round(2)`, as well as the reactivation-only group, t(`r mod_contrasts$df[5]`) = `r mod_contrasts$statistic[5] %>% round(2)`, p = `r mod_contrasts$p.value[5] %>% round(2)`, d = mod_contrasts$eff_size[5] %>% round(2)`. Further, there were no significant differences between the no-task control group and the reactivation-only group, t(`r mod_contrasts$df[3]`) = `r mod_contrasts$statistic[3] %>% round(2)`, p = `r mod_contrasts$p.value[3] %>% round(2)`, or between the no-task control group and the Tetris-only group, t(`r mod_contrasts$df[2]`) = `r mod_contrasts$statistic[2] %>% round(2)`, p = `r mod_contrasts$p.value[2] %>% round(2)`
+Second, and critically, for the 7-day diary postintervention, there was a significant difference between groups in overall intrusion frequency in daily life, F(`r mod_output$num.Df`, `r mod_output$den.Df`) = `r mod_output$statistic %>% round(2)`, p = `r mod_output$p.value %>% round(3)`, ηp2 = .`r mod_output$ges %>% round(2)`. Planned comparisons demonstrated that relative to the no-task control group, only those in the reactivation-plus-Tetris group, t(`r mod_contrasts$df[1]`) = `r mod_contrasts$statistic[1] %>% round(2)`, p = `r mod_contrasts$p.value[1] %>% round(2)`, d = `r mod_contrasts$eff_size[1] %>% round(2)`, experienced significantly fewer intrusive memories; this finding replicated Experiment 1. Critically, as predicted by reconsolidation theory, the reactivation-plus-Tetris group had significantly fewer intrusive memories than the Tetris-only group, t(`r mod_contrasts$df[4]`) = `r mod_contrasts$statistic[4] %>% round(2)`, p = `r mod_contrasts$p.value[4] %>% round(2)`, d = `r mod_contrasts$eff_size[4] %>% round(2)`, as well as the reactivation-only group, t(`r mod_contrasts$df[5]`) = `r mod_contrasts$statistic[5] %>% round(2)`, p = `r mod_contrasts$p.value[5] %>% round(2)`, d = `r mod_contrasts$eff_size[5] %>% round(2)`. Further, there were no significant differences between the no-task control group and the reactivation-only group, t(`r mod_contrasts$df[3]`) = `r mod_contrasts$statistic[3] %>% round(2)`, p = `r mod_contrasts$p.value[3] %>% round(2)`, or between the no-task control group and the Tetris-only group, t(`r mod_contrasts$df[2]`) = `r mod_contrasts$statistic[2] %>% round(2)`, p = `r mod_contrasts$p.value[2] %>% round(2)`
 ```
 
-Second, and critically, for the 7-day diary postintervention, there was a significant difference between groups in overall intrusion frequency in daily life, F(`r mod_output$num.Df`, `r mod_output$den.Df`) = `r mod_output$statistic %>% round(2)`, p = `r mod_output$p.value %>% round(3)`, ηp2 = .`r mod_output$ges %>% round(2)`. Planned comparisons demonstrated that relative to the no-task control group, only those in the reactivation-plus-Tetris group, t(`r mod_contrasts$df[1]`) = `r mod_contrasts$statistic[1] %>% round(2)`, p = `r mod_contrasts$p.value[1] %>% round(2)`, d = `mod_contrasts$eff_size[1] %>% round(2)`, experienced significantly fewer intrusive memories; this finding replicated Experiment 1. Critically, as predicted by reconsolidation theory, the reactivation-plus-Tetris group had significantly fewer intrusive memories than the Tetris-only group, t(`r mod_contrasts$df[4]`) = `r mod_contrasts$statistic[4] %>% round(2)`, p = `r mod_contrasts$p.value[4] %>% round(2)`, d = mod_contrasts$eff_size[4] %>% round(2)`, as well as the reactivation-only group, t(`r mod_contrasts$df[5]`) = `r mod_contrasts$statistic[5] %>% round(2)`, p = `r mod_contrasts$p.value[5] %>% round(2)`, d = mod_contrasts$eff_size[5] %>% round(2)`. Further, there were no significant differences between the no-task control group and the reactivation-only group, t(`r mod_contrasts$df[3]`) = `r mod_contrasts$statistic[3] %>% round(2)`, p = `r mod_contrasts$p.value[3] %>% round(2)`, or between the no-task control group and the Tetris-only group, t(`r mod_contrasts$df[2]`) = `r mod_contrasts$statistic[2] %>% round(2)`, p = `r mod_contrasts$p.value[2] %>% round(2)`
+Second, and critically, for the 7-day diary postintervention, there was a significant difference between groups in overall intrusion frequency in daily life, F(`r mod_output$num.Df`, `r mod_output$den.Df`) = `r mod_output$statistic %>% round(2)`, p = `r mod_output$p.value %>% round(3)`, ηp2 = .`r mod_output$ges %>% round(2)`. Planned comparisons demonstrated that relative to the no-task control group, only those in the reactivation-plus-Tetris group, t(`r mod_contrasts$df[1]`) = `r mod_contrasts$statistic[1] %>% round(2)`, p = `r mod_contrasts$p.value[1] %>% round(2)`, d = `r mod_contrasts$eff_size[1] %>% round(2)`, experienced significantly fewer intrusive memories; this finding replicated Experiment 1. Critically, as predicted by reconsolidation theory, the reactivation-plus-Tetris group had significantly fewer intrusive memories than the Tetris-only group, t(`r mod_contrasts$df[4]`) = `r mod_contrasts$statistic[4] %>% round(2)`, p = `r mod_contrasts$p.value[4] %>% round(2)`, d = `r mod_contrasts$eff_size[4] %>% round(2)`, as well as the reactivation-only group, t(`r mod_contrasts$df[5]`) = `r mod_contrasts$statistic[5] %>% round(2)`, p = `r mod_contrasts$p.value[5] %>% round(2)`, d = `r mod_contrasts$eff_size[5] %>% round(2)`. Further, there were no significant differences between the no-task control group and the reactivation-only group, t(`r mod_contrasts$df[3]`) = `r mod_contrasts$statistic[3] %>% round(2)`, p = `r mod_contrasts$p.value[3] %>% round(2)`, or between the no-task control group and the Tetris-only group, t(`r mod_contrasts$df[2]`) = `r mod_contrasts$statistic[2] %>% round(2)`, p = `r mod_contrasts$p.value[2] %>% round(2)`
 
 ### Activity solutions 
 Below this line you will find the solutions to the above tasks. Only look at them after giving the tasks a good try and speaking to the tutor about any issues
@@ -357,7 +492,7 @@ ggplot(dat2, aes(x = Condition, y = intrusions))+
 
 For the second part of our ANOVA lab we're going to look at an example of a factorial ANOVA. You'll learn more about interpreting these in the second lecture, but for now, we'll just focus on the code. 
 
-We're going to reproduce the analysis from Experiment 3 of [Zhang, T., Kim, T., Brooks, A. W., Gino, F., & Norton, M. I. (2014). A "present" for the future: The unexpected value of rediscovery. Psychological Science, 25, 1851-1860.](https://journals.sagepub.com/doi/abs/10.1177/0956797614542274). You may remember this study from the Chapter {#vis} pre-class activity. 
+We're going to reproduce the analysis from Experiment 3 of [Zhang, T., Kim, T., Brooks, A. W., Gino, F., & Norton, M. I. (2014). A "present" for the future: The unexpected value of rediscovery. Psychological Science, 25, 1851-1860.](https://journals.sagepub.com/doi/abs/10.1177/0956797614542274). You may remember this study from the Chapter \@ref(vis) pre-class activity. 
 
 This experiment has a 2 x 2 mixed design:
 
@@ -461,9 +596,9 @@ ggplot(sum_dat_factorial, aes(x = time, y = mean, group = Condition, shape = Con
 
 ### Activity 5: ANOVA
 
-* Complete the below code to run the factorial ANOVA. Remember that you will need to specify both IVs and that one of them is between and one of them is within-subjects. Look up the help documentation for `aov_ez` to find out how to do this. 
+* Complete the below code to run the factorial ANOVA. Remember that you will need to specify both IVs and that one of them is between-subjects and one of them is within-subjects. Look up the help documentation for `aov_ez` to find out how to do this. 
 * Save the ANOVA model to an object called `mod_factorial`
-* Use `tidy()` and save the `anova()` output to an object named `factorial_output`.
+* Use `tidy()` and save the output to an object named `factorial_output`.
 * Hint: refer to pre-class Activity 6
 
 ```{r fact_anova, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
@@ -475,9 +610,7 @@ mod_factorial <- aov_ez(id = "subject",
                type = 3,
                es = "pes") 
 
-(summary(mod_factorial))
-
-factorial_output <- anova(mod_factorial) %>% tidy()
+factorial_output <- mod_factorial$anova_table %>% tidy()
 ```
 
 ```{r fact_anova2, eval = FALSE}
@@ -491,7 +624,6 @@ mod_factorial <- aov_ez(id = "NULL",
 
 factorial_output <- 
 ```
-
 
 Look at the results. Remember the pre-class information about how to read p-values in scientific notation.
 
@@ -508,13 +640,13 @@ The assumptions for a factorial ANOVA are the same as the one-way ANOVA.
 3. The residuals should be normally distributed
 4. There should be homogeneity of variance between the groups
 
-As before, we know 2 is met from the design of the study. 1 throws up an interesting issue which is the problem of ordinal data. Ordinal data is the kind of data that comes from Likert scales and is very, very common in psychology. The problem is that ordinal data isn't interval or ratio data, there's a very fixed number of values it can take (the values of the Likert scale) and you can't claim that the distance between the values is equal (is the difference between strongly agree and agree the same as the difference between agree and neutral?). 
+As before, we know assumption 2 is met from the design of the study. Assumption 1 throws up an interesting issue which is the problem of ordinal data. Ordinal data is the kind of data that comes from Likert scales and is very, very common in psychology. The problem is that ordinal data isn't interval or ratio data, there's a  fixed number of values it can take (the values of the Likert scale) and you can't claim that the distance between the values is equal (is the difference between strongly agree and agree the same as the difference between agree and neutral?). 
 
-Technically, we shouldn't use an ANOVA to analyse ordinal data - but *almost everyone does*. Most people would argue that if there are multiple Likert scale items that are averaged (which is the case in our study) and this averaged data is normally distributed, then it is not a problem. There is a minority (who are actually correct) that argue you should use non-parametric methods or more complicated tests such as ordinal regression for this type of data. Whichever route you choose, you should understand the data you have and you should be able to justify your decision.
+Technically, we shouldn't use an ANOVA to analyse ordinal data - *but almost everyone does*. Most people would argue that if there are multiple Likert scale items that are averaged (which is the case in our study) and this averaged data is normally distributed, then it is not a problem. There is a minority (who are actually correct) that argue you should use non-parametric methods or more complicated tests such as ordinal regression for this type of data. Whichever route you choose, you should understand the data you have and you should be able to justify your decision.
 
 * To test 3, extract the residuals from the model (`mod_factorial$lm$residuals`), create a qq-plot and conduct a Shapiro-Wilk test.
 
-* Are the residuals normally distributed? `r mcq(c("Yes", "No", answer =  "No, but given the sample it is acceptable to proceed"))` 
+* Are the residuals normally distributed? `r mcq(c("Yes", "No", answer =  "No, but given the sample it is probably acceptable to proceed"))` 
 
 For the final assumption, we can again use `test_levene()` to test homogeneity of variance.
 
@@ -523,16 +655,18 @@ For the final assumption, we can again use `test_levene()` to test homogeneity o
 
 ### Activity 7: Post-hoc tests
 
-Because the interaction is significant, we should follow this up with post-hoc tests using `emmeans()` to determine which comparisons are significant. If the overall interaction is not significant, you should not conduct additional test.
+Because the interaction is significant, we should follow this up with post-hoc tests using `emmeans()` to determine which comparisons are significant. If the overall interaction is not significant, you should not conduct additional tests.
 
-`emmeans()` requires you to specify the aov object, and then the factors you want contrasts for. For an interaction, we use the notation `pairwise ~ IV1 | IV2` and you specify which multiple comparison correction you want to apply. Finally, you can use `tidy()` to tidy up the output of the contrasts and save it into a tibble.
+`emmeans()` requires you to specify the `aov` object, and then the factors you want contrasts for. For an interaction, we use the notation `pairwise ~ IV1 | IV2` and you specify which multiple comparison correction you want to apply. Finally, you can use `tidy()` to tidy up the output of the contrasts and save it into a tibble.
 
 * Run the below code and view the results. 
 
 ```{r}
+# run the tests
 posthoc_factorial <- emmeans(mod_factorial$aov, 
                              pairwise ~ time| Condition, 
-                             adjust = "bonferroni") 
+                             adjust = "bonferroni")
+# tidy up the output of the tests
 contrasts_factorial <- posthoc_factorial$contrasts %>%
   tidy()
 ```
@@ -552,7 +686,9 @@ contrasts_factorial2 <- posthoc_factorial2$contrasts %>%
 
 Because our main effects (condition and time) only have two levels, we don't need to do any post-hoc tests to determine which conditions differ from each other, however, if one of our factors had three levels then we could use `emmeans()` to calculate the contrast for the main effects, like we did for the one-way ANOVA. 
 
-Finally, to calculate effect size for the pairwise comparisons we again need to do this individually. * Run the below code to add on effect sizes to `contrasts_factorial` and `contrasts_factorial2`.
+Finally, to calculate effect size for the pairwise comparisons we again need to do this individually. 
+
+* Run the below code to add on effect sizes to `contrasts_factorial` and `contrasts_factorial2`.
 
 ```{r effsizes}
 d_extra_t1_t2 <- cohensD(interest ~ time, 
@@ -601,37 +737,29 @@ time_descrip <- factorial %>%
 Copy and paste the below into **white-space**.
 
 ```{r writeup, eval = FALSE}
-We conducted the same repeated measures ANOVA with interest as the dependent measure and again found a main effect of time, F(`r factorial_output$num.DF[2]`, `r factorial_output$den.DF[2]`) = `r factorial_output$statistic[2] %>% round(2)`, p < .001, ηp2 = `r factorial_output$ges[2] %>% round(3)`; anticipated interest at Time 1 (M = `r time_descrip$mean_interest[1]`), SD = `r time_descrip$sd_interest[1]`), 95% CI = [`r time_descrip$min[1]`, `r time_descrip$max[1]`]) was lower than actual interest at Time 2 (M = `r time_descrip$mean_interest[2]`, SD = `r time_descrip$sd_interest[2]`, 95% CI = [`r time_descrip$min[2]`, `r time_descrip$max[2]`]).We also observed an interaction between time and type of experience, F(`r factorial_output$num.DF[3]`, `r factorial_output$den.DF[3]`) = `r factorial_output$statistic[3] %>% round(3)`, p = `r factorial_output$p.value[3] %>% round(2)`, ηp2 = `r factorial_output$ges[3] %>% round(3)`. Pairwise comparisons revealed that for ordinary events, predicted interest at Time 1 (M = `r sum_dat_factorial$mean[3]`, SD = `r sum_dat_factorial$sd[3]`, 95% CI = [`r sum_dat_factorial$min[3]`, `r sum_dat_factorial$max[3]`]) was lower than experienced interest at Time 2 (M = `r sum_dat_factorial$mean[4]`, SD = `r sum_dat_factorial$sd[4]`, 95% CI = [`r sum_dat_factorial$min[4]`, `r sum_dat_factorial$max[4]`]), t(`r contrasts_factorial$df[2]`) = `r contrasts_factorial$statistic[2]`, p < .001, d = `r contrasts_factorial$eff_size[2]`. Although predicted interest for extraordinary events at Time 1 (M = `r sum_dat_factorial$mean[1]`, SD = `r sum_dat_factorial$sd[1]`, 95% CI = [`r sum_dat_factorial$min[1]`, `r sum_dat_factorial$max[1]`]) was lower than experienced interest at Time 2 (M = `r sum_dat_factorial$mean[2]`, SD = `r sum_dat_factorial$sd[2]`, 95% CI = [`r sum_dat_factorial$min[2]`, `r sum_dat_factorial$max[2]`), t(`r contrasts_factorial$df[1]`) = `r contrasts_factorial$statistic[1]`, p < .001, d = `r contrasts_factorial$eff_size[1]` , the magnitude of underestimation was smaller than for ordinary events.
+We conducted the same repeated measures ANOVA with interest as the dependent measure and again found a main effect of time, F(`r factorial_output$num.Df[2]`, `r factorial_output$den.Df[2]`) = `r factorial_output$statistic[2] %>% round(2)`, p < .001, ηp2 = `r factorial_output$ges[2] %>% round(3)`; anticipated interest at Time 1 (M = `r time_descrip$mean_interest[1] %>% round(2)`), SD = `r time_descrip$sd_interest[1]%>% round(2)`), 95% CI = [`r time_descrip$min[1]%>% round(2)`, `r time_descrip$max[1]%>% round(2)`]) was lower than actual interest at Time 2 (M = `r time_descrip$mean_interest[2]%>% round(2)`, SD = `r time_descrip$sd_interest[2]%>% round(2)`, 95% CI = [`r time_descrip$min[2]%>% round(2)`, `r time_descrip$max[2]%>% round(2)`]).We also observed an interaction between time and type of experience, F(`r factorial_output$num.Df[3]`, `r factorial_output$den.Df[3]`) = `r factorial_output$statistic[3] %>% round(3)`, p = `r factorial_output$p.value[3] %>% round(2)`, ηp2 = `r factorial_output$ges[3] %>% round(3)`. Pairwise comparisons revealed that for ordinary events, predicted interest at Time 1 (M = `r sum_dat_factorial$mean[3]%>% round(2)`, SD = `r sum_dat_factorial$sd[3]%>% round(2)`, 95% CI = [`r sum_dat_factorial$min[3]%>% round(2)`, `r sum_dat_factorial$max[3]%>% round(2)`]) was lower than experienced interest at Time 2 (M = `r sum_dat_factorial$mean[4]%>% round(2)`, SD = `r sum_dat_factorial$sd[4]%>% round(2)`, 95% CI = [`r sum_dat_factorial$min[4]%>% round(2)`, `r sum_dat_factorial$max[4]%>% round(2)`]), t(`r contrasts_factorial$df[2]%>% round(2)`) = `r contrasts_factorial$statistic[2]%>% round(2)`, p < .001, d = `r contrasts_factorial$eff_size[2]%>% round(2)`. Although predicted interest for extraordinary events at Time 1 (M = `r sum_dat_factorial$mean[1]%>% round(2)`, SD = `r sum_dat_factorial$sd[1]%>% round(2)`, 95% CI = [`r sum_dat_factorial$min[1]%>% round(2)`, `r sum_dat_factorial$max[1]%>% round(2)`]) was lower than experienced interest at Time 2 (M = `r sum_dat_factorial$mean[2]%>% round(2)`, SD = `r sum_dat_factorial$sd[2]%>% round(2)`, 95% CI = [`r sum_dat_factorial$min[2]%>% round(2)`, `r sum_dat_factorial$max[2]%>% round(2)`), t(`r contrasts_factorial$df[1]%>% round(2)`) = `r contrasts_factorial$statistic[1]%>% round(2)`, p < .001, d = `r contrasts_factorial$eff_size[1]%>% round(2)` , the magnitude of underestimation was smaller than for ordinary events.
 ```
 
-> We conducted the same repeated measures ANOVA with interest as the dependent measure and again found a main effect of time, F(`r factorial_output$num.DF[2]`, `r factorial_output$den.DF[2]`) = `r factorial_output$statistic[2] %>% round(2)`, p < .001, ηp2 = `r factorial_output$ges[2] %>% round(3)`; anticipated interest at Time 1 (M = `r time_descrip$mean_interest[1]`), SD = `r time_descrip$sd_interest[1]`), 95% CI = [`r time_descrip$min[1]`, `r time_descrip$max[1]`]) was lower than actual interest at Time 2 (M = `r time_descrip$mean_interest[2]`, SD = `r time_descrip$sd_interest[2]`, 95% CI = [`r time_descrip$min[2]`, `r time_descrip$max[2]`]).We also observed an interaction between time and type of experience, F(`r factorial_output$num.DF[3]`, `r factorial_output$den.DF[3]`) = `r factorial_output$statistic[3] %>% round(3)`, p = `r factorial_output$p.value[3] %>% round(2)`, ηp2 = `r factorial_output$ges[3] %>% round(3)`. Pairwise comparisons revealed that for ordinary events, predicted interest at Time 1 (M = `r sum_dat_factorial$mean[3]`, SD = `r sum_dat_factorial$sd[3]`, 95% CI = [`r sum_dat_factorial$min[3]`, `r sum_dat_factorial$max[3]`]) was lower than experienced interest at Time 2 (M = `r sum_dat_factorial$mean[4]`, SD = `r sum_dat_factorial$sd[4]`, 95% CI = [`r sum_dat_factorial$min[4]`, `r sum_dat_factorial$max[4]`]), t(`r contrasts_factorial$df[2]`) = `r contrasts_factorial$statistic[2]`, p < .001, d = `r contrasts_factorial$eff_size[2]`. Although predicted interest for extraordinary events at Time 1 (M = `r sum_dat_factorial$mean[1]`, SD = `r sum_dat_factorial$sd[1]`, 95% CI = [`r sum_dat_factorial$min[1]`, `r sum_dat_factorial$max[1]`]) was lower than experienced interest at Time 2 (M = `r sum_dat_factorial$mean[2]`, SD = `r sum_dat_factorial$sd[2]`, 95% CI = [`r sum_dat_factorial$min[2]`, `r sum_dat_factorial$max[2]`), t(`r contrasts_factorial$df[1]`) = `r contrasts_factorial$statistic[1]`, p < .001, d = `r contrasts_factorial$eff_size[1]` , the magnitude of underestimation was smaller than for ordinary events.
+> We conducted the same repeated measures ANOVA with interest as the dependent measure and again found a main effect of time, F(`r factorial_output$num.Df[2]`, `r factorial_output$den.Df[2]`) = `r factorial_output$statistic[2] %>% round(2)`, p < .001, ηp2 = `r factorial_output$ges[2] %>% round(3)`; anticipated interest at Time 1 (M = `r time_descrip$mean_interest[1] %>% round(2)`), SD = `r time_descrip$sd_interest[1]%>% round(2)`), 95% CI = [`r time_descrip$min[1]%>% round(2)`, `r time_descrip$max[1]%>% round(2)`]) was lower than actual interest at Time 2 (M = `r time_descrip$mean_interest[2]%>% round(2)`, SD = `r time_descrip$sd_interest[2]%>% round(2)`, 95% CI = [`r time_descrip$min[2]%>% round(2)`, `r time_descrip$max[2]%>% round(2)`]).We also observed an interaction between time and type of experience, F(`r factorial_output$num.Df[3]`, `r factorial_output$den.Df[3]`) = `r factorial_output$statistic[3] %>% round(3)`, p = `r factorial_output$p.value[3] %>% round(2)`, ηp2 = `r factorial_output$ges[3] %>% round(3)`. Pairwise comparisons revealed that for ordinary events, predicted interest at Time 1 (M = `r sum_dat_factorial$mean[3]%>% round(2)`, SD = `r sum_dat_factorial$sd[3]%>% round(2)`, 95% CI = [`r sum_dat_factorial$min[3]%>% round(2)`, `r sum_dat_factorial$max[3]%>% round(2)`]) was lower than experienced interest at Time 2 (M = `r sum_dat_factorial$mean[4]%>% round(2)`, SD = `r sum_dat_factorial$sd[4]%>% round(2)`, 95% CI = [`r sum_dat_factorial$min[4]%>% round(2)`, `r sum_dat_factorial$max[4]%>% round(2)`]), t(`r contrasts_factorial$df[2]%>% round(2)`) = `r contrasts_factorial$statistic[2]%>% round(2)`, p < .001, d = `r contrasts_factorial$eff_size[2]%>% round(2)`. Although predicted interest for extraordinary events at Time 1 (M = `r sum_dat_factorial$mean[1]%>% round(2)`, SD = `r sum_dat_factorial$sd[1]%>% round(2)`, 95% CI = [`r sum_dat_factorial$min[1]%>% round(2)`, `r sum_dat_factorial$max[1]%>% round(2)`]) was lower than experienced interest at Time 2 (M = `r sum_dat_factorial$mean[2]%>% round(2)`, SD = `r sum_dat_factorial$sd[2]%>% round(2)`, 95% CI = [`r sum_dat_factorial$min[2]%>% round(2)`, `r sum_dat_factorial$max[2]%>% round(2)`), t(`r contrasts_factorial$df[1]%>% round(2)`) = `r contrasts_factorial$statistic[1]%>% round(2)`, p < .001, d = `r contrasts_factorial$eff_size[1]%>% round(2)` , the magnitude of underestimation was smaller than for ordinary events.
 
 ### Activity 9: Transforming data
 
 In this chapter we decided that the violation of the assumption of normality was ok so that we could replicate the results in the paper. But what if we weren't happy with this or if the violation had been more extreme? One option to deal with normality is to **transform your data**. If you want more information on this you should consult Chapter \@ref(supp). 
 
-First, we are going to transform the data. There are various options for how you can transform data but we're going to use Tukeys Ladder of Powers transformation. This finds the power transformation that makes the data fit the normal distribution as closely as possible with this type of transformation.
+There are various options for how you can transform data but we're going to use Tukeys Ladder of Powers transformation. This finds the power transformation that makes the data fit the normal distribution as closely as possible with this type of transformation.
 
 * Run the below code. This will use `mutate()` to add a new variable to the data-set, `interest_tukey` which is going to be our transformed DV. The function `transformTukey()` is from the `rcompanion` package. Setting `plotit = TRUE` will automatically create qqPlots and histograms so that we can immediately visualise the new variable. 
 
 
 ```{r transform_var, eval = FALSE}
 factorial <- factorial %>%
-  mutate(interest_log = log(interest),
-         interest_sqrt = sqrt(interest),
-         interest_cube = sign(interest) * abs(interest)^(1/3),
-         interest_tukey = transformTukey(interest, plotit=TRUE)
-)
+  mutate(interest_tukey = transformTukey(interest, plotit=TRUE))
 
 ```
 
 ```{r transform_var2, echo = FALSE, results='hide'}
 factorial <- factorial %>%
-  mutate(interest_log = log(interest),
-         interest_sqrt = sqrt(interest),
-         interest_cube = sign(interest) * abs(interest)^(1/3),
-         interest_tukey = transformTukey(interest, plotit=FALSE)
-)
+  mutate(interest_tukey = transformTukey(interest, plotit=FALSE))
 
 ```
 
