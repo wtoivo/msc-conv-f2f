@@ -11,7 +11,7 @@ Do the following. If you need help, consult Chapter \@ref(ref3) and Chapter \@re
 
 * Open R Studio and set the working directory to your RM2 Chapter 6 folder. Ensure the environment is clear.   
 * Open a new R Markdown document and save it in your working directory. Call the file "Pre-class 2".    
-* Download the `messy.csv` file from Moodle and save it in your Chapter 6 folder. Make sure that you do not change the file name at all.  
+* Download <a href="messy.csv" download>messy.csv</a>and save it in your Chapter 6 folder. Make sure that you do not change the file name at all.  
 * Delete the default R Markdown welcome text and insert a new code chunk that loads the `tidyverse` using the `library()` function and loads the data into an object named `messy` using `read_csv()`
 
 ```{r echo = FALSE, message=FALSE, warning=FALSE}
@@ -303,8 +303,8 @@ To summarise, 39 professional recruiters from Fortune 500 companies evaluated jo
 Your task is to reproduce the results from the article (p. 887). Do the following. If you need help, consult Chapter \@ref(ref3) and Chapter \@(ref2).
 
 * Open R Studio and set the working directory to your RM2 Chapter 6 folder. Ensure the environment is clear.   
-* Open a new R Markdown document and save it in your working directory. Call the file "In-class 2".    
-* Download the `evaluators.csv` file from Moodle and save it in your Chapter 6 folder. Make sure that you do not change the file name at all.    
+* Open a new R Markdown document and save it in your working directory. Call the file "Chapter 6 In-class".    
+* Download <a href="evaluators.csv" download>evaluators.csv</a> and save it in your Chapter 6 folder. Make sure that you do not change the file name at all.    
 * Delete the default R Markdown welcome text and insert a new code chunk that loads `broom`, `car`, `lsr`,  and `tidyverse` using the `library()` function and loads the data into an object named `evaluators` using `read_csv()`
 
 ```{r library2, echo = FALSE, message=FALSE, warning=FALSE}

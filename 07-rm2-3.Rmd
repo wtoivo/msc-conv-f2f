@@ -1,10 +1,10 @@
 # RM2 Visualisation, power, and effect size {#vis}
 
-## Pre-lab activities
+## Pre-class activities
 
 In this pre-lab we are going to focus on visualising data using `ggplot2`. You've already created a number of different plots including bar charts, scatterplots, histograms, qq-plots, and violin-boxplots, but now we will show you how to customise your plots further to give you a better idea of the range and flexibility of visualising data in R. 
 
-In this pre-class, you won't be asked to write any code yourself, we will give you all the example code. Instead, play with the arguments, change TRUE to FALSE and vice-versa, change the values and colours etc.. This will help you learn what each bit does. 
+In this pre-class, you won't be asked to write any code yourself, we will give you all the example code. Instead, play with the arguments, change TRUE to FALSE and vice-versa, change the values and colours. This will help you learn what each bit does. 
 
 For all of the activities in this pre-lab we are going to use data from  Experiment 3 of [Zhang, T., Kim, T., Brooks, A. W., Gino, F., & Norton, M. I. (2014). A "present" for the future: The unexpected value of rediscovery. Psychological Science, 25, 1851-1860.](https://journals.sagepub.com/doi/abs/10.1177/0956797614542274).
 
@@ -17,8 +17,8 @@ To help you understand the data we're visualising, here is the abstract:
 Do the following. If you need help, consult Chapter \@ref(ref3) and Chapter \@(ref2).
 
 * Open R Studio and set the working directory to your Chapter 7 folder. Ensure the environment is clear.   
-* Open a new R Markdown document and save it in your working directory. Call the file "Pre-class 3".    
-* Download `Zhang et al. 2014 Study 3.csv` from Moodle and save it in your Chapter 7 folder. Make sure that you do not change the file name at all.
+* Open a new R Markdown document and save it in your working directory. Call the file "Chapter 7 Pre-class".    
+* Download <a href="Zhang et al. 2014 Study 3.csv" download>Zhang et al. 2014 Study 3.csv</a> and save it in your Chapter 7 folder. Make sure that you do not change the file name at all.
 * Delete the default R Markdown welcome text and insert a new code chunk that loads the package `tidyverse` using the `library()` function. 
 * Run the below code to load and wrangle the data into tidy data.
 
@@ -43,7 +43,7 @@ The first line of code creates the `ggplot()` object and specifies which dataset
 
 #### Basic histogram
 
-The code below will create a simple histogram with default appearance and no customisation. You wouldn't use this graph in a paper, but if you just wanting to very quickly check your distributions, for e.g., normality, this code might be enough. 
+The code below will create a simple histogram with default appearance and no customisation. You wouldn't use this graph in a paper, but if you just want to quickly check your distributions, for e.g., normality, this code might be enough. 
 
 ```{r hist1, fig.cap = "Basic histogram",warning=FALSE, message = FALSE}
 ggplot(zhang_data, aes(interest))+ 
@@ -54,7 +54,7 @@ ggplot(zhang_data, aes(interest))+
 
 The next section of code will change the appearance. Plots in ggplot2 are highly customisable - [R for Data Science](https://r4ds.had.co.nz/data-visualisation.html) has an excellent chapter on `ggplot` if you would like additional information. 
 
-Adding `binwdith` to `geom_histogram()` changes the bins of the histogram, i.e., how wide the bars are. The default is 30. Sometimes this may be appropriate but often you will want to change the binwidth. What value you give will depend upon your data.
+Adding `binwidth` to `geom_histogram()` changes the bins of the histogram, i.e., how wide the bars are. The default is 30. Sometimes this may be appropriate but often you will want to change the binwidth. What value you give will depend upon your data.
 
 `colour()` changes the colour of the line around the bars. `fill()` changes the fill of the bars. 
 
@@ -75,8 +75,8 @@ These scale functions control all the information about the axis, from the label
 
 For our labelling purposes, there are two main arguments:
 
-1. `name()` (controls the main name of the axis)  
-2. `labels()` (controls the name of the breaks)  
+1. `name()` controls the main name of the axis
+2. `labels()` controls the name of the breaks  
 
 For our histogram we will just change the main axis labels. 
 
@@ -133,7 +133,7 @@ ggplot(zhang_data, aes(x = interest,y = Age))+
 
 #### Adding a regression line
 
-It's often useful to add a regression line or line of best fit to a scatterplot. The regression line is added with `geom_smooth()` and by default will also provide a 95% confidence interval. 
+It's often useful to add a regression line or line of best fit to a scatterplot. The regression line is added with `geom_smooth()` and by default will also provide a 95% confidence interval. You can specify what type of line you want to draw, most often you will need `method = lm`, i.e., a linear model or a straight line. Look up the help documentation for `geom_smooth()` and see what other methods you can use. 
 
 ```{r scat3, fig.cap = "Scatterplot with regression line"}
 ggplot(zhang_data, aes(x = interest,y = Age))+
@@ -222,7 +222,7 @@ ggplot(zhang_data, aes(x = Condition, y = interest, fill = Condition))+
 
 When you only have one IV, using the fill command to change the colour is a little redundant, as the colours don't add any additional information. It makes more sense to use colour to represent an additional IV. 
 
-For this example, we'll use gender and speaker as IVs. `fill()` now specifies a second IV, rather than repeating the IV on the x-axis as in the previous plot. 
+For this example, we'll use `Condition` and `time` as IVs. `fill()` now specifies a second IV, rather than repeating the IV on the x-axis as in the previous plot. 
 
 With multiple IVs the command to overlay the raw data points changes as the data points also need dodged (try running the code with the previous geom_jitter function to see what happens)
 
@@ -236,7 +236,7 @@ ggplot(zhang_data, aes(x = Condition, y = interest, fill = time))+
 
 There is one more fill option that we can use. Rather than specifying `scale_fill_discrete()`, we can use `scale_fill_viridis_d()`. This function does exactly the same thing but it uses a colour-blind friendly palette (which also prints in black and white). There are 5 different options for colours and you can see them by changing `option` to A, B, C, D or E. Personally I like option E with `alpha = .6` (to control transparency) but that's not an official School position.
 
-```{r}
+```{r, fig.cap= "Boxplots with friendly colours"}
 ggplot(zhang_data, aes(x = Condition, y = interest, fill = time))+
   geom_boxplot(alpha = .6)+
   geom_point(position=position_jitterdodge(jitter.width = .1)) +
@@ -245,7 +245,7 @@ ggplot(zhang_data, aes(x = Condition, y = interest, fill = time))+
 
 ### Activity 5: Reordering factors
 
-R orders categorical variables alphabetically. For Gender this didn't make much of a difference and for time 1 and 2 this make sense for them to be in this order but we may want to change the order of Condition (in my mind it makes more sense for Ordinary to come first, but that may just be me).
+R orders categorical variables alphabetically. For gender it didn't really matter whether male or female was represented first and for time 1 and 2 it makes sense for them to be in this order but we may want to change the order of Condition (in my mind it makes more sense for Ordinary to come first, but that may just be me).
 
 To do this we can use `mutate()` and `fct_level()` to change the factor levels to the order we want.
 
@@ -321,7 +321,7 @@ This plot first requires you to calculate summary data for the variables that yo
 summary_data<-zhang_data%>%
   group_by(Condition)%>%
   summarise(mean = mean(interest, na.rm = TRUE),
-            min = mean(interest) - qnorm(0.975)*sd(interest)/sqrt(n()), # this is standard error
+            min = mean(interest) - qnorm(0.975)*sd(interest)/sqrt(n()), # standard error
             max = mean(interest) + qnorm(0.975)*sd(interest)/sqrt(n()),
             sd = sd(interest)
             )
@@ -346,9 +346,9 @@ ggplot(zhang_data, aes(x = Condition, y = interest, fill = Condition))+
 `ggplot2` contains a facet function that produces different plots for each level of a grouping variable which can be very useful when you have more than two factors, for example, for a three-way ANOVA. The following code displays produces violin-boxplots for Condition ~ interest, but separately for male and female participants. 
 
 ```{r facet1, fig.cap = "Violin-boxplot facetted by gender"}
-ggplot(zhang_data, aes(x = Condition, y = interest, fill = Condition))+
+ggplot(zhang_data, aes(x = Condition, y = interest, fill = time))+
   geom_violin(alpha = .6, trim = FALSE)+
-  geom_boxplot(width = .2, alpha = .6)+
+  geom_boxplot(width = .2, alpha = .6, position = position_dodge(.9))+
   scale_fill_viridis_d(option = "E") +
   facet_wrap(~Gender)
 ```
@@ -357,19 +357,19 @@ If you want to add `geom_pointrange()` to this then you would need to calculate 
 
 ```{r sumdat2, fig.cap = "Violin-boxplot facetted by gender with summary data"}
 summary_data2<-zhang_data%>%
-  group_by(Condition, Gender)%>% # add Gender to group_by()
+  group_by(Condition, Gender, time)%>% # add Gender to group_by()
   summarise(mean = mean(interest, na.rm = TRUE),
             min = mean(interest) - qnorm(0.975)*sd(interest)/sqrt(n()),
             max = mean(interest) + qnorm(0.975)*sd(interest)/sqrt(n()),
             sd = sd(interest)
             )
 
-ggplot(zhang_data, aes(x = Condition, y = interest, fill = Condition))+
+ggplot(zhang_data, aes(x = Condition, y = interest, fill = time))+
   geom_violin(alpha = .6, trim = FALSE)+
-  geom_boxplot(width = .2, alpha = .6)+
+  geom_boxplot(width = .2, alpha = .6, position = position_dodge(.9))+
   scale_fill_viridis_d(option = "E") +
   facet_wrap(~Gender)+
-  geom_pointrange(data = summary_data,
+  geom_pointrange(data = summary_data2,
                   aes(Condition, mean, ymin=min, ymax=max),
                   shape = 20, 
                   position = position_dodge(width = 0.9))
@@ -397,7 +397,7 @@ Finally, we're going to do something a bit snazzy. As well as the functions that
 
 #### Split-violin plots
 
-Because the functions we need don't exist we need to create them. Copy and paste all of the below code without changing anything. You do not need to understand this code. I don't. When you run this, you should see `geom_split_violin` appear in the Environment pane under Functions. 
+Because the functions we need don't exist in a package we can load, we need to create them. Copy and paste all of the below code without changing anything. You do not need to understand this code. I certainly don't. When you run this, you should see `geom_split_violin` appear in the Environment pane under Functions. 
 
 ```{r function1}
 GeomSplitViolin <- ggproto(
@@ -630,7 +630,7 @@ Let's now try out some calculations. We will start with just looking at effect s
 Do the following. 
 
 * Open R Studio and set the working directory to your Chapter 7 folder.  
-* Open a new R Markdown document and save it in your working directory. Call the file "In-class 3".    
+* Open a new R Markdown document and save it in your working directory. Call the file "Chapter 7 In-class".    
 * Delete the default R Markdown welcome text and insert a new code chunk that loads the packages `pwr`, `broom`, and `tidyverse` using the `library()` function. You may need to install `pwr` if you are working on your own machine but remember **never install packages on a university machine**.
 
 ### Activity 2: Effect size from a one-sample t-test
