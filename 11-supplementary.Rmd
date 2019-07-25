@@ -1,4 +1,4 @@
-# Supplementary Analyses {#supp}
+# Supplementary Analyses {#refsup}
 
 **WARNING** This chapter is still under construction.
 
@@ -820,7 +820,7 @@ dat <- tweets %>%
 
 ```
 
-You can <a href="all_data.zip" download>download this file here</a> so that you can reproduce our my exact analyses (or you can use your own, but the results will look a bit different).
+You can <a href="all_data.zip" download>download this file here</a> so that you can reproduce my exact analyses (or you can use your own, but the results will look a bit different).
 
 The first thing we need to do is tidy up the text by getting rid of punctuation, numbers, and links that aren't of any interest to us. We can also remove the hashtags because we don't want those to be included in any analysis. This code uses **regular expressions** which quite frankly make very little sense to me, I have copied and pasted this code from the Tidy Text book.
 
