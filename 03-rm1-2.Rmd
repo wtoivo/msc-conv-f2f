@@ -45,10 +45,11 @@ To demonstrate the power of the six `dplyr` verbs, we will use them to work with
 
 Do the following. If you need help, consult Chapter \@ref(ref2) and Chapter \@ref(ref3).
 
-* Open R Studio and set the working directory to your Chapter 3 folder. Ensure the environment is clear.  
-* Open a new R Markdown document and save it in your working directory. Call the file "Chapter 3 Pre-class".    
+* Download <a href="stubs\stub-3.2.Rmd" download>`stub-3.2.Rmd`</a> into your Chapter 3 folder.
+* Open R Studio and ensure the environment is clear.  
+* Open the Markdown stub file and ensure that the working directory is set to your Chapter 3 folder.    
 * If you are working on your own computer, install the package `babynames`. Remember, **never install packages if you are working on a university computer**. The university computers will already have this package installed.  
-* Delete the default R Markdown welcome text and insert a new code chunk that loads the packages `tidyverse` and `babynames` using `library()`.  
+* Write the code to load the packages `tidyverse` and `babynames` using `library()`.  
 
 ```{r, message=FALSE, warning=FALSE}
 
@@ -86,7 +87,7 @@ The first row of the table tells us that in the year 1880, there were 7065 baby 
 
 ### Activity 3: Your first plot
 
-* Type the code below into a new code chunk and run it. 
+* Type the code below into the Activity 3 code chunk and run it. 
 
 The code might not make much sense to you right now, but don't worry about not understanding it yet! The point is show you how much you can accomplish with very little code. The code creates a graph showing the popularity of four girl baby names - Alexandra, Beverly, Emily, and Kathleen - from 1880 to 2014.  You should see Figure \@ref(fig:babynames-plot) appear, which shows the proportion of each name across different years -  you can plug in different names if you like and see how the plot changes.
 
@@ -337,11 +338,10 @@ Today we are going to be using data from this paper: [Is there a Chastity Belt o
 
 If you need help with any of these steps, you should refer to the pre-lab activities:  
 
-* Download <a href="PongBlueRedBack 1-16 Codebook.csv" download>PongBlueRedBack 1-16 Codebook.csv</a> into your Chapter 3 folder.  
-* Set the working directory to your Chapter 3 folder. Ensure the environment is clear.    
-* Open a new R Markdown document and save it in your working directory. Call the file "Chapter 3 In-class".    
-* Delete the default R Markdown welcome text and insert a new code chunk.
-* Copy and paste the below code into this code chunk and then run the code.
+* Download <a href="stubs\stub-3.3.Rmd" download>`stub-3.3.Rmd`</a>, <a href="PongBlueRedBack 1-16 Codebook.csv" download>PongBlueRedBack 1-16 Codebook.csv</a> into your Chapter 3 folder.  
+* Open R and ensure the environment is clear.    
+* Open the Markdown stub file and ensure that the working directory is set to your Chapter 3 folder.    
+* Type the below code into the Activity 1 code chunk and then run the code.
 
 ``` {r libraries, eval = TRUE, message = FALSE, warning = FALSE}
 library("tidyverse")
@@ -493,7 +493,7 @@ The number of groups should be between the product of the number of background c
 
 The `summarise()` function lets you calculate descriptive statistics for your data. For example, say you want to know the number of hits there were for different paddle lengths, or number of hits there were when the background colour was red or blue.
 
-We will do this using pipes, to get you used to using them. Remember to try and read the code out loud and to pronounce `%>%` as 'and then'. Copy and paste the below code into a new code chunk and run the code.
+We will do this using pipes, to get you used to using them. Remember to try and read the code out loud and to pronounce `%>%` as 'and then'. Type the below code into the Activity 9 code chunk and run the code.
 
 ```{r datasummary, eval = FALSE}
 

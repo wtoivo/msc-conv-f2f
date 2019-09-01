@@ -21,9 +21,10 @@
   <meta name="twitter:description" content="This is the materials for the one-year MSc Conversion in Psychological Studies/Science." />
   
 
+<meta name="author" content="Emily Nordmann, Heather Cleland-Woods, Phil McAleer" />
 
 
-<meta name="date" content="2019-07-25" />
+<meta name="date" content="2019-09-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -517,11 +518,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">8.1.2</span> Activity 1: Set-up</h3>
 <p>Do the following.</p>
 <ul>
-<li>Open R Studio and set the working directory to your RM2 Chapter 8 folder. Ensure the environment is clear.<br />
+<li>Open R Studio and ensure the environment is clear.<br />
 </li>
-<li>Open a new R Markdown document and save it in your working directory. Call the file “Chapter 8 Pre-class”.<br />
-</li>
-<li>Download the <code>James Holmes_Expt 2_DATA.csv</code> file from Moodle and save it in your Chapter 8 folder. Make sure that you do not change the file name at all. * Delete the default R Markdown welcome text and insert a new code chunk that loads <code>pwr</code>, <code>lsr</code>, <code>car</code>, <code>broom</code>, <code>ez</code>, <code>emmeans</code> and <code>tidyverse</code> using the <code>library()</code> function and loads the data into an object named <code>dat</code> using <code>read_csv()</code>. If you are working on your own machine you may need to install <code>afex</code> and <code>emmeans</code> but as always <strong>do not install packages on university machines</strong>.</li>
+<li>Download <a href="stubs\stub-8.1.Rmd" download><code>stub-8.1.Rmd</code></a> and <a href="James Holmes_Expt 2_DATA.csv" download><code>James Holmes_Expt 2_DATA.csv</code></a> and save them in your Chapter 8 folder. Make sure that you do not change the file name at all.</li>
+<li>Open the Markdown stub file and ensure the working directory is set to your Chapter 8 folder.</li>
+<li>Type and run the code that loads <code>pwr</code>, <code>lsr</code>, <code>car</code>, <code>broom</code>, <code>ez</code>, <code>emmeans</code> and <code>tidyverse</code> using the <code>library()</code> function and loads the data into an object named <code>dat</code> using <code>read_csv()</code>. If you are working on your own machine you may need to install <code>afex</code> and <code>emmeans</code> but as always <strong>do not install packages on university machines</strong>.</li>
 <li>Add (hint: mutate) a column to <code>dat</code> called <code>subject</code>that equals <code>row_number()</code> to act as a participant ID which is currently missing from the data set.</li>
 </ul>
 </div>
@@ -881,13 +882,12 @@ Activity 5
 <div id="activity-1-set-up-11" class="section level3">
 <h3><span class="header-section-number">8.2.2</span> Activity 1: Set-up</h3>
 <ul>
-<li>Open R Studio and set the working directory to your RM2 Chapter 8 folder. Ensure the environment is clear.<br />
+<li>Open R Studio and ensure the environment is clear.<br />
 </li>
-<li>Open a new R Markdown document and save it in your working directory. Call the file “Chapter 8 In-class”.<br />
-</li>
-<li>Download <a href="Zhang et al. 2014 Study 3.csv" download>Zhang et al. 2014 Study 3.csv</a> and save it in your Chapter 8 folder. Make sure that you do not change the file name at all.</li>
+<li>Download <a href="stubs\stub-8.2.Rmd" download><code>stub-8.2.Rmd</code></a> and <a href="Zhang et al. 2014 Study 3.csv" download>Zhang et al. 2014 Study 3.csv</a> into your Chapter 8 folder. Make sure that you do not change the file names at all.</li>
+<li>Open the Markdown stub file and ensure the working directory is set to your Chapter 8 folder.</li>
 <li>If you are working on your own computer, install the package <code>rcompanion</code>. Remember <strong>do not install packages on university computers, they are already installed</strong>.</li>
-<li>Delete the default R Markdown welcome text and insert a new code chunk that loads <code>pwr</code>, <code>rcompanion</code>, <code>car</code>, <code>broom</code>, <code>afex</code>, <code>emmeans</code> and <code>tidyverse</code> using the <code>library()</code> function.</li>
+<li>Type and run the code that loads <code>pwr</code>, <code>rcompanion</code>, <code>car</code>, <code>broom</code>, <code>afex</code>, <code>emmeans</code> and <code>tidyverse</code> using the <code>library()</code> function.</li>
 </ul>
 <p>Run the below code to load the data and wrangle it into the format we need. You don’t need to write this code yourself but do make sure you can understand what each line is doing - a good way to do this when the code uses pipes (<code>%&gt;%</code>) is to highlight and run each line progressively so you can see how it builds up. Line-by-line the code:</p>
 <ul>

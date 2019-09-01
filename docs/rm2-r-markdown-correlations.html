@@ -21,9 +21,10 @@
   <meta name="twitter:description" content="This is the materials for the one-year MSc Conversion in Psychological Studies/Science." />
   
 
+<meta name="author" content="Emily Nordmann, Heather Cleland-Woods, Phil McAleer" />
 
 
-<meta name="date" content="2019-07-25" />
+<meta name="date" content="2019-09-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -764,14 +765,13 @@ Explain this
 <p>In this lab we will use the examples in Miller and Haden (2013), Chapter 11, looking at the relationship between four variables: reading ability, intelligence (IQ), the number of minutes per week spent reading at home (Home); and the number of minutes per week spent watching TV at home (TV). You can see in this situation that it would be unethical to manipulate these variables so measuring them as they exist in the environment is most appropriate; hence the use of correlations.</p>
 <p>Do the following. If you need help, consult Chapter <a href="ref3.html#ref3">1</a> and Chapter @(ref2).</p>
 <ul>
-<li>Open R Studio and set the working directory to your RM2 Chapter 5 folder. Ensure the environment is clear.<br />
+<li>Open R Studio and ensure the environment is clear.<br />
 </li>
-<li>Open a new R Markdown document and save it in your working directory. Call the file “Chapter 5 In-class”.<br />
+<li>Download <a href="stubs\stub-5.2.Rmd" download><code>stub-5.2.Rmd</code></a>, <a href="MillerHadenData.csv" download>MillerHadenData.csv</a> and save it in your Chapter 5 folder. Make sure that you do not change the file names at all.<br />
 </li>
-<li>Download <a href="MillerHadenData.csv" download>MillerHadenData.csv</a> and save it in your Chapter 5 folder. Make sure that you do not change the file name at all.<br />
-</li>
+<li>Open the Markdown stub file and ensure that the working directory is set to your Chapter 5 folder.</li>
 <li>If you are working on your own computer, install the packages <code>Hmisc</code>, <code>car</code>, and <code>broom</code>. Remember <strong>do not install packages on university computers, they are already installed</strong>.</li>
-<li>Delete the default R Markdown welcome text and insert a new code chunk that loads the packages <code>broom</code>, <code>car</code>, <code>lsr</code>, <code>Hmisc</code>, and <code>tidyverse</code> (in that order) using the <code>library()</code> function and loads the data into an object named <code>mh</code> using <code>read_csv()</code></li>
+<li>Type and run the code that loads the packages <code>broom</code>, <code>car</code>, <code>lsr</code>, <code>Hmisc</code>, and <code>tidyverse</code> (in that order) using the <code>library()</code> function and loads the data into an object named <code>mh</code> using <code>read_csv()</code> in the Activity 1 code chunk.</li>
 </ul>
 </div>
 <div id="activity-2-look-at-your-data-1" class="section level3">
@@ -1025,7 +1025,7 @@ Figure 5.15: Scatterplot matrix
 <pre class="sourceCode r"><code class="sourceCode r">mh &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(mh)</code></pre>
 <p>OK, finally let’s run the correlations.</p>
 <ul>
-<li>Run the below code to calculate then view the correlation results</li>
+<li>Type and run the below code to calculate then view the correlation results</li>
 </ul>
 <pre class="sourceCode r"><code class="sourceCode r">corr_results &lt;-<span class="st"> </span><span class="kw">correlate</span>(<span class="dt">x =</span> mh, <span class="co"># our data</span>
                           <span class="dt">test =</span> <span class="ot">TRUE</span>, <span class="co"># compute p-values</span>
