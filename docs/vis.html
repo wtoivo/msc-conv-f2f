@@ -21,9 +21,10 @@
   <meta name="twitter:description" content="This is the materials for the one-year MSc Conversion in Psychological Studies/Science." />
   
 
+<meta name="author" content="Emily Nordmann, Heather Cleland-Woods, Phil McAleer" />
 
 
-<meta name="date" content="2019-07-25" />
+<meta name="date" content="2019-09-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -515,13 +516,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">7.1.1</span> Activity 1: Set-up</h3>
 <p>Do the following. If you need help, consult Chapter <a href="ref3.html#ref3">1</a> and Chapter @(ref2).</p>
 <ul>
-<li>Open R Studio and set the working directory to your Chapter 7 folder. Ensure the environment is clear.<br />
+<li>Open R Studio and ensure the environment is clear.<br />
 </li>
-<li>Open a new R Markdown document and save it in your working directory. Call the file “Chapter 7 Pre-class”.<br />
-</li>
-<li>Download <a href="Zhang et al. 2014 Study 3.csv" download>Zhang et al. 2014 Study 3.csv</a> and save it in your Chapter 7 folder. Make sure that you do not change the file name at all.</li>
-<li>Delete the default R Markdown welcome text and insert a new code chunk that loads the package <code>tidyverse</code> using the <code>library()</code> function.</li>
-<li>Run the below code to load and wrangle the data into tidy data.</li>
+<li>Download <a href="stubs\stub-7.1.Rmd" download><code>stub-7.1.Rmd</code></a> and <a href="Zhang et al. 2014 Study 3.csv" download>Zhang et al. 2014 Study 3.csv</a> and save them in your Chapter 7 folder. Make sure that you do not change the file names at all.</li>
+<li>Open the Markdown stub and ensure that the working directory is set to your Chapter 7 folder.</li>
+<li>Type and run the code that loads the package <code>tidyverse</code> using the <code>library()</code> function in the Activity 1 code chunk.</li>
+<li>Copy and paste the below code to load and wrangle the data into tidy data in the Activity 1 code chunk and then run it.</li>
 </ul>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
 zhang_data &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;Zhang et al. 2014 Study 3.csv&quot;</span>)<span class="op">%&gt;%</span>
@@ -770,8 +770,8 @@ Figure 7.14: Boxplot for two factors
 <span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">alpha =</span> <span class="fl">.6</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">position=</span><span class="kw">position_jitterdodge</span>(<span class="dt">jitter.width =</span> <span class="fl">.1</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_fill_viridis_d</span>(<span class="dt">option =</span> <span class="st">&quot;E&quot;</span>)</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-3"></span>
-<img src="07-rm2-3_files/figure-html/unnamed-chunk-3-1.png" alt="Boxplots with friendly colours" width="100%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
+<img src="07-rm2-3_files/figure-html/unnamed-chunk-4-1.png" alt="Boxplots with friendly colours" width="100%" />
 <p class="caption">
 Figure 7.15: Boxplots with friendly colours
 </p>
@@ -1182,11 +1182,13 @@ Figure 7.27: Raincloud plot for two factors
 <h3><span class="header-section-number">7.2.3</span> Activity 1: Set-up</h3>
 <p>Do the following.</p>
 <ul>
-<li>Open R Studio and set the working directory to your Chapter 7 folder.<br />
+<li>Open R Studio and ensure the environment is clear.<br />
 </li>
-<li>Open a new R Markdown document and save it in your working directory. Call the file “Chapter 7 In-class”.<br />
+<li>Download <a href="stubs\stub-7.2.Rmd" download><code>stub-7.2.Rmd</code></a> and save it in your Chapter 7 folder.<br />
 </li>
-<li>Delete the default R Markdown welcome text and insert a new code chunk that loads the packages <code>pwr</code>, <code>broom</code>, and <code>tidyverse</code> using the <code>library()</code> function. You may need to install <code>pwr</code> if you are working on your own machine but remember <strong>never install packages on a university machine</strong>.</li>
+<li>Open the Markdown stub file and ensure the working directory is set to your Chapter 7 folder.</li>
+<li>Type and run the code that loads the packages <code>pwr</code>, <code>broom</code>, and <code>tidyverse</code> using the <code>library()</code> function into the Activity 1 code chunk.
+You may need to install <code>pwr</code> if you are working on your own machine but remember <strong>never install packages on a university machine</strong>.</li>
 </ul>
 </div>
 <div id="activity-2-effect-size-from-a-one-sample-t-test" class="section level3">
@@ -1282,6 +1284,7 @@ Helpful hint
 <ul>
 <li>Run the below code:</li>
 </ul>
+<pre><code>## Warning: package &#39;broom&#39; was built under R version 3.6.1</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pwr.t.test</span>(<span class="dt">d =</span> <span class="fl">.4</span>,
            <span class="dt">power =</span> <span class="fl">.8</span>,
            <span class="dt">sig.level =</span> <span class="fl">.05</span>,

@@ -21,9 +21,10 @@
   <meta name="twitter:description" content="This is the materials for the one-year MSc Conversion in Psychological Studies/Science." />
   
 
+<meta name="author" content="Emily Nordmann, Heather Cleland-Woods, Phil McAleer" />
 
 
-<meta name="date" content="2019-07-25" />
+<meta name="date" content="2019-09-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -539,13 +540,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">3.2.3</span> Activity 1: Set-up</h3>
 <p>Do the following. If you need help, consult Chapter <a href="rm1-intro-to-r.html#ref2">2.2</a> and Chapter <a href="ref3.html#ref3">1</a>.</p>
 <ul>
-<li>Open R Studio and set the working directory to your Chapter 3 folder. Ensure the environment is clear.<br />
+<li>Download <a href="stubs\stub-3.2.Rmd" download><code>stub-3.2.Rmd</code></a> into your Chapter 3 folder.</li>
+<li>Open R Studio and ensure the environment is clear.<br />
 </li>
-<li>Open a new R Markdown document and save it in your working directory. Call the file “Chapter 3 Pre-class”.<br />
+<li>Open the Markdown stub file and ensure that the working directory is set to your Chapter 3 folder.<br />
 </li>
 <li>If you are working on your own computer, install the package <code>babynames</code>. Remember, <strong>never install packages if you are working on a university computer</strong>. The university computers will already have this package installed.<br />
 </li>
-<li>Delete the default R Markdown welcome text and insert a new code chunk that loads the packages <code>tidyverse</code> and <code>babynames</code> using <code>library()</code>.</li>
+<li>Write the code to load the packages <code>tidyverse</code> and <code>babynames</code> using <code>library()</code>.</li>
 </ul>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
 <span class="kw">library</span>(babynames)</code></pre>
@@ -614,7 +616,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="activity-3-your-first-plot" class="section level3">
 <h3><span class="header-section-number">3.2.5</span> Activity 3: Your first plot</h3>
 <ul>
-<li>Type the code below into a new code chunk and run it.</li>
+<li>Type the code below into the Activity 3 code chunk and run it.</li>
 </ul>
 <p>The code might not make much sense to you right now, but don’t worry about not understanding it yet! The point is show you how much you can accomplish with very little code. The code creates a graph showing the popularity of four girl baby names - Alexandra, Beverly, Emily, and Kathleen - from 1880 to 2014. You should see Figure <a href="rm1-data-wrangling.html#fig:babynames-plot">3.1</a> appear, which shows the proportion of each name across different years - you can plug in different names if you like and see how the plot changes.</p>
 <pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span>babynames <span class="op">%&gt;%</span><span class="st"> </span>
@@ -977,14 +979,13 @@ When learning to code it can be a useful practice to read your code ‘out loud�
 <h3><span class="header-section-number">3.3.3</span> Activity 1: Set-up</h3>
 <p>If you need help with any of these steps, you should refer to the pre-lab activities:</p>
 <ul>
-<li>Download <a href="PongBlueRedBack 1-16 Codebook.csv" download>PongBlueRedBack 1-16 Codebook.csv</a> into your Chapter 3 folder.<br />
+<li>Download <a href="stubs\stub-3.3.Rmd" download><code>stub-3.3.Rmd</code></a>, <a href="PongBlueRedBack 1-16 Codebook.csv" download>PongBlueRedBack 1-16 Codebook.csv</a> into your Chapter 3 folder.<br />
 </li>
-<li>Set the working directory to your Chapter 3 folder. Ensure the environment is clear.<br />
+<li>Open R and ensure the environment is clear.<br />
 </li>
-<li>Open a new R Markdown document and save it in your working directory. Call the file “Chapter 3 In-class”.<br />
+<li>Open the Markdown stub file and ensure that the working directory is set to your Chapter 3 folder.<br />
 </li>
-<li>Delete the default R Markdown welcome text and insert a new code chunk.</li>
-<li>Copy and paste the below code into this code chunk and then run the code.</li>
+<li>Type the below code into the Activity 1 code chunk and then run the code.</li>
 </ul>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)
 pong_data &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;PongBlueRedBack 1-16 Codebook.csv&quot;</span>)
@@ -1166,7 +1167,7 @@ Helpful Hint
 <div id="activity-9-summarising-data" class="section level3">
 <h3><span class="header-section-number">3.3.11</span> Activity 9: Summarising data</h3>
 <p>The <code>summarise()</code> function lets you calculate descriptive statistics for your data. For example, say you want to know the number of hits there were for different paddle lengths, or number of hits there were when the background colour was red or blue.</p>
-<p>We will do this using pipes, to get you used to using them. Remember to try and read the code out loud and to pronounce <code>%&gt;%</code> as ‘and then’. Copy and paste the below code into a new code chunk and run the code.</p>
+<p>We will do this using pipes, to get you used to using them. Remember to try and read the code out loud and to pronounce <code>%&gt;%</code> as ‘and then’. Type the below code into the Activity 9 code chunk and run the code.</p>
 <pre class="sourceCode r"><code class="sourceCode r">pong_data_hits&lt;-<span class="st"> </span><span class="kw">group_by</span>(pong_data, BackgroundColor, PaddleLength) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># first group the data</span>
 <span class="st">  </span><span class="kw">summarise</span>(<span class="dt">total_hits =</span> <span class="kw">sum</span>(HitOrMiss)) <span class="co"># and then create a new variable called total_hits</span></code></pre>
 <p><code>summarise()</code> has a range of internal functions that make life really easy, e.g. <code>mean</code>, <code>sum</code>, <code>max</code>, <code>min</code>, etc. See the <a href="https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf">dplyr cheatsheet</a> for more examples.</p>

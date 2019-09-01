@@ -1,6 +1,7 @@
 --- 
 title: "MSc Conversion in Psychological Studies/Science"
 date: "`r Sys.Date()`"
+author: "Emily Nordmann, Heather Cleland-Woods, Phil McAleer"
 bibliography:
 - book.bib
 - packages.bib
