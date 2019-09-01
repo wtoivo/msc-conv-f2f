@@ -300,7 +300,7 @@ To summarise, 39 professional recruiters from Fortune 500 companies evaluated jo
 
 ### Activity 1: Set-up
 
-Your task is to reproduce the results from the article (p. 887). Do the following. If you need help, consult Chapter \@ref(ref3) and Chapter \@(ref2).
+Your task is to reproduce the results from the article (p. 887). Do the following. If you need help, consult Chapter \@ref(ref3) and Chapter \@ref(ref2).
 
 * Open R Studio and ensure the environment is clear.   
 * Download <a href="stubs\stub-6.2.Rmd" download>`stub-6.2.Rmd`</a> and <a href="evaluators.csv" download>`evaluators.csv`</a> and save them in your Chapter 6 folder. Make sure that you do not change the file names at all.    

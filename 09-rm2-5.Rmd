@@ -20,7 +20,7 @@ If our hypothesis is correct then there should be `r mcq(c("a positive", "no", "
 
 ### Activity 1: Setup
 
-Do the following. If you need help, consult Chapter @\ref(ref3) and Chapter \@(ref2).
+Do the following. If you need help, consult Chapter \@ref(ref3) and Chapter \@ref(ref2).
 
 * Open R Studio and ensure the environment is clear.   
  
