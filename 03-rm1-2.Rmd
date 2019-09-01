@@ -338,7 +338,7 @@ Today we are going to be using data from this paper: [Is there a Chastity Belt o
 
 If you need help with any of these steps, you should refer to the pre-lab activities:  
 
-* Download <a href="stubs\stub-3.3.Rmd" download>`stub-3.3.Rmd`</a>, <a href="PongBlueRedBack 1-16 Codebook.csv" download>PongBlueRedBack 1-16 Codebook.csv</a> into your Chapter 3 folder.  
+* Download <a href="stubs\stub-3.3.Rmd" download>`stub-3.3.Rmd`</a> and <a href="PongBlueRedBack 1-16 Codebook.csv" download>`PongBlueRedBack 1-16 Codebook.csv`</a> into your Chapter 3 folder.  
 * Open R and ensure the environment is clear.    
 * Open the Markdown stub file and ensure that the working directory is set to your Chapter 3 folder.    
 * Type the below code into the Activity 1 code chunk and then run the code.
