@@ -124,7 +124,7 @@ To help you understand the data we're visualising, here is the abstract:
 Do the following. If you need help, consult Chapter \@ref(ref3) and Chapter \@(ref2).
 
 * Open R Studio and ensure the environment is clear.   
-* Download <a href="stubs\stub-7.1.Rmd" download>`stub-7.1.Rmd`</a> and <a href="Zhang et al. 2014 Study 3.csv" download>Zhang et al. 2014 Study 3.csv</a> and save them in your Chapter 7 folder. Make sure that you do not change the file names at all.
+* Download <a href="stubs\stub-7.1.Rmd" download>`stub-7.1.Rmd`</a> and <a href="`Zhang et al. 2014 Study 3.csv`" download>Zhang et al. 2014 Study 3.csv</a> and save them in your Chapter 7 folder. Make sure that you do not change the file names at all.
 * Open the Markdown stub and ensure that the working directory is set to your Chapter 7 folder. 
 * Type and run the code that loads the package `tidyverse` using the `library()` function in the Activity 1 code chunk. 
 * Copy and paste the below code to load and wrangle the data into tidy data in the Activity 1 code chunk and then run it.
