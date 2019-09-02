@@ -191,9 +191,9 @@ Today in the lab you will learn how to load the packages required to work with o
 
 Before we begin working with the data we need to do some set-up. If you need help with any of these steps, you should refer to the pre-lab activities and Chapter \@ref(ref1): 
 
-* Download <a href="stubs\stub-2.3.Rmd" download>`stub-2.3.Rmd`</a>, <a href="ahi-cesd.csv" download>`ahi-cesd.csv`</a> and <a href="participant-info.csv" download>`participant-info.csv`</a> into your Chapter 2 folder.  
+* Download <a href="files\2.3.zip" download> the chapter 2.3 files</a> and extract the files in to your Chapter 2 folder.  
 * Open R and ensure the environment is clear.
-* Open the stub Markdown document and ensure that the working directory is set to your Chapter 2 folder.
+* Open the `stub-2.3.Rmd` file and ensure that the working directory is set to your Chapter 2 folder and the data files are in the workiing directory (you should be able to see them in the file pane).
 
 ### Activity  2: Load in the package
 
