@@ -73,9 +73,9 @@ There are four data files to work with that you should download from Moodle:
 
 Do the following. If you need help, consult Chapter \@ref(ref2) and Chapter \@ref(ref3).
 
-* Download <a href="stubs\stub-4.2.Rmd" download>`stub-4.2.Rmd`</a>, <a href="responses.csv" download>`responses.csv`</a>, <a href="qformats.csv" download>`qformats.csv`</a>, <a href="scoring.csv" download>`scoring.csv`</a>, and <a href="pinfo.csv" download>`pinfo.csv`</a> into your Chapter 4 folder.
+* Download <a href="files\4.2.zip" download> the chapter 4.2 files</a> and extract the files in to your Chapter 4 folder. 
 * Open R Studio and ensure the environment is clear.  
-* Open the Markdown stub file and ensure your working directory is set to your Chapter 4 folder.    
+* Open the `stub-4.2.Rmd` file and ensure your working directory is set to your Chapter 4 folder and that you can see the data files in the file pane.  
 * Write the code that loads the package `tidyverse` using the `library()` function in the Activity 1 code chunk. 
 
 ### Activity 2: Load in the data
@@ -336,8 +336,8 @@ What we want to do is to run a chi-square analysis to determine whether those in
 Do the following. If you need help, consult Chapter \@ref(ref2) and Chapter \@ref(ref3).
 
 * Open R Studio and ensure the environment is clear.   
-* Download <a href="stubs\stub-4.3.Rmd" download>`stub-4.3.Rmd`</a> and <a href="RTA_study1.csv" download>`RTA_study1.csv`</a> and save them in your Chapter 4 folder. Make sure that you do not change the file names at all.
-* Open the Markdown stub file and ensure that the working directory is set to your Chapter 4 folder.
+* Download <a href="files\4.3.zip" download> the chapter 4.3 files</a> and extract the files in to your Chapter 4 folder. 
+* Open the `stub-4.3.Rmd` file and ensure that the working directory is set to your Chapter 4 folder and that you can see the data files in the file pane.
 * If you are working on your own computer, install the package `lsr`. Remember **do not install packages on university computers, they are already installed**.
 * Type and run the code that loads the packages `tidyverse` and `lsr` using the `library()` function and loads the data into an object named `intent_data` using `read_csv()`  into the Activity 1 code chunk.
 

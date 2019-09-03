@@ -1,7 +1,7 @@
 
 --- 
 title: "MSc Conversion in Psychological Studies/Science"
-date: "2019-09-01"
+date: "2019-09-02"
 author: "Emily Nordmann, Heather Cleland-Woods, Phil McAleer"
 bibliography:
 - book.bib

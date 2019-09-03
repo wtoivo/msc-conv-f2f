@@ -45,9 +45,9 @@ To demonstrate the power of the six `dplyr` verbs, we will use them to work with
 
 Do the following. If you need help, consult Chapter \@ref(ref2) and Chapter \@ref(ref3).
 
-* Download <a href="stubs\stub-3.2.Rmd" download>`stub-3.2.Rmd`</a> into your Chapter 3 folder.
+* Download <a href="files\3.2.zip" download> the chapter 3.2 files</a> and extract the files in to your Chapter 3 folder. 
 * Open R Studio and ensure the environment is clear.  
-* Open the Markdown stub file and ensure that the working directory is set to your Chapter 3 folder.    
+* Open the `stub-3.2.Rmd` file and ensure that the working directory is set to your Chapter 3 folder and that you can see the data files in the file pane.    
 * If you are working on your own computer, install the package `babynames`. Remember, **never install packages if you are working on a university computer**. The university computers will already have this package installed.  
 * Write the code to load the packages `tidyverse` and `babynames` using `library()`.  
 
@@ -338,9 +338,9 @@ Today we are going to be using data from this paper: [Is there a Chastity Belt o
 
 If you need help with any of these steps, you should refer to the pre-lab activities:  
 
-* Download <a href="stubs\stub-3.3.Rmd" download>`stub-3.3.Rmd`</a> and <a href="PongBlueRedBack 1-16 Codebook.csv" download>`PongBlueRedBack 1-16 Codebook.csv`</a> into your Chapter 3 folder.  
+* Download <a href="files\3.3.zip" download> the chapter 3.3 files</a> and extract the files in to your Chapter 3 folder.   
 * Open R and ensure the environment is clear.    
-* Open the Markdown stub file and ensure that the working directory is set to your Chapter 3 folder.    
+* Open the `stub-3.3.Rmd` file and ensure that the working directory is set to your Chapter 3 folder and that you can see the data files in the file pane.    
 * Type the below code into the Activity 1 code chunk and then run the code.
 
 ``` {r libraries, eval = TRUE, message = FALSE, warning = FALSE}
