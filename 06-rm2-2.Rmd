@@ -727,7 +727,7 @@ The output of the paired-samples t-test is very similar to the independent test,
 
 * Enter the mean estimates and t-test results (means and t-value to 2 decimal places, p-value to 3 decimal places):
 
-    + Mean `estimate` = `r fitb("-0.07")`  
+    + Mean `estimate` = `r fitb("-0.07", "-.07")`  
     
     + t(`r fitb("31")`) = `r fitb("2.42")`, p = `r fitb(c("0.022",".022"))` 
     
