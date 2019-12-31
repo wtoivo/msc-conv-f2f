@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 RM1 Data Wrangling &amp; Chi-Square | MSc Conversion in Psychological Studies/Science</title>
   <meta name="description" content="This is the materials for the one-year MSc Conversion in Psychological Studies/Science." />
-  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 RM1 Data Wrangling &amp; Chi-Square | MSc Conversion in Psychological Studies/Science" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,15 @@
 <meta name="author" content="Emily Nordmann, Heather Cleland-Woods, Phil McAleer" />
 
 
-<meta name="date" content="2019-12-20" />
+<meta name="date" content="2019-12-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="rm1-data-wrangling.html">
-<link rel="next" href="rm2-r-markdown-correlations.html">
+<link rel="prev" href="rm1-data-wrangling.html"/>
+<link rel="next" href="rm2-r-markdown-correlations.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +40,9 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -55,7 +58,6 @@ code.sourceCode > span { color: inherit; text-decoration: inherit; }
 code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -581,11 +583,11 @@ This layout can be easy to read, however, it makes programming quite difficult. 
 <div id="activity-2-load-in-the-data" class="section level3">
 <h3><span class="header-section-number">4.2.5</span> Activity 2: Load in the data</h3>
 <p>Now you need to load in the <code>.csv</code> data files using the <code>read_csv()</code> function and save them as variables in the environment. For example, to load in the <code>responses</code> file we would type:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="rm1-data-wrangling-chi-square.html#cb81-1"></a>responses &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;responses.csv&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="rm1-data-wrangling-chi-square.html#cb81-1"></a>responses &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;responses.csv&quot;</span>) </span></code></pre></div>
 <ul>
 <li>Add the following lines of code to your Markdown and complete them to load in all four <code>.csv</code> data files. Use the above code as an example and name each variable the same as its original file name (minus the .csv part), again as above, e.g. <code>responses.csv</code> gets saved as <code>responses</code>. Remember to run the lines so that the data loaded in and is stored in your environment.</li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="rm1-data-wrangling-chi-square.html#cb82-1"></a>responses &lt;-<span class="st">  </span><span class="kw">read_csv</span>()    <span class="co"># survey responses</span></span>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="rm1-data-wrangling-chi-square.html#cb82-1"></a>responses &lt;-<span class="st">  </span><span class="kw">read_csv</span>()    <span class="co"># survey responses</span></span>
 <span id="cb82-2"><a href="rm1-data-wrangling-chi-square.html#cb82-2"></a>qformats &lt;-<span class="st">                 </span><span class="co"># question formats</span></span>
 <span id="cb82-3"><a href="rm1-data-wrangling-chi-square.html#cb82-3"></a>scoring &lt;-<span class="st">                  </span><span class="co"># scoring info</span></span>
 <span id="cb82-4"><a href="rm1-data-wrangling-chi-square.html#cb82-4"></a>pinfo &lt;-<span class="st">                    </span><span class="co"># participant information</span></span></code></pre></div>
@@ -609,7 +611,7 @@ Explain this answer
 <ul>
 <li>Type the below code line into the Activity 4 code chunk and run it.</li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="rm1-data-wrangling-chi-square.html#cb83-1"></a>rlong &lt;-<span class="st"> </span><span class="kw">gather</span>(<span class="dt">data =</span> responses, <span class="co"># the dataset we want to work on</span></span>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="rm1-data-wrangling-chi-square.html#cb83-1"></a>rlong &lt;-<span class="st"> </span><span class="kw">gather</span>(<span class="dt">data =</span> responses, <span class="co"># the dataset we want to work on</span></span>
 <span id="cb83-2"><a href="rm1-data-wrangling-chi-square.html#cb83-2"></a>                <span class="dt">key =</span> Question, <span class="co"># the name of the variable that will store what is currently the names of each column (question numbers)</span></span>
 <span id="cb83-3"><a href="rm1-data-wrangling-chi-square.html#cb83-3"></a>                <span class="dt">value =</span> Response, <span class="co"># the name of the new column that will store the values (data points)</span></span>
 <span id="cb83-4"><a href="rm1-data-wrangling-chi-square.html#cb83-4"></a>                Q1<span class="op">:</span>Q10) <span class="co"># the columns we want to gather together</span></span></code></pre></div>
@@ -634,7 +636,7 @@ In the code above we have used the notation <code>Q1:Q10</code>. This means ’s
 <ul>
 <li>Replace the <code>NULL</code> values in the below code with the necessary variable names to join <code>rlong1</code> and <code>qformats</code> by <code>Question</code>. If you need extra help, revisit Chapter 2 In-class Activity 4 - you used the same function then! You can also check the solutions for the answer (but make sure you try yourself first).</li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="rm1-data-wrangling-chi-square.html#cb84-1"></a>rlong2 &lt;-<span class="st"> </span><span class="kw">inner_join</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="ot">NULL</span>, <span class="dt">by =</span> <span class="st">&quot;NULL&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="rm1-data-wrangling-chi-square.html#cb84-1"></a>rlong2 &lt;-<span class="st"> </span><span class="kw">inner_join</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="ot">NULL</span>, <span class="dt">by =</span> <span class="st">&quot;NULL&quot;</span>)</span></code></pre></div>
 <ul>
 <li>Now view <code>rlong2</code>. You have matched each question with its scoring format, <code>forward</code> or <code>reverse</code>.</li>
 </ul>
@@ -653,7 +655,7 @@ The reasoning behind this shift is that sometimes agreeing or disagreeing might 
 <ul>
 <li>Type the below line into the Activity 6 code chunk, run it, and then view the new object.</li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="rm1-data-wrangling-chi-square.html#cb85-1"></a><span class="co"># combine rows in rlong2 and scoring based on QFormat and Response</span></span>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="rm1-data-wrangling-chi-square.html#cb85-1"></a><span class="co"># combine rows in rlong2 and scoring based on QFormat and Response</span></span>
 <span id="cb85-2"><a href="rm1-data-wrangling-chi-square.html#cb85-2"></a>rscores &lt;-<span class="st"> </span><span class="kw">inner_join</span>(rlong2, scoring, <span class="kw">c</span>(<span class="st">&quot;QFormat&quot;</span>, <span class="st">&quot;Response&quot;</span>))</span></code></pre></div>
 </div>
 <div id="activity-7-calculating-the-aq-scores." class="section level3">
@@ -664,7 +666,7 @@ The reasoning behind this shift is that sometimes agreeing or disagreeing might 
 </li>
 <li>Save your Markdown and knit it to make sure all your code works.</li>
 </ol>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="rm1-data-wrangling-chi-square.html#cb86-1"></a>aq_scores &lt;-<span class="st"> </span>rscores <span class="op">%&gt;%</span><span class="st"> </span></span>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="rm1-data-wrangling-chi-square.html#cb86-1"></a>aq_scores &lt;-<span class="st"> </span>rscores <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb86-2"><a href="rm1-data-wrangling-chi-square.html#cb86-2"></a><span class="st">             </span><span class="kw">group_by</span>(<span class="ot">NULL</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># how will you group individual participants?</span></span>
 <span id="cb86-3"><a href="rm1-data-wrangling-chi-square.html#cb86-3"></a><span class="st">             </span><span class="kw">summarise</span>(<span class="dt">AQ =</span> <span class="kw">sum</span>(<span class="ot">NULL</span>)) <span class="co"># which column will you sum to obtain AQ scores?</span></span></code></pre></div>
 <div class="solution">
@@ -702,7 +704,7 @@ Helpful Hint
 <button>
 Activity 2
 </button>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="rm1-data-wrangling-chi-square.html#cb87-1"></a>responses &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;responses.csv&quot;</span>)                  </span>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="rm1-data-wrangling-chi-square.html#cb87-1"></a>responses &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;responses.csv&quot;</span>)                  </span>
 <span id="cb87-2"><a href="rm1-data-wrangling-chi-square.html#cb87-2"></a>qformats &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;qformats.csv&quot;</span>)                 </span>
 <span id="cb87-3"><a href="rm1-data-wrangling-chi-square.html#cb87-3"></a>scoring &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;scoring.csv&quot;</span>)                  </span>
 <span id="cb87-4"><a href="rm1-data-wrangling-chi-square.html#cb87-4"></a>pinfo &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;pinfo.csv&quot;</span>)</span></code></pre></div>
@@ -715,7 +717,7 @@ Activity 2
 <button>
 Solution Task 5
 </button>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="rm1-data-wrangling-chi-square.html#cb88-1"></a>rlong2 &lt;-<span class="st"> </span><span class="kw">inner_join</span>(<span class="dt">x =</span> rlong, <span class="dt">y =</span> qformats, <span class="dt">by =</span> <span class="st">&quot;Question&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="rm1-data-wrangling-chi-square.html#cb88-1"></a>rlong2 &lt;-<span class="st"> </span><span class="kw">inner_join</span>(<span class="dt">x =</span> rlong, <span class="dt">y =</span> qformats, <span class="dt">by =</span> <span class="st">&quot;Question&quot;</span>)</span></code></pre></div>
 </div>
 <p><strong>Click the tab to see the solution</strong></p>
 </div>
@@ -725,7 +727,7 @@ Solution Task 5
 <button>
 Solution Task 7
 </button>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="rm1-data-wrangling-chi-square.html#cb89-1"></a>aq_scores &lt;-<span class="st"> </span>rscores <span class="op">%&gt;%</span><span class="st"> </span></span>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="rm1-data-wrangling-chi-square.html#cb89-1"></a>aq_scores &lt;-<span class="st"> </span>rscores <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb89-2"><a href="rm1-data-wrangling-chi-square.html#cb89-2"></a><span class="st">             </span><span class="kw">group_by</span>(Id) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># group by the ID number in column Id</span></span>
 <span id="cb89-3"><a href="rm1-data-wrangling-chi-square.html#cb89-3"></a><span class="st">             </span><span class="kw">summarise</span>(<span class="dt">AQ =</span> <span class="kw">sum</span>(Score)) <span class="co"># sum column Score to obtain AQ scores.</span></span></code></pre></div>
 </div>
@@ -737,7 +739,7 @@ Solution Task 7
 <button>
 Activity 8
 </button>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="rm1-data-wrangling-chi-square.html#cb90-1"></a>aq_scores2 &lt;-<span class="st"> </span>responses <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># take the data in `responses` and then</span></span>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="rm1-data-wrangling-chi-square.html#cb90-1"></a>aq_scores2 &lt;-<span class="st"> </span>responses <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># take the data in `responses` and then</span></span>
 <span id="cb90-2"><a href="rm1-data-wrangling-chi-square.html#cb90-2"></a><span class="st">  </span><span class="kw">gather</span>(Question, Response, Q1<span class="op">:</span>Q10) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># gather up columns Q1 to Q10, put the column names in Question and the scores in Response and then</span></span>
 <span id="cb90-3"><a href="rm1-data-wrangling-chi-square.html#cb90-3"></a><span class="st">  </span><span class="kw">inner_join</span>(qformats, <span class="st">&quot;Question&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># join with `qformats` and match the data by the column `Question` and then</span></span>
 <span id="cb90-4"><a href="rm1-data-wrangling-chi-square.html#cb90-4"></a><span class="st">  </span><span class="kw">inner_join</span>(scoring, <span class="kw">c</span>(<span class="st">&quot;QFormat&quot;</span>, <span class="st">&quot;Response&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># join with `scoring` and match the data by the columns `Qformat` and `Response` and then</span></span>
@@ -813,7 +815,7 @@ Explain these answers
 <li>If you are working on your own computer, install the package <code>lsr</code>. Remember <strong>do not install packages on university computers, they are already installed</strong>.</li>
 <li>Type and run the code that loads the packages <code>tidyverse</code> and <code>lsr</code> using the <code>library()</code> function and loads the data into an object named <code>intent_data</code> using <code>read_csv()</code> into the Activity 1 code chunk.</li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="rm1-data-wrangling-chi-square.html#cb91-1"></a><span class="kw">library</span>(<span class="ot">NULL</span>)</span>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="rm1-data-wrangling-chi-square.html#cb91-1"></a><span class="kw">library</span>(<span class="ot">NULL</span>)</span>
 <span id="cb91-2"><a href="rm1-data-wrangling-chi-square.html#cb91-2"></a>intent_data &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="ot">NULL</span>)</span></code></pre></div>
 </div>
 <div id="activity-2-look-at-the-data-1" class="section level3">
@@ -835,7 +837,7 @@ Explain these answers
 <li>You can do this in two separate steps, or you can use pipes. Regardless of how you do it, save the final output to an object named <code>intent_recode</code>.</li>
 </ul>
 <p>The solutions are at the end of this chapter but make sure you try it yourself and ask your peers and tutor for help first.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="rm1-data-wrangling-chi-square.html#cb92-1"></a>intent_recode &lt;-</span></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="rm1-data-wrangling-chi-square.html#cb92-1"></a>intent_recode &lt;-</span></code></pre></div>
 <div class="solution">
 <button>
 Helpful hint
@@ -904,7 +906,7 @@ There are several different packages that have a function called <code>recode()<
 <ul>
 <li>Replace the NULLs in the below code to calculate the number of participants in each category and save it to an object named <code>intent_counts</code>.</li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="rm1-data-wrangling-chi-square.html#cb93-1"></a>intent_counts &lt;-<span class="st"> </span>intent_recode <span class="op">%&gt;%</span></span>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="rm1-data-wrangling-chi-square.html#cb93-1"></a>intent_counts &lt;-<span class="st"> </span>intent_recode <span class="op">%&gt;%</span></span>
 <span id="cb93-2"><a href="rm1-data-wrangling-chi-square.html#cb93-2"></a><span class="st">  </span><span class="kw">group_by</span>(<span class="ot">NULL</span>, <span class="ot">NULL</span>) <span class="op">%&gt;%</span></span>
 <span id="cb93-3"><a href="rm1-data-wrangling-chi-square.html#cb93-3"></a><span class="st">  </span><span class="kw">count</span>()</span></code></pre></div>
 <p>How many participants in the control condition didn’t donate? <input class='solveme nospaces' size='2' data-answer='["22"]'/><br />
@@ -912,7 +914,7 @@ How many participants in the control condition donated? <input class='solveme no
 How many participants in the rta condition didn’t donate? <input class='solveme nospaces' size='2' data-answer='["10"]'/><br />
 How many participants in the rta condition donated? <input class='solveme nospaces' size='2' data-answer='["29"]'/></p>
 <p>You may also want to calculate the percentage of people who donated in each condition, if so you can adapt the code like this:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="rm1-data-wrangling-chi-square.html#cb94-1"></a>intent_percent &lt;-<span class="st"> </span>intent_recode <span class="op">%&gt;%</span></span>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="rm1-data-wrangling-chi-square.html#cb94-1"></a>intent_percent &lt;-<span class="st"> </span>intent_recode <span class="op">%&gt;%</span></span>
 <span id="cb94-2"><a href="rm1-data-wrangling-chi-square.html#cb94-2"></a><span class="st">  </span><span class="kw">group_by</span>(condition, actualdonate) <span class="op">%&gt;%</span></span>
 <span id="cb94-3"><a href="rm1-data-wrangling-chi-square.html#cb94-3"></a><span class="st">  </span><span class="kw">count</span>() <span class="op">%&gt;%</span></span>
 <span id="cb94-4"><a href="rm1-data-wrangling-chi-square.html#cb94-4"></a><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># ungroups the code</span></span>
@@ -982,7 +984,7 @@ Figure 4.1: ggplot2 layers from Field et al. (2012)
 </li>
 <li><code>position = "dodge"</code> places the bars next to each other, rather than on top of each other. Try removing this argument and just running the code with <code>geom_bar()</code> to see what happens.</li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="rm1-data-wrangling-chi-square.html#cb95-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> intent_recode, <span class="kw">aes</span>(<span class="dt">x =</span> condition, <span class="dt">fill =</span> actualdonate)) <span class="op">+</span></span>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="rm1-data-wrangling-chi-square.html#cb95-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> intent_recode, <span class="kw">aes</span>(<span class="dt">x =</span> condition, <span class="dt">fill =</span> actualdonate)) <span class="op">+</span></span>
 <span id="cb95-2"><a href="rm1-data-wrangling-chi-square.html#cb95-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:layer1"></span>
 <img src="04-rm1-3_files/figure-html/layer1-1.png" alt="Bar plot of RTA Study 1 data" width="100%" />
@@ -1007,7 +1009,7 @@ In R terms, <code>ggplot2</code> is a fairly old package. As a result, the use o
 </li>
 <li>Change the theme of the plot to change how it looks visually</li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="rm1-data-wrangling-chi-square.html#cb96-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> intent_recode, <span class="kw">aes</span>(<span class="dt">x =</span> condition, <span class="dt">fill =</span> actualdonate)) <span class="op">+</span></span>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="rm1-data-wrangling-chi-square.html#cb96-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> intent_recode, <span class="kw">aes</span>(<span class="dt">x =</span> condition, <span class="dt">fill =</span> actualdonate)) <span class="op">+</span></span>
 <span id="cb96-2"><a href="rm1-data-wrangling-chi-square.html#cb96-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="op">+</span></span>
 <span id="cb96-3"><a href="rm1-data-wrangling-chi-square.html#cb96-3"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;Condition&quot;</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Control&quot;</span>, <span class="st">&quot;RTA&quot;</span>)) <span class="op">+</span></span>
 <span id="cb96-4"><a href="rm1-data-wrangling-chi-square.html#cb96-4"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;Count&quot;</span>) <span class="op">+</span></span>
@@ -1033,7 +1035,7 @@ In R terms, <code>ggplot2</code> is a fairly old package. As a result, the use o
 <div id="activity-7-chi-square" class="section level3">
 <h3><span class="header-section-number">4.3.10</span> Activity 7: Chi-square</h3>
 <p>So, let’s finally run that chi-square analysis to see whether our intuition from the plot holds up and there is a significant association between the grouping variables. As promised, the code is quite simple - type the below code into a new R chunk and run it.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="rm1-data-wrangling-chi-square.html#cb97-1"></a>results &lt;-<span class="st"> </span><span class="kw">chisq.test</span>(<span class="dt">x =</span> intent_recode<span class="op">$</span>condition, <span class="co"># the first grouping variable</span></span>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="rm1-data-wrangling-chi-square.html#cb97-1"></a>results &lt;-<span class="st"> </span><span class="kw">chisq.test</span>(<span class="dt">x =</span> intent_recode<span class="op">$</span>condition, <span class="co"># the first grouping variable</span></span>
 <span id="cb97-2"><a href="rm1-data-wrangling-chi-square.html#cb97-2"></a>                      <span class="dt">y =</span> intent_recode<span class="op">$</span>actualdonate, <span class="co"># the second grouping variable</span></span>
 <span id="cb97-3"><a href="rm1-data-wrangling-chi-square.html#cb97-3"></a>                      <span class="dt">correct =</span> <span class="ot">FALSE</span>) <span class="co"># whether we want to apply the continuity correction</span></span>
 <span id="cb97-4"><a href="rm1-data-wrangling-chi-square.html#cb97-4"></a>results</span></code></pre></div>
@@ -1074,7 +1076,7 @@ Figure 4.3: Contents of a list
 </p>
 </div>
 <p>Each of these components can be viewed separately using the same <code>object$variable</code> notation we used above. For example, if we wanted to view the observed frequencies (refer to the lecture), we would run the following code:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="rm1-data-wrangling-chi-square.html#cb99-1"></a>results<span class="op">$</span>observed</span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="rm1-data-wrangling-chi-square.html#cb99-1"></a>results<span class="op">$</span>observed</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1121,7 +1123,7 @@ Figure 4.3: Contents of a list
 <h3><span class="header-section-number">4.3.14</span> Activity 10: Effect size</h3>
 <p>Although it wasn’t in the original paper, as our last step we will calculate an effect size so that we have a standardised measure of how large the association between our grouping variable is, the effect size measure for chi-square is Cramer’s V that you covered in the lecture.</p>
 <p>To calculate Cramer’s V we’re going to use the function <code>cramersv()</code> from the <code>lsr</code> package. This function is very easy to use - you copy and paste the code you gave to <code>chisq.test()</code> in Activity 7.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="rm1-data-wrangling-chi-square.html#cb100-1"></a>eff_size &lt;-<span class="st"> </span><span class="kw">cramersV</span>(<span class="dt">x =</span> intent_recode<span class="op">$</span>condition, <span class="dt">y =</span> intent_recode<span class="op">$</span>actualdonate, <span class="dt">correct =</span> <span class="ot">FALSE</span>)</span>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="rm1-data-wrangling-chi-square.html#cb100-1"></a>eff_size &lt;-<span class="st"> </span><span class="kw">cramersV</span>(<span class="dt">x =</span> intent_recode<span class="op">$</span>condition, <span class="dt">y =</span> intent_recode<span class="op">$</span>actualdonate, <span class="dt">correct =</span> <span class="ot">FALSE</span>)</span>
 <span id="cb100-2"><a href="rm1-data-wrangling-chi-square.html#cb100-2"></a>eff_size</span></code></pre></div>
 <pre><code>## [1] 0.327207</code></pre>
 </div>
@@ -1129,7 +1131,7 @@ Figure 4.3: Contents of a list
 <h3><span class="header-section-number">4.3.15</span> Activity 11: Write-up</h3>
 <p>Now that you’ve run all of the analyses you can use inline coding to help you write up your results. This isn’t something you’re going to be tested on in this course but it’s a really cool feature of Markdown so for each statistical test we’ll show you the code that does it so that you can use it in the future if you wanted to. We’re going to replicate the exact write-up of the results from the original paper (with the addition of the effect size).</p>
 <p>In the <strong>white-space</strong> in your Markdown document, copy and paste the following (do not change anything):</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="rm1-data-wrangling-chi-square.html#cb102-1"></a>Those <span class="cf">in</span> the reminder<span class="op">-</span>through<span class="op">-</span>association condition performed the intended behavior at a significantly higher <span class="kw">rate</span> (<span class="st">`</span><span class="dt">r round(pluck(intent_percent$percent_condition, 3),0)</span><span class="st">`</span>%, <span class="st">`</span><span class="dt">r pluck(intent_percent$n, 3)</span><span class="st">`</span> out of <span class="st">`</span><span class="dt">r pluck(intent_percent$n, 3) + pluck(intent_percent$n, 4)</span><span class="st">`</span>) than did those <span class="cf">in</span> the control <span class="kw">condition</span> (<span class="st">`</span><span class="dt">r round(pluck(intent_percent$percent_condition, 1),0)</span><span class="st">`</span>, <span class="st">`</span><span class="dt">r pluck(intent_percent$n, 1)</span><span class="st">`</span> out of <span class="st">`</span><span class="dt">r pluck(intent_percent$n, 1) + pluck(intent_percent$n, 2)</span><span class="st">`</span>)<span class="er">)</span>, χ2(<span class="st">`</span><span class="dt">r results$parameter</span><span class="st">`</span>, <span class="dt">N =</span> <span class="st">`</span><span class="dt">r length(intent_recode$id)</span><span class="st">`</span>) =<span class="st"> `</span><span class="dt">r round(results$statistic,2)</span><span class="st">`</span>, p =<span class="st"> `</span><span class="dt">r round(results$p.value, 3)</span><span class="st">`</span>, V =<span class="st"> `</span><span class="dt">r round(eff_size, 2)</span><span class="st">`</span>.</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="rm1-data-wrangling-chi-square.html#cb102-1"></a>Those <span class="cf">in</span> the reminder<span class="op">-</span>through<span class="op">-</span>association condition performed the intended behavior at a significantly higher <span class="kw">rate</span> (<span class="st">`</span><span class="dt">r round(pluck(intent_percent$percent_condition, 3),0)</span><span class="st">`</span>%, <span class="st">`</span><span class="dt">r pluck(intent_percent$n, 3)</span><span class="st">`</span> out of <span class="st">`</span><span class="dt">r pluck(intent_percent$n, 3) + pluck(intent_percent$n, 4)</span><span class="st">`</span>) than did those <span class="cf">in</span> the control <span class="kw">condition</span> (<span class="st">`</span><span class="dt">r round(pluck(intent_percent$percent_condition, 1),0)</span><span class="st">`</span>, <span class="st">`</span><span class="dt">r pluck(intent_percent$n, 1)</span><span class="st">`</span> out of <span class="st">`</span><span class="dt">r pluck(intent_percent$n, 1) + pluck(intent_percent$n, 2)</span><span class="st">`</span>)<span class="er">)</span>, χ2(<span class="st">`</span><span class="dt">r results$parameter</span><span class="st">`</span>, <span class="dt">N =</span> <span class="st">`</span><span class="dt">r length(intent_recode$id)</span><span class="st">`</span>) =<span class="st"> `</span><span class="dt">r round(results$statistic,2)</span><span class="st">`</span>, p =<span class="st"> `</span><span class="dt">r round(results$p.value, 3)</span><span class="st">`</span>, V =<span class="st"> `</span><span class="dt">r round(eff_size, 2)</span><span class="st">`</span>.</span></code></pre></div>
 <p>This will knit as:</p>
 <blockquote>
 <p>Those in the reminder-through-association condition performed the intended behaviour at a significantly higher rate (74%, 29 out of 39) than did those in the control condition (42, 16 out of 38)), χ2(1, N = 77) = 8.24, p = 0.004,V = 0.33.</p>
@@ -1148,7 +1150,7 @@ Figure 4.3: Contents of a list
 <button>
 Activity 1
 </button>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="rm1-data-wrangling-chi-square.html#cb103-1"></a><span class="kw">library</span>(tidyverse)</span>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="rm1-data-wrangling-chi-square.html#cb103-1"></a><span class="kw">library</span>(tidyverse)</span>
 <span id="cb103-2"><a href="rm1-data-wrangling-chi-square.html#cb103-2"></a>intent_data &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;RTA_study1.csv&quot;</span>)</span></code></pre></div>
 </div>
 <p><strong>click the tab to see the solution</strong>
@@ -1160,7 +1162,7 @@ Activity 1
 <button>
 Activity 3
 </button>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="rm1-data-wrangling-chi-square.html#cb104-1"></a><span class="co"># solution using pipes</span></span>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="rm1-data-wrangling-chi-square.html#cb104-1"></a><span class="co"># solution using pipes</span></span>
 <span id="cb104-2"><a href="rm1-data-wrangling-chi-square.html#cb104-2"></a></span>
 <span id="cb104-3"><a href="rm1-data-wrangling-chi-square.html#cb104-3"></a>intent_recode &lt;-<span class="st"> </span>intent_data <span class="op">%&gt;%</span></span>
 <span id="cb104-4"><a href="rm1-data-wrangling-chi-square.html#cb104-4"></a><span class="st">  </span><span class="kw">filter</span>(intend <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></span>
@@ -1182,7 +1184,7 @@ Activity 3
 <button>
 Activity 9
 </button>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="rm1-data-wrangling-chi-square.html#cb105-1"></a>results<span class="op">$</span>expected</span></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="rm1-data-wrangling-chi-square.html#cb105-1"></a>results<span class="op">$</span>expected</span></code></pre></div>
 </div>
 <p><strong>click the tab to see the solution</strong>
 <br></p>
@@ -1204,11 +1206,11 @@ Explain this answer
 <ol start="2" style="list-style-type: decimal">
 <li>From the below code, what would the plot have on the x-axis? <select class='solveme' data-answer='["gender"]'> <option></option> <option>exp_data</option> <option>gender</option> <option>score</option></select></li>
 </ol>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="rm1-data-wrangling-chi-square.html#cb106-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> exp_data, <span class="kw">aes</span>(gender, score))</span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="rm1-data-wrangling-chi-square.html#cb106-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> exp_data, <span class="kw">aes</span>(gender, score))</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>From the below code, how would the bars in the plot be positioned? <select class='solveme' data-answer='["On top of each other"]'> <option></option> <option>On top of each other</option> <option>Next to each other</option></select></li>
 </ol>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="rm1-data-wrangling-chi-square.html#cb107-1"></a><span class="kw">ggplot</span>(data, <span class="kw">aes</span>(<span class="dt">x =</span> condition, <span class="dt">fill =</span> actualdonate)) <span class="op">+</span></span>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="rm1-data-wrangling-chi-square.html#cb107-1"></a><span class="kw">ggplot</span>(data, <span class="kw">aes</span>(<span class="dt">x =</span> condition, <span class="dt">fill =</span> actualdonate)) <span class="op">+</span></span>
 <span id="cb107-2"><a href="rm1-data-wrangling-chi-square.html#cb107-2"></a><span class="st">  </span><span class="kw">geom_bar</span>()</span></code></pre></div>
 <div class="solution">
 <button>
@@ -1339,11 +1341,13 @@ window.onload = function() {
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -1351,12 +1355,12 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -1368,6 +1372,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -1387,8 +1395,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
