@@ -51,7 +51,7 @@ Some of the information contained in these activities will repeat what we have a
 
 ```{r img-dialog, echo=FALSE, fig.cap=".Rmd dialog box"}
 
-knitr::include_graphics("images/rmd_dialogue.png")
+knitr::include_graphics("images/rmd_dialog.png")
 
 ```
 
@@ -474,7 +474,7 @@ You should now have a tibble called `results` that gives you the output of the c
 
 Look at `results`and then with your group, answer the following questions:
 
-1. What is the value of Pearson's *r* to 2 decimal places? `r fitb(".45", width = 20, ignore_ws = TRUE)`
+1. What is the value of Pearson's *r* to 2 decimal places? `r fitb(c(".45", "0.45"), width = 20, ignore_ws = TRUE)`
 2. The direction of the relationship between Ability and IQ is: `r mcq(c(answer = "positive", "negative","no relationship"))`
 3. The strength of the relationship between Ability and IQ is: `r mcq(c("strong", answer = "medium", "weak"))`
 4. Based on $\alpha = .05$ the relationship between Ability and IQ is: `r mcq(c(answer = "significant", "not significant"))`
@@ -623,6 +623,21 @@ ggplot(data = mh, aes(x = Abil, y = IQ)) +
   geom_point()+
   geom_smooth(method = lm)+
   scale_x_continuous(name = "Reading Ability")
+```
+`r unhide()`  
+
+**click the tab to see the solution**
+<br>
+
+#### Activity 4
+
+`r hide("Activity 5")`
+```{r}
+descriptives <- summarise(mh, 
+                          Abil_mean = mean(Abil),
+                          Abil_SD = sd(Abil),
+                          IQ_mean = mean(IQ),
+                          IQ_SD = sd(IQ))
 ```
 `r unhide()`  
 
