@@ -24,7 +24,7 @@
 <meta name="author" content="Emily Nordmann, Heather Cleland-Woods, Phil McAleer" />
 
 
-<meta name="date" content="2020-01-15" />
+<meta name="date" content="2020-01-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -877,10 +877,10 @@ Hints on removing missing data points
 <div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> mh, <span class="kw">aes</span>(<span class="dt">x =</span> Abil, <span class="dt">y =</span> IQ)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb110-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span></a>
 <a class="sourceLine" id="cb110-3" title="3"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> lm) <span class="co"># if you don&#39;t want the shaded CI, add se = FALSE to this</span></a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
-<img src="05-rm2-1_files/figure-html/unnamed-chunk-11-1.png" alt="Scatterplot with the line of best fit and confidence intervals" width="100%" />
+<div class="figure" style="text-align: center">
+<img src="05-rm2-1_files/figure-html/scatter_abil_IQ-1.png" alt="Scatterplot with the line of best fit and confidence intervals" width="100%" />
 <p class="caption">
-Figure 5.14: Scatterplot with the line of best fit and confidence intervals
+(#fig:scatter_abil_IQ)Scatterplot with the line of best fit and confidence intervals
 </p>
 </div>
 <ul>
@@ -998,7 +998,7 @@ Explain these answers
 <div class="figure" style="text-align: center"><span id="fig:pairs"></span>
 <img src="05-rm2-1_files/figure-html/pairs-1.png" alt="Scatterplot matrix" width="100%" />
 <p class="caption">
-Figure 5.15: Scatterplot matrix
+Figure 5.14: Scatterplot matrix
 </p>
 </div>
 <p>Notice something wrong? <code>pairs()</code> will create scatterplots for <strong>all</strong> variables in your data (as will <code>correlate()</code> below). This means that it has correlated the Participant ID number as well, which is totally meaningless.</p>

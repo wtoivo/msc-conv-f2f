@@ -388,9 +388,9 @@ In order to assess linearity and homoscedasticity, we can create a scatterplot u
 
 The first geom, `geom_point()` adds in the data points, the second geom, `geom_smooth` adds in the line of best fit. The shaded area around the line is a **confidence interval**.
 
-```{r, fig.cap= "Scatterplot with the line of best fit and confidence intervals"}
+```{r scatter_abil_IQ, fig.cap= "Scatterplot with the line of best fit and confidence intervals"}
 ggplot(data = mh, aes(x = Abil, y = IQ)) +
-  geom_point()+
+  geom_point()+ 
   geom_smooth(method = lm) # if you don't want the shaded CI, add se = FALSE to this
 ```
 
