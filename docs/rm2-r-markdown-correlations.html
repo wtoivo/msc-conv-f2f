@@ -24,7 +24,7 @@
 <meta name="author" content="Emily Nordmann, Heather Cleland-Woods, Phil McAleer" />
 
 
-<meta name="date" content="2020-01-17" />
+<meta name="date" content="2020-01-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -875,7 +875,7 @@ Hints on removing missing data points
 <p>In order to assess linearity and homoscedasticity, we can create a scatterplot using <code>ggplot2</code>. This code is slightly different to what you have already done with <code>ggplot()</code> in that with a scatterplot you need to specify both the x and y axis in <code>aes()</code>.</p>
 <p>The first geom, <code>geom_point()</code> adds in the data points, the second geom, <code>geom_smooth</code> adds in the line of best fit. The shaded area around the line is a <strong>confidence interval</strong>.</p>
 <div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> mh, <span class="kw">aes</span>(<span class="dt">x =</span> Abil, <span class="dt">y =</span> IQ)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb110-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb110-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb110-3" title="3"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> lm) <span class="co"># if you don&#39;t want the shaded CI, add se = FALSE to this</span></a></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="05-rm2-1_files/figure-html/scatter_abil_IQ-1.png" alt="Scatterplot with the line of best fit and confidence intervals" width="100%" />

@@ -16,7 +16,7 @@ Do the following. If you need help, consult Chapter \@ref(ref3) and Chapter \@re
 
 ```{r echo = FALSE, message=FALSE, warning=FALSE}
 library("tidyverse")
-messy <- read_csv("messy.csv")
+messy <- read_csv("messy.csv") 
 ```
 
 ### Activity 2: Look at the data
